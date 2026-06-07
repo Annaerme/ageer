@@ -114,7 +114,7 @@
             ${i.locatie?`<div class="info-row"><span class="info-label">Locatie</span><span class="info-val">${esc(i.locatie)}</span></div>`:''}
             ${i.tijdstip?`<div class="info-row"><span class="info-label">Tijdstip</span><span class="info-val">${esc(i.tijdstip)}</span></div>`:''}
             ${i.beschrijving?`<p style="font-size:.83rem;margin-top:.5rem;color:var(--text-muted)">${esc(i.beschrijving)}</p>`:''}
-            ${i.inschrijven_url?`<a href="${esc(i.inschrijven_url)}" target="_blank" rel="noopener" class="btn btn-navy" style="margin-top:.75rem;font-size:.83rem">Inschrijven →</a>`:'<a href="http://www.redfed.be" target="_blank" rel="noopener" class="btn btn-navy" style="margin-top:.75rem;font-size:.83rem">Inschrijven via redfed.be →</a>'}
+            <a href="${esc(i.inschrijven_url||'http://www.redfed.be')}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.3rem;margin-top:.75rem;font-size:.82rem;font-weight:600;color:var(--navy);text-decoration:none;border-bottom:1.5px solid var(--gold);padding-bottom:1px">Inschrijven${!i.inschrijven_url?' via redfed.be':''} →</a>
           </div>`;
         }).join('');
       }).catch(()=>{
