@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const chevron = `<span class="nav-chevron"><svg viewBox="0 0 8 5" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l3 3 3-3"/></svg></span>`;
 
   navEl.innerHTML = `
-<nav class="nav${isHome ? ' nav-transparent' : ''}" role="navigation" aria-label="Hoofdnavigatie">
+<nav class="nav nav-transparent" role="navigation" aria-label="Hoofdnavigatie">
   <div class="nav-inner">
 
     <a href="/" class="nav-logo" aria-label="Aegir Gent — home">
@@ -85,12 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const burger = navEl.querySelector('.nav-burger');
   const links  = navEl.querySelector('.nav-links');
 
-  // Transparent homepage nav
-  if (isHome) {
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
+  // Transparent nav scroll behaviour (all pages)
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
   // Burger open/close
   if (burger && links) {

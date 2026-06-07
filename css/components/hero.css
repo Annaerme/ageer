@@ -1,7 +1,7 @@
 .page-hero {
   background: url('/images/banner/aegirbanner009.jpg') center / cover no-repeat;
   color: white;
-  padding: calc(var(--nav-h) + 4rem) 0 4rem;
+  padding: calc(var(--nav-h) + 1.5rem) 0 2rem;
   margin-top: calc(-1 * var(--nav-h));
   position: relative;
   overflow: hidden;
