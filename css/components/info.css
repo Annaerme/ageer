@@ -1,0 +1,16 @@
+.info-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: border-color .2s;
+}
+.info-box:hover { border-color: rgba(240,180,41,.3); }
+.info-box h4 { margin-bottom: .85rem; font-size: 1rem; }
+.info-row { display: flex; gap: .85rem; margin-bottom: .45rem; font-size: .875rem; align-items: baseline; }
+.info-label { color: var(--text-muted); min-width: 110px; flex-shrink: 0; font-size: .8rem; font-weight: 500; letter-spacing: .02em; }
+.info-val { color: var(--text); font-weight: 500; }
+.info-val a { color: var(--navy); text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color .15s; }
+.info-val a:hover { text-decoration-color: var(--navy); }
+
+.divider { height: 1px; background: var(--border); margin: 1.5rem 0; }

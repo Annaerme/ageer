@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reddingsclub Aegir Gent — trainen, redden en samenkomen in het water." />
+  <title>Aegir Gent | Reddingsclub</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
+  <style>
+    /* ── Homepage only ── */
+    html, body { height: 100%; }
+    body { background: var(--navy-deep); }
+
+    .home-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: url('/images/banner/aegirbanner009.jpg') center / cover no-repeat;
+    }
+    .home-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(8,14,32,.1) 0%,
+        rgba(8,14,32,.6) 40%,
+        rgba(8,14,32,.94) 100%
+      );
+    }
+
+    .home-stage {
+      position: relative; z-index: 1;
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+    }
+
+    /* ── hero content ── */
+    .home-hero {
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: calc(var(--nav-h) + 2rem) 0 6rem;
+    }
+    .home-hero-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 2.5rem; width: 100%;
+    }
+    .home-eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: .68rem; font-weight: 700; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.75rem;
+    }
+    .home-eyebrow::before {
+      content: ''; display: block; width: 32px; height: 2px;
+      background: var(--gold); border-radius: 2px;
+    }
+    .home-h1 {
+      font-family: var(--font-head);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: .98;
+      color: white;
+      margin-bottom: 1.75rem;
+    }
+    .home-h1 em { color: var(--gold); font-style: normal; display: block; }
+    .home-sub {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: rgba(255,255,255,.48);
+      margin-bottom: 2.5rem;
+      letter-spacing: .02em;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .home-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* ── scroll indicator ── */
+    .home-scroll {
+      position: fixed; bottom: 2.5rem; right: 2.5rem; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.25); font-size: .6rem; letter-spacing: .18em;
+      text-transform: uppercase; text-decoration: none;
+      transition: color .2s;
+    }
+    .home-scroll:hover { color: rgba(255,255,255,.55); }
+    .home-scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.25), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: .3; transform: scaleY(1); }
+      50% { opacity: .8; transform: scaleY(1.1); }
+    }
+
+    /* ── stat strip ── */
+    .home-stats {
+      position: relative; z-index: 1;
+      background: rgba(10,18,38,.85);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    @media (max-width: 768px) {
+      .home-hero { padding-bottom: 4rem; }
+      .home-h1 { font-size: clamp(3rem, 12vw, 5rem); }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <div class="home-bg" aria-hidden="true"></div>
+
+  <div class="home-stage">
+    <!-- HERO -->
+    <div class="home-hero">
+      <div class="home-hero-inner">
+        <div class="home-eyebrow">Reddingszwemmen · Gent</div>
+        <h1 class="home-h1">
+          Reddingsclub
+          <em>Aegir Gent.</em>
+        </h1>
+        <p class="home-sub">Trainingen, competitie en reddersopleiding in Zwembad Strop. Welkom bij de reddingsclub van Gent.</p>
+        <div class="home-cta">
+          <a href="/pages/leden/inschrijven.html" class="btn btn-primary btn-lg">Word lid</a>
+          <a href="/pages/club/" class="btn btn-outline btn-lg">Ontdek de club</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="home-stats">
+      <div id="homepage-stats" class="stat-strip-inner" style="max-width:var(--max-w);margin:0 auto">
+        <div class="stat-block"><div class="stat-n">40+</div><div class="stat-l">Jaar actief</div></div>
+        <div class="stat-block"><div class="stat-n">100+</div><div class="stat-l">Actieve leden</div></div>
+        <div class="stat-block"><div class="stat-n">7</div><div class="stat-l">Niveaugroepen</div></div>
+        <div class="stat-block"><div class="stat-n">10+</div><div class="stat-l">Disciplines</div></div>
+      </div>
+    </div>
+  </div>
+
+  <a href="/pages/nieuws/" class="home-scroll" aria-label="Naar nieuws">
+    Scroll
+    <span class="home-scroll-line"></span>
+  </a>
+
+  <script src="/js/components/nav.js"></script>
+  <script src="/js/components/footer.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+  (()=>{
+    const SB='https://wlmehcbxeseigxwougwd.supabase.co';
+    const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+    fetch(`${SB}/rest/v1/homepage_stats?order=volgorde.asc`,{headers:{apikey:KEY}})
+      .then(r=>r.json())
+      .then(stats=>{
+        if(!stats||!stats.length) return;
+        document.getElementById('homepage-stats').innerHTML=stats.map(s=>
+          `<div class="stat-block"><div class="stat-n">${s.waarde}</div><div class="stat-l">${s.label}</div></div>`
+        ).join('');
+      })
+      .catch(()=>{});
+  })();
+  </script>
+</body>
+</html>

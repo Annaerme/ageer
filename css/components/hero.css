@@ -1,0 +1,81 @@
+.page-hero {
+  background: var(--navy-deep);
+  color: white;
+  padding: calc(var(--nav-h) + 4rem) 0 4rem;
+  margin-top: calc(-1 * var(--nav-h));
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 100% 0%, rgba(240,180,41,.08) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 80% at 0% 100%, rgba(36,53,100,.6) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-hero .wrap { position: relative; }
+.page-hero h1 {
+  color: white;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  margin-top: 0.75rem;
+  max-width: 800px;
+}
+.page-hero p {
+  color: rgba(255,255,255,.5);
+  margin-top: .9rem;
+  max-width: 540px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.73rem;
+  color: rgba(255,255,255,.25);
+  letter-spacing: .03em;
+}
+.breadcrumb a { color: rgba(255,255,255,.45); transition: color .15s; }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb span { opacity: .3; }
+.breadcrumb [aria-current] { color: rgba(255,255,255,.55); opacity: 1; }
+
+/* Full-screen hero (homepage only) */
+.hero {
+  position: relative;
+  height: calc(100vh - var(--nav-h));
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    rgba(8,14,32,.15) 0%,
+    rgba(8,14,32,.55) 40%,
+    rgba(8,14,32,.9) 100%
+  );
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 2.5rem 5rem;
+  width: 100%;
+}
+.hero h1 { color: white; max-width: 860px; }
+.hero h1 em { color: var(--gold); font-style: normal; }
+.hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: 2rem; }

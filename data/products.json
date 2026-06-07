@@ -1,0 +1,74 @@
+[
+  {
+    "id": "tshirt-basic",
+    "naam": "T-shirt (basic)",
+    "prijs": 15.00,
+    "emoji": "👕",
+    "foto": "https://wlmehcbxeseigxwougwd.supabase.co/storage/v1/object/public/fotos/shop/tshirt.png",
+    "beschrijving": "Klassiek clubt-shirt met Aegir Gent logo. Comfortabele kwaliteit voor training en vrije tijd.",
+    "maten": ["XS", "S", "M", "L", "XL", "XXL"]
+  },
+  {
+    "id": "tshirt-lifeguard",
+    "naam": "T-shirt LIFEGUARD",
+    "prijs": 15.00,
+    "emoji": "🦺",
+    "foto": "https://wlmehcbxeseigxwougwd.supabase.co/storage/v1/object/public/fotos/shop/tshirt.png",
+    "beschrijving": "T-shirt met LIFEGUARD opdruk. Draag je trots je redderstitel.",
+    "maten": ["XS", "S", "M", "L", "XL", "XXL"]
+  },
+  {
+    "id": "hoodie",
+    "naam": "Hoodie",
+    "prijs": 30.00,
+    "emoji": "🧥",
+    "foto": "https://wlmehcbxeseigxwougwd.supabase.co/storage/v1/object/public/fotos/shop/hoodie.png",
+    "beschrijving": "Warme hoodie met Aegir Gent borduursels. Perfect na de training.",
+    "maten": ["XS", "S", "M", "L", "XL", "XXL"]
+  },
+  {
+    "id": "short",
+    "naam": "Short",
+    "prijs": 15.00,
+    "emoji": "🩳",
+    "foto": "https://wlmehcbxeseigxwougwd.supabase.co/storage/v1/object/public/fotos/shop/short.png",
+    "beschrijving": "Lichte trainingsshort met clublogo. Geschikt voor in en rond het water.",
+    "maten": ["XS", "S", "M", "L", "XL", "XXL"]
+  },
+  {
+    "id": "badmuts",
+    "naam": "Badmuts",
+    "prijs": 6.00,
+    "emoji": "🏊",
+    "foto": "https://wlmehcbxeseigxwougwd.supabase.co/storage/v1/object/public/fotos/shop/badmuts.png",
+    "beschrijving": "Siliconen badmuts in clubkleuren. One size fits all.",
+    "maten": null
+  },
+  {
+    "id": "usb",
+    "naam": "USB-stick 8GB",
+    "prijs": 6.00,
+    "emoji": "💾",
+    "foto": "https://wlmehcbxeseigxwougwd.supabase.co/storage/v1/object/public/fotos/shop/usb.jpg",
+    "beschrijving": "8GB USB-stick met Aegir Gent logo. Handig voor opleidingsmateriaal.",
+    "maten": null
+  },
+  {
+    "id": "fluitje",
+    "naam": "Fluitje FOX-40",
+    "prijs": 10.00,
+    "emoji": "🔔",
+    "foto": "https://wlmehcbxeseigxwougwd.supabase.co/storage/v1/object/public/fotos/shop/fox40.jpg",
+    "beschrijving": "Professioneel reddersfluitje FOX-40. Krachtig geluid, ook in het water.",
+    "maten": null
+  },
+  {
+    "id": "pocket-mask",
+    "naam": "Pocket mask",
+    "prijs": 12.50,
+    "emoji": "🩺",
+    "foto": "https://wlmehcbxeseigxwougwd.supabase.co/storage/v1/object/public/fotos/shop/pocketmask.jpg",
+    "beschrijving": "Pocket mask met ventiel en filter voor veilige beademing bij eerste hulp.",
+    "maten": null
+  }
+]

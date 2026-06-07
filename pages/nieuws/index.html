@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nieuws | Aegir Gent</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page">
+
+    <section class="page-hero">
+      <div class="wrap">
+        <nav class="breadcrumb"><span aria-current="page">Nieuws</span></nav>
+        <h1>Nieuws</h1>
+        <p>De laatste updates, verslagen en aankondigingen van Aegir Gent.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div id="nieuws-list" class="article-list">
+          <div style="text-align:center;padding:3rem;color:var(--text-muted)">Laden…</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div id="site-footer"></div>
+  <script src="/js/components/nav.js"></script>
+  <script src="/js/components/footer.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+const SB  = 'https://wlmehcbxeseigxwougwd.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+
+const CAT = { club:'Club', trainingen:'Trainingen', competitie:'Competitie', opleiding:'Opleiding', activiteit:'Activiteit' };
+
+function fmtDate(s) {
+  if (!s) return '';
+  const d = new Date(s + 'T12:00:00');
+  return d.toLocaleDateString('nl-BE', { day:'numeric', month:'long', year:'numeric' });
+}
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+fetch(`${SB}/rest/v1/nieuws_items?gepubliceerd=eq.true&order=datum.desc`, { headers:{ apikey:KEY } })
+  .then(r => r.json())
+  .then(items => {
+    const el = document.getElementById('nieuws-list');
+    if (!items.length) {
+      el.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--text-muted)">Geen nieuws beschikbaar.</div>';
+      return;
+    }
+    el.innerHTML = items.map(a => `
+      <a href="/pages/nieuws/artikel.html?id=${a.id}" class="article-card">
+        <div class="article-img">
+          <img src="/images/banner/aegirbanner009.jpg" alt="${esc(a.titel)}" loading="lazy">
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date">${fmtDate(a.datum)}</span>
+            <span class="article-tag">${esc(CAT[a.categorie]||a.categorie)}</span>
+          </div>
+          <h3>${esc(a.titel)}</h3>
+          <p>${esc(a.samenvatting||'')}</p>
+          <span class="article-more">Lees meer →</span>
+        </div>
+      </a>
+    `).join('');
+  })
+  .catch(() => {
+    document.getElementById('nieuws-list').innerHTML = '<div style="text-align:center;padding:3rem;color:var(--text-muted)">Nieuws kon niet worden geladen.</div>';
+  });
+  </script>
+</body>
+</html>

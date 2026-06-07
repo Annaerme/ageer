@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sportverzekering bij Aegir Gent — dekking, procedure bij een ongeval en alle documenten." />
+  <title>Verzekering | Aegir Gent</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+  <style>
+    /* ── PROCEDURE STAPPEN ── */
+    .steps { display: flex; flex-direction: column; margin-top: 2.5rem; }
+    .step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 1.25rem;
+      padding-bottom: 2rem;
+      position: relative;
+    }
+    .step:last-child { padding-bottom: 0; }
+    .step::before {
+      content: '';
+      position: absolute;
+      left: 17px; top: 34px; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .step:last-child::before { display: none; }
+    .step-n {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--navy); color: white;
+      font-family: var(--font-head); font-weight: 700; font-size: 0.88rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .step-body { padding-top: 6px; }
+    .step-body h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .step-body p { font-size: 0.87rem; line-height: 1.6; }
+
+    /* ── POLIS CARD ── */
+    .polis {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.5rem;
+      background: var(--white);
+    }
+    .polis-head {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1rem; padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .polis-icon {
+      width: 38px; height: 38px; border-radius: 7px;
+      background: var(--gold-pale);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .polis-icon svg { width: 20px; height: 20px; stroke: var(--navy); }
+    .polis h3 { font-size: 1rem; margin: 0; }
+    .polis .info-row { margin-bottom: 0.35rem; }
+
+    /* ── DOCUMENT LINKS ── */
+    .doc-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .doc-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.9rem 1.1rem;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none; color: inherit;
+      background: var(--white);
+      transition: background 0.12s;
+    }
+    .doc-item:last-child { border-bottom: none; }
+    .doc-item:hover { background: var(--bg); }
+    .doc-icon {
+      width: 34px; height: 34px; border-radius: 5px;
+      background: var(--gold-pale);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .doc-icon svg { width: 17px; height: 17px; stroke: var(--navy); }
+    .doc-info { flex: 1; min-width: 0; }
+    .doc-title { font-weight: 600; font-size: 0.88rem; color: var(--text); }
+    .doc-desc { font-size: 0.77rem; color: var(--text-muted); margin-top: 1px; }
+    .doc-badge {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--navy);
+      background: var(--gold-pale); padding: 2px 6px; border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ── TIP BOX ── */
+    .tip {
+      display: flex; gap: 0.875rem; align-items: flex-start;
+      background: var(--gold-pale);
+      border: 1px solid rgba(240,180,41,0.35);
+      border-radius: var(--r);
+      padding: 1.1rem 1.25rem;
+    }
+    .tip svg { width: 18px; height: 18px; stroke: var(--gold-dark); flex-shrink: 0; margin-top: 1px; }
+    .tip p { font-size: 0.87rem; color: var(--text); line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page">
+
+    <section class="page-hero">
+      <div class="wrap">
+        <nav class="breadcrumb" aria-label="Kruimelpad">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <a href="leden.html">Leden</a>
+          <span>›</span>
+          <span aria-current="page">Verzekering</span>
+        </nav>
+        <h1>Sportverzekering</h1>
+        <p>Als lid ben je automatisch verzekerd voor lichamelijke ongevallen en burgerrechtelijke aansprakelijkheid — mits je lidmaatschap in orde is.</p>
+      </div>
+    </section>
+
+    <!-- PROCEDURE + POLISSEN -->
+    <section class="section">
+      <div class="wrap">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start">
+
+          <!-- Stappen -->
+          <div>
+            <div class="label">Procedure</div>
+            <h2>Wat doe je bij een lichamelijk ongeval?</h2>
+            <p style="margin-top:0.5rem">Volg deze stappen zo snel mogelijk na het incident. Een tijdige aangifte is noodzakelijk voor je vergoeding.</p>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-n">1</div>
+                <div class="step-body">
+                  <h4>Verwittigen van het bestuur</h4>
+                  <p>Geef de <strong>plaats</strong>, het <strong>tijdstip</strong>, een <strong>beschrijving</strong> en eventuele <strong>getuigen</strong> door aan het clubbestuur.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-n">2</div>
+                <div class="step-body">
+                  <h4>Aangifteformulier invullen</h4>
+                  <p>Vul het aangifteformulier in en bezorg het terug aan het bestuur — <strong>binnen 5 werkdagen</strong>.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-n">3</div>
+                <div class="step-body">
+                  <h4>Originele betalingsbewijzen bewaren</h4>
+                  <p>Bewaar alle <strong>originele afrekeningen</strong> van apotheek, mutualiteit en ziekenhuis. Geen kopieën.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-n">4</div>
+                <div class="step-body">
+                  <h4>Dossiernummer ontvangen</h4>
+                  <p>Je ontvangt een dossiernummer van de verzekeraar. Gebruik dit bij alle verdere inzendingen.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-n">5</div>
+                <div class="step-body">
+                  <h4>Genezeringsverklaring terugsturen</h4>
+                  <p>Na je herstel stuurt je dokter een genezeringsverklaring naar de verzekeraar om het dossier af te sluiten.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-n">6</div>
+                <div class="step-body">
+                  <h4>Bij ziekenhuisopname</h4>
+                  <p>Controleer of je arts of chirurg aangesloten is bij het <strong>RIZIV</strong> en of de behandeling onder de RIZIV-nomenclatuur valt.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rechter kolom -->
+          <div style="display:flex;flex-direction:column;gap:1.25rem">
+
+            <div class="tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              <p>Bij andere incidenten of bij twijfel neem je <strong>onmiddellijk contact op met het clubbestuur</strong> via de sleutelpersonen van Aegir Gent.</p>
+            </div>
+
+            <div class="info-box">
+              <h4>Contact bij een incident</h4>
+              <div class="divider" style="margin:0.75rem 0"></div>
+              <div class="info-row"><span class="info-label">Bestuur</span><span class="info-val"><a href="mailto:info@aegir-gent.be">info@aegir-gent.be</a></span></div>
+              <div class="info-row"><span class="info-label">Telefonisch</span><span class="info-val">Zie ledenportaal</span></div>
+              <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem">Meer contactinfo op de <a href="contact.html" style="color:var(--navy)">contactpagina</a>.</p>
+            </div>
+
+            <div class="label" style="margin-bottom:0.25rem">Onze polissen</div>
+            <div class="polis">
+              <div class="polis-head">
+                <div class="polis-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <h3>Sporta Federatie vzw</h3>
+                  <p style="font-size:0.8rem;margin:0;color:var(--text-muted)">Ethias Verzekeringen</p>
+                </div>
+              </div>
+              <div class="info-row"><span class="info-label">Polisnummer</span><span class="info-val" style="font-family:monospace;font-size:0.85rem">45.236.716</span></div>
+            </div>
+            <div class="polis">
+              <div class="polis-head">
+                <div class="polis-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                </div>
+                <div>
+                  <h3>Vlaamse Reddingsfederatie</h3>
+                  <p style="font-size:0.8rem;margin:0;color:var(--text-muted)">Arena nv</p>
+                </div>
+              </div>
+              <div class="info-row"><span class="info-label">Polis LO</span><span class="info-val" style="font-family:monospace;font-size:0.85rem">1.102.192</span></div>
+              <div class="info-row"><span class="info-label">Polis BA</span><span class="info-val" style="font-family:monospace;font-size:0.85rem">1.102.193</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCUMENTEN -->
+    <section class="section bg-off">
+      <div class="wrap">
+        <div class="label">Downloads</div>
+        <h2>Formulieren & documentatie</h2>
+        <p style="margin-top:0.4rem;margin-bottom:2.5rem;max-width:560px">Download het aangifteformulier van jouw federatie en de bijkomende informatiedocumenten.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem">
+          <div>
+            <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem">Aangifteformulieren</p>
+            <div class="doc-list">
+              <a href="documents/verzekering-aangifte-sporta.pdf" class="doc-item" target="_blank" rel="noopener">
+                <div class="doc-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div class="doc-info">
+                  <div class="doc-title">Aangifte Sporta Federatie</div>
+                  <div class="doc-desc">Invullen bij lichamelijk ongeval</div>
+                </div>
+                <span class="doc-badge">PDF</span>
+              </a>
+              <a href="documents/verzekering-aangifte-redfed.pdf" class="doc-item" target="_blank" rel="noopener">
+                <div class="doc-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div class="doc-info">
+                  <div class="doc-title">Aangifte RedFed</div>
+                  <div class="doc-desc">Invullen bij lichamelijk ongeval</div>
+                </div>
+                <span class="doc-badge">PDF</span>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem">Informatiedocumenten</p>
+            <div class="doc-list">
+              <a href="documents/verzekering-uitleg.pdf" class="doc-item" target="_blank" rel="noopener">
+                <div class="doc-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                </div>
+                <div class="doc-info">
+                  <div class="doc-title">Een ongeval, wat nu?</div>
+                  <div class="doc-desc">Stap-voor-stap procedure</div>
+                </div>
+                <span class="doc-badge">PDF</span>
+              </a>
+              <a href="documents/verzekering-dekking-sporta.pdf" class="doc-item" target="_blank" rel="noopener">
+                <div class="doc-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="doc-info">
+                  <div class="doc-title">Dekkingsoverzicht Sporta</div>
+                  <div class="doc-desc">Volledig overzicht van de dekking</div>
+                </div>
+                <span class="doc-badge">PDF</span>
+              </a>
+              <a href="documents/infobrochure.pdf" class="doc-item" target="_blank" rel="noopener">
+                <div class="doc-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
+                <div class="doc-info">
+                  <div class="doc-title">Clubinfobrochure</div>
+                  <div class="doc-desc">Verzekeringsinformatie op blz. 26–28</div>
+                </div>
+                <span class="doc-badge">PDF</span>
+              </a>
+              <a href="documents/privacy.pdf" class="doc-item" target="_blank" rel="noopener">
+                <div class="doc-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <div class="doc-info">
+                  <div class="doc-title">Privacy- & cookiebeleid</div>
+                  <div class="doc-desc">Hoe wij omgaan met je persoonsgegevens</div>
+                </div>
+                <span class="doc-badge">PDF</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="background:var(--navy);padding:3rem 0">
+      <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+        <div>
+          <h3 style="color:white;font-size:1.3rem">Nog vragen over de verzekering?</h3>
+          <p style="color:rgba(255,255,255,0.55);margin-top:0.35rem">Het bestuur helpt je graag verder.</p>
+        </div>
+        <a href="contact.html" class="btn btn-primary">Neem contact op</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="js/nav.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

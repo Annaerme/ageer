@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clubshop | Aegir Gent</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
+  <style>
+    /* ── Shop-specific styles ── */
+    .shop-hero {
+      background: var(--navy-deep);
+      padding: calc(var(--nav-h) + 3.5rem) 0 3.5rem;
+      margin-top: calc(-1 * var(--nav-h));
+      position: relative; overflow: hidden;
+    }
+    .shop-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 100% 0%, rgba(240,180,41,.07) 0%, transparent 65%),
+                  radial-gradient(ellipse 50% 60% at 0% 100%, rgba(36,53,100,.5) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .shop-hero .wrap { position: relative; }
+
+    /* Product grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .25s, transform .2s;
+      position: relative;
+    }
+    .product-card:hover {
+      border-color: rgba(240,180,41,.4);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+    .product-card.selected {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(240,180,41,.15), var(--shadow-md);
+    }
+    .product-card.selected::after {
+      content: '✓';
+      position: absolute; top: 12px; right: 12px;
+      width: 28px; height: 28px;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: .85rem;
+      line-height: 28px; text-align: center;
+    }
+    .product-photo {
+      width: 100%; aspect-ratio: 4/3; overflow: hidden;
+      background: var(--bg);
+    }
+    .product-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .product-card:hover .product-photo img { transform: scale(1.05); }
+    .product-info { padding: 1.25rem 1.5rem 1.5rem; }
+    .product-name { font-family: var(--font-head); font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
+    .product-desc { font-size: .82rem; color: var(--text-muted); line-height: 1.55; margin-bottom: .75rem; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--gold); }
+    .product-maten { font-size: .72rem; color: var(--text-muted); font-weight: 500; }
+
+    /* Order panel */
+    .order-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      position: sticky;
+      top: calc(var(--nav-h) + 1.5rem);
+    }
+    .order-panel-empty {
+      text-align: center; padding: 2.5rem 1rem;
+      color: var(--text-muted); font-size: .88rem;
+    }
+    .order-panel-empty .order-empty-icon { font-size: 2.5rem; margin-bottom: .75rem; opacity: .4; }
+    .order-line {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .87rem;
+    }
+    .order-line-photo {
+      width: 44px; height: 44px; border-radius: 8px;
+      overflow: hidden; flex-shrink: 0; background: var(--bg);
+    }
+    .order-line-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .order-line-info { flex: 1; min-width: 0; }
+    .order-line-name { font-weight: 600; font-size: .85rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .order-line-maat { font-size: .76rem; color: var(--text-muted); margin-top: 2px; }
+    .order-qty-ctrl { display: flex; align-items: center; gap: .35rem; flex-shrink: 0; }
+    .order-qty-btn { width: 26px; height: 26px; border-radius: 5px; border: 1px solid var(--border); background: var(--bg); font-size: .95rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .1s; }
+    .order-qty-btn:hover { background: var(--border); }
+    .order-qty-num { min-width: 18px; text-align: center; font-weight: 600; font-size: .87rem; }
+    .order-line-price { font-family: var(--font-head); font-weight: 700; color: var(--navy); font-size: .95rem; flex-shrink: 0; }
+    .order-total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 0 .5rem;
+    }
+    .order-total-label { font-size: .83rem; color: var(--text-muted); font-weight: 500; }
+    .order-total-val { font-family: var(--font-head); font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+
+    /* Checkout form */
+    .checkout-section {
+      margin-top: 3rem; padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Maat selector inline */
+    .maat-sel {
+      padding: 4px 10px; border: 1.5px solid var(--border);
+      border-radius: 5px; font-size: .78rem; font-family: var(--font-body);
+      color: var(--text); background: white; cursor: pointer;
+      transition: border-color .15s;
+    }
+    .maat-sel:focus { border-color: var(--navy); outline: none; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page">
+
+    <!-- HERO -->
+    <section class="shop-hero">
+      <div class="wrap">
+        <nav class="breadcrumb"><span aria-current="page">Clubshop</span></nav>
+        <h1 style="color:white;margin-top:.75rem">Clubshop</h1>
+        <p style="color:rgba(255,255,255,.48);margin-top:.75rem;max-width:500px">Bestel officiële Aegir Gent-artikelen. Selecteer je producten, kies maat en vul je gegevens in. Afhalen aan het zwembad.</p>
+      </div>
+    </section>
+
+    <!-- SHOP BODY -->
+    <section class="section">
+      <div class="wrap">
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:3rem;align-items:start">
+
+          <!-- LEFT: PRODUCTS + CHECKOUT FORM -->
+          <div>
+            <div class="label">Stap 1 — Kies je producten</div>
+            <h2 style="margin-bottom:2rem">Artikelen</h2>
+
+            <div id="product-grid" class="product-grid">
+              <div style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--text-muted)">
+                <div style="font-size:2rem;margin-bottom:.5rem;opacity:.4">🛍️</div>
+                Producten laden…
+              </div>
+            </div>
+
+            <!-- CHECKOUT FORM -->
+            <div class="checkout-section" id="checkout-section" style="display:none">
+              <div class="label">Stap 2 — Jouw gegevens</div>
+              <h2 style="margin-bottom:2rem">Afrekenen</h2>
+
+              <div id="order-success" class="form-success">
+                Bedankt voor je bestelling! We sturen een bevestiging naar je e-mailadres en contacteren je voor het afhalen.
+              </div>
+              <div id="order-error" class="form-error"></div>
+
+              <form id="order-form" class="form" novalidate>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="voornaam">Voornaam *</label>
+                    <input type="text" id="voornaam" name="voornaam" required placeholder="Voornaam" />
+                  </div>
+                  <div class="form-group">
+                    <label for="naam">Naam *</label>
+                    <input type="text" id="naam" name="naam" required placeholder="Naam" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="email">E-mailadres *</label>
+                    <input type="email" id="email" name="email" required placeholder="jouw@email.be" />
+                  </div>
+                  <div class="form-group">
+                    <label for="telefoon">Telefoon</label>
+                    <input type="tel" id="telefoon" name="telefoon" placeholder="0470 00 00 00" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="opmerking">Opmerking</label>
+                  <textarea id="opmerking" name="opmerking" rows="3" placeholder="Bijzondere wensen of vragen…"></textarea>
+                </div>
+                <div class="info-box" style="font-size:.83rem;margin-bottom:.5rem">
+                  Afhaling aan <strong>Zwembad Strop</strong> tijdens een training. Betaling bij afhaling of via overschrijving
+                  <span style="font-family:monospace">BE17 8907 3409 5021</span>.
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:14px">
+                  Bestelling plaatsen
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- RIGHT: ORDER PANEL -->
+          <div>
+            <div class="order-panel" id="order-panel">
+              <h4 style="margin-bottom:1rem;font-size:1rem">Jouw bestelling</h4>
+              <div id="order-panel-body">
+                <div class="order-panel-empty">
+                  <div class="order-empty-icon">🛒</div>
+                  Klik op een product om het toe te voegen.
+                </div>
+              </div>
+            </div>
+
+            <div class="info-box" style="margin-top:1rem">
+              <h4>Afhalen</h4>
+              <p style="font-size:.85rem;margin-top:.4rem">Je bestelling haal je op aan Zwembad Strop tijdens een training. We bevestigen per mail wanneer klaar.</p>
+            </div>
+            <div class="info-box" style="margin-top:1rem">
+              <h4>Vragen?</h4>
+              <p style="font-size:.85rem;margin-top:.4rem"><a href="mailto:info@aegir-gent.be" style="color:var(--navy)">info@aegir-gent.be</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div id="site-footer"></div>
+  <script src="/js/lib/supabase.js"></script>
+  <script src="/js/components/nav.js"></script>
+  <script src="/js/components/footer.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const grid = document.getElementById('product-grid');
+    const panelBody = document.getElementById('order-panel-body');
+    const checkoutSection = document.getElementById('checkout-section');
+
+    let products = [];
+    let cart = {}; // { id: { product, qty, maat } }
+
+    // Load products from Supabase
+    const SB_URL = 'https://wlmehcbxeseigxwougwd.supabase.co';
+    const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/shop_producten?beschikbaar=eq.true&order=volgorde.asc`, {
+        headers: { apikey: SB_KEY }
+      });
+      const data = await res.json();
+      products = data.map(p => ({ ...p, foto: p.foto_url, emoji: '🛍️' }));
+    } catch {
+      // Fall back to local JSON if Supabase is unavailable
+      try {
+        const res = await fetch('/data/products.json');
+        products = await res.json();
+      } catch {
+        grid.innerHTML = '<p style="color:var(--text-muted)">Kon producten niet laden.</p>';
+        return;
+      }
+    }
+
+    renderGrid();
+
+    function renderGrid() {
+      grid.innerHTML = products.map(p => `
+        <div class="product-card ${cart[p.id] ? 'selected' : ''}" data-id="${p.id}" role="button" tabindex="0" aria-pressed="${!!cart[p.id]}">
+          <div class="product-photo">
+            <img src="${p.foto}" alt="${p.naam}" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<div style=&quot;display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;opacity:.3&quot;>${p.emoji}</div>'">
+          </div>
+          <div class="product-info">
+            <div class="product-name">${p.naam}</div>
+            <div class="product-desc">${p.beschrijving}</div>
+            <div class="product-footer">
+              <div class="product-price">${p.prijs.toFixed(2).replace('.',',')}€</div>
+              ${p.maten ? `<div class="product-maten">XS – XXL</div>` : '<div class="product-maten">One size</div>'}
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('.product-card').forEach(card => {
+        const activate = () => toggleProduct(card.dataset.id);
+        card.addEventListener('click', activate);
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+      });
+    }
+
+    function toggleProduct(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      if (cart[id]) {
+        delete cart[id];
+      } else {
+        cart[id] = { product, qty: 1, maat: product.maten ? product.maten[2] : null }; // default M
+      }
+      renderGrid();
+      renderPanel();
+      checkoutSection.style.display = Object.keys(cart).length ? 'block' : 'none';
+    }
+
+    function renderPanel() {
+      const ids = Object.keys(cart);
+      if (!ids.length) {
+        panelBody.innerHTML = `<div class="order-panel-empty"><div class="order-empty-icon">🛒</div>Klik op een product om het toe te voegen.</div>`;
+        return;
+      }
+      const total = ids.reduce((s, id) => s + cart[id].product.prijs * cart[id].qty, 0);
+      panelBody.innerHTML = `
+        ${ids.map(id => {
+          const { product, qty, maat } = cart[id];
+          return `
+          <div class="order-line" data-id="${id}">
+            <div class="order-line-photo">
+              <img src="${product.foto}" alt="${product.naam}" loading="lazy"
+                   onerror="this.parentElement.innerHTML='<div style=&quot;display:flex;align-items:center;justify-content:center;height:100%;font-size:1.4rem&quot;>${product.emoji}</div>'">
+            </div>
+            <div class="order-line-info">
+              <div class="order-line-name">${product.naam}</div>
+              ${product.maten ? `
+              <select class="maat-sel" data-id="${id}">
+                ${product.maten.map(m => `<option ${m===maat?'selected':''}>${m}</option>`).join('')}
+              </select>` : '<div class="order-line-maat">One size</div>'}
+            </div>
+            <div class="order-qty-ctrl">
+              <button class="order-qty-btn" data-id="${id}" data-d="-1" aria-label="Min">−</button>
+              <span class="order-qty-num">${qty}</span>
+              <button class="order-qty-btn" data-id="${id}" data-d="1" aria-label="Plus">+</button>
+            </div>
+            <div class="order-line-price">${(product.prijs * qty).toFixed(2).replace('.',',')}€</div>
+          </div>`;
+        }).join('')}
+        <div class="order-total-row">
+          <span class="order-total-label">Totaal</span>
+          <span class="order-total-val">${total.toFixed(2).replace('.',',')}€</span>
+        </div>
+        <a href="#checkout-section" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.5rem">
+          Naar gegevens ↓
+        </a>
+      `;
+
+      panelBody.querySelectorAll('.order-qty-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          cart[id].qty = Math.max(1, cart[id].qty + parseInt(btn.dataset.d));
+          renderGrid();
+          renderPanel();
+        });
+      });
+      panelBody.querySelectorAll('.maat-sel').forEach(sel => {
+        sel.addEventListener('change', () => { cart[sel.dataset.id].maat = sel.value; });
+      });
+    }
+
+    // Form submit
+    const form = document.getElementById('order-form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const ids = Object.keys(cart);
+      if (!ids.length) return;
+
+      const btn = form.querySelector('[type="submit"]');
+      const success = document.getElementById('order-success');
+      const err = document.getElementById('order-error');
+      success.classList.remove('visible');
+      err.classList.remove('visible');
+      btn.textContent = 'Bestelling indienen…';
+      btn.disabled = true;
+
+      const regels = ids.map(id => ({
+        product_id: id,
+        naam: cart[id].product.naam,
+        maat: cart[id].maat,
+        aantal: cart[id].qty,
+        eenheidsprijs: cart[id].product.prijs,
+        totaal: cart[id].product.prijs * cart[id].qty
+      }));
+      const totaal = regels.reduce((s, r) => s + r.totaal, 0);
+
+      try {
+        await window.aegirDB.insert('shop_bestellingen', {
+          voornaam: form.voornaam.value.trim(),
+          naam: form.naam.value.trim(),
+          email: form.email.value.trim(),
+          telefoon: form.telefoon.value.trim(),
+          opmerking: form.opmerking.value.trim(),
+          regels: JSON.stringify(regels),
+          totaal,
+          status: 'nieuw',
+          ingediend_op: new Date().toISOString()
+        });
+        cart = {};
+        renderGrid();
+        renderPanel();
+        checkoutSection.style.display = 'none';
+        form.reset();
+        success.classList.add('visible');
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (ex) {
+        console.error(ex);
+        err.textContent = 'Er ging iets mis. Mail info@aegir-gent.be.';
+        err.classList.add('visible');
+      } finally {
+        btn.textContent = 'Bestelling plaatsen';
+        btn.disabled = false;
+      }
+    });
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda | Aegir Gent</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page">
+
+    <section class="page-hero">
+      <div class="wrap">
+        <nav class="breadcrumb"><span aria-current="page">Agenda</span></nav>
+        <h1>Agenda</h1>
+        <p>Alle activiteiten, wedstrijden, bijscholingen en evenementen van Aegir Gent.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:4rem;align-items:start">
+          <div>
+            <div class="label">Komende activiteiten</div>
+            <h2 style="margin-bottom:1.75rem">Agenda 2026</h2>
+
+            <!-- Filters -->
+            <div id="agenda-filters" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem">
+              <button class="filter-btn active" data-type="">Alle</button>
+              <button class="filter-btn" data-type="training">Training</button>
+              <button class="filter-btn" data-type="competitie">Competitie</button>
+              <button class="filter-btn" data-type="opleiding">Opleiding</button>
+              <button class="filter-btn" data-type="activiteit">Activiteit</button>
+            </div>
+
+            <div id="agenda-list" class="event-list">
+              <div style="padding:2rem 0;text-align:center;color:var(--text-muted);font-size:.9rem">Laden…</div>
+            </div>
+          </div>
+          <div>
+            <div class="info-box" style="margin-bottom:1rem">
+              <h4>Activiteitstypen</h4>
+              <div style="display:flex;flex-direction:column;gap:.4rem;margin-top:.75rem">
+                <div style="display:flex;align-items:center;gap:.5rem;font-size:.85rem"><span class="event-tag" style="flex-shrink:0">Training</span><span>Wekelijkse trainingen</span></div>
+                <div style="display:flex;align-items:center;gap:.5rem;font-size:.85rem"><span class="event-tag" style="flex-shrink:0">Competitie</span><span>Officiële wedstrijden</span></div>
+                <div style="display:flex;align-items:center;gap:.5rem;font-size:.85rem"><span class="event-tag" style="flex-shrink:0">Opleiding</span><span>Bijscholingen &amp; cursussen</span></div>
+                <div style="display:flex;align-items:center;gap:.5rem;font-size:.85rem"><span class="event-tag" style="flex-shrink:0">Activiteit</span><span>Clubuitstappen</span></div>
+              </div>
+            </div>
+            <div class="info-box">
+              <h4>Aanmelden voor activiteiten</h4>
+              <p style="font-size:.85rem;margin-top:.4rem">Voor wedstrijden en bijscholingen is vooraf aanmelden verplicht.</p>
+              <a href="/pages/contact/" class="btn btn-navy" style="margin-top:1rem;display:inline-block;font-size:.85rem">Contacteer ons</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div id="site-footer"></div>
+  <script src="/js/components/nav.js"></script>
+  <script src="/js/components/footer.js"></script>
+  <script src="/js/main.js"></script>
+  <style>
+    .filter-btn{padding:.38rem .85rem;border-radius:6px;border:1.5px solid var(--border);background:white;font-family:var(--font-body);font-size:.82rem;font-weight:500;color:var(--text-mid);cursor:pointer;transition:all .14s}
+    .filter-btn:hover{border-color:var(--navy);color:var(--navy)}
+    .filter-btn.active{background:var(--navy);color:white;border-color:var(--navy)}
+  </style>
+  <script>
+const SB  = 'https://wlmehcbxeseigxwougwd.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+
+const MAANDEN = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+const TYPE_LABELS = { training:'Training', competitie:'Competitie', opleiding:'Opleiding', activiteit:'Activiteit' };
+
+let allItems = [];
+let activeType = '';
+
+function fmtDay(s) { if(!s) return '?'; return s.split('-')[2].replace(/^0/,''); }
+function fmtMaand(s) { if(!s) return ''; return MAANDEN[parseInt(s.split('-')[1])-1]?.toUpperCase()||''; }
+function fmtFull(s) { if(!s) return ''; const [y,m,d] = s.split('-'); return `${d.replace(/^0/,'')} ${MAANDEN[parseInt(m)-1]} ${y}`; }
+
+function render(items) {
+  const el = document.getElementById('agenda-list');
+  const filtered = activeType ? items.filter(i=>i.type===activeType) : items;
+  if (!filtered.length) {
+    el.innerHTML = '<div style="padding:2rem 0;color:var(--text-muted);font-size:.9rem">Geen evenementen gevonden.</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(item => {
+    const tag = `<div class="event-tag">${TYPE_LABELS[item.type]||item.type}</div>`;
+    const desc = item.beschrijving
+      ? `<p>${item.beschrijving.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>` : '';
+    const details = [
+      item.tijdstip ? `<span style="font-size:.83rem;color:var(--text-mid)">🕐 ${item.tijdstip}</span>` : '',
+      item.locatie  ? `<span style="font-size:.83rem;color:var(--text-mid)">📍 ${item.locatie}</span>` : '',
+      item.doelgroep ? `<span style="font-size:.83rem;color:var(--text-mid)">👥 ${item.doelgroep}</span>` : ''
+    ].filter(Boolean).join('');
+    const inschrijven = item.inschrijven_url
+      ? `<a href="${item.inschrijven_url}" target="_blank" rel="noopener" class="btn btn-navy" style="font-size:.8rem;margin-top:.5rem;display:inline-flex">Inschrijven →</a>` : '';
+
+    return `<div class="event-item">
+      <div class="event-date">
+        <span class="event-day">${fmtDay(item.datum)}</span>
+        <span class="event-month">${fmtMaand(item.datum)}</span>
+      </div>
+      <div class="event-body">
+        ${tag}
+        <h4>${item.titel}</h4>
+        ${details ? `<div style="display:flex;flex-direction:column;gap:.2rem;margin:.3rem 0">${details}</div>` : ''}
+        ${desc}
+        ${inschrijven}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function loadAgenda() {
+  const today = new Date().toISOString().split('T')[0];
+  const res = await fetch(`${SB}/rest/v1/agenda_items?datum=gte.${today}&gepubliceerd=eq.true&order=datum.asc`, {
+    headers: { apikey: KEY }
+  });
+  allItems = await res.json();
+  if (!allItems.length) {
+    document.getElementById('agenda-list').innerHTML = '<div style="padding:2rem 0;color:var(--text-muted);font-size:.9rem">Geen komende evenementen. Kijk later opnieuw.</div>';
+    return;
+  }
+  render(allItems);
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeType = btn.dataset.type;
+    render(allItems);
+  });
+});
+
+loadAgenda().catch(() => {
+  document.getElementById('agenda-list').innerHTML = '<div style="padding:2rem 0;color:var(--text-muted);font-size:.9rem">Kon agenda niet laden. Probeer later opnieuw.</div>';
+});
+  </script>
+</body>
+</html>

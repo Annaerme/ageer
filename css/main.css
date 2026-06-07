@@ -1,0 +1,130 @@
+/* Aegir Gent — main stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+@import './base/variables.css';
+@import './base/reset.css';
+@import './base/typography.css';
+
+@import './components/nav.css';
+@import './components/hero.css';
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/forms.css';
+@import './components/info.css';
+@import './components/article.css';
+@import './components/events.css';
+@import './components/footer.css';
+@import './components/dropdown.css';
+
+/* ─── LAYOUT ─────────────────────────────── */
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 2.5rem; }
+.page { padding-top: var(--nav-h); min-height: 100vh; }
+.section { padding: 7rem 0; }
+.section-sm { padding: 4rem 0; }
+.bg-off { background: var(--bg); }
+
+/* ─── GRIDS ──────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; }
+
+/* ─── STAT STRIP ─────────────────────────── */
+.stat-strip {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+.stat-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(240,180,41,.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.stat-strip-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.stat-block {
+  padding: 2.5rem 2.5rem;
+  border-right: 1px solid rgba(255,255,255,.06);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+.stat-block::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 2.5rem;
+  width: 32px; height: 2px;
+  background: var(--gold);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.stat-block:hover::after { opacity: 1; }
+.stat-block:last-child { border-right: none; }
+.stat-n {
+  font-family: var(--font-head);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-l { font-size: .82rem; color: rgba(255,255,255,.42); letter-spacing: .03em; margin-top: 2px; }
+
+/* ─── STEP LIST ──────────────────────────── */
+.step-list { display: flex; flex-direction: column; gap: 1rem; }
+.step { display: grid; grid-template-columns: 44px 1fr; gap: 1rem; align-items: start; }
+.step-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--navy); color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-family: var(--font-head); flex-shrink: 0;
+  font-size: .95rem;
+  border: 2px solid rgba(240,180,41,.25);
+}
+.step strong { display: block; font-size: .96rem; margin-bottom: .25rem; color: var(--text); }
+.step p { font-size: .86rem; margin: 0; }
+
+/* ─── BADGES ─────────────────────────────── */
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: .7rem; font-weight: 700; }
+.badge-success { background: #dcfce7; color: #166534; }
+.badge-pending { background: var(--gold-pale); color: var(--navy); }
+.badge-info { background: #dbeafe; color: #1d4ed8; }
+
+/* ─── SECTION DIVIDER ────────────────────── */
+.section-divider {
+  width: 48px; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+  border-radius: 2px;
+  margin: 1.25rem 0 2rem;
+}
+
+/* ─── RESPONSIVE ─────────────────────────── */
+@media (max-width: 1280px) {
+  .wrap { padding: 0 2rem; }
+}
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2,1fr); }
+  .stat-strip-inner { grid-template-columns: repeat(2,1fr); }
+  .stat-block:nth-child(2) { border-right: none; }
+  .section { padding: 5rem 0; }
+}
+@media (max-width: 768px) {
+  .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .section { padding: 4rem 0; }
+  .wrap { padding: 0 1.25rem; }
+  .stat-block { padding: 1.75rem 1.5rem; }
+  .stat-n { font-size: 2.2rem; }
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns:2fr 1fr"],
+  [style*="grid-template-columns: 2fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inschrijven | Aegir Gent</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page">
+
+    <section class="page-hero">
+      <div class="wrap">
+        <nav class="breadcrumb">
+
+          <a href="/pages/leden/">Leden</a><span>›</span>
+          <span aria-current="page">Inschrijven</span>
+        </nav>
+        <h1>Inschrijven</h1>
+        <p>Vul het formulier in om lid te worden van Aegir Gent. We nemen daarna contact met je op.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:4rem;align-items:start">
+
+          <div>
+            <div class="label">Nieuw lid</div>
+            <h2 style="margin-bottom:2rem">Inschrijvingsformulier</h2>
+
+            <div id="membership-success" class="form-success">
+              Bedankt! Je inschrijving is ontvangen. We nemen snel contact op via je e-mailadres.
+            </div>
+            <div id="membership-error" class="form-error"></div>
+
+            <form id="membership-form" class="form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="voornaam">Voornaam *</label>
+                  <input type="text" id="voornaam" name="voornaam" required placeholder="Jouw voornaam" />
+                </div>
+                <div class="form-group">
+                  <label for="naam">Naam *</label>
+                  <input type="text" id="naam" name="naam" required placeholder="Familienaam" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="geboortedatum">Geboortedatum</label>
+                  <input type="date" id="geboortedatum" name="geboortedatum" />
+                </div>
+                <div class="form-group">
+                  <label for="telefoon">Telefoon</label>
+                  <input type="tel" id="telefoon" name="telefoon" placeholder="0470 00 00 00" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">E-mailadres *</label>
+                <input type="email" id="email" name="email" required placeholder="jouw@email.be" />
+              </div>
+              <div class="form-group">
+                <label for="adres">Adres</label>
+                <input type="text" id="adres" name="adres" placeholder="Straat 1, 9000 Gent" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="type_lid">Type lidmaatschap</label>
+                  <select id="type_lid" name="type_lid">
+                    <option value="recreatief">Recreatief</option>
+                    <option value="competitie">Competitie</option>
+                    <option value="jeugd">Jeugd (&lt; 16 jaar)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="niveau">Niveaugroep (indien bekend)</label>
+                  <select id="niveau" name="niveau">
+                    <option value="">Weet ik nog niet</option>
+                    <option value="pinguïn">Pinguïn</option>
+                    <option value="otter">Otter</option>
+                    <option value="dolfijn">Dolfijn</option>
+                    <option value="orka">Orka</option>
+                    <option value="haai">Haai</option>
+                    <option value="nemo">Nemo</option>
+                    <option value="octopus">Octopus</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="opmerking">Opmerking</label>
+                <textarea id="opmerking" name="opmerking" rows="4" placeholder="Vragen, bijzonderheden, hoe heb je ons gevonden?"></textarea>
+              </div>
+              <div class="info-box" style="font-size:.83rem">
+                <strong>Privacy</strong>: je gegevens worden enkel gebruikt voor de verwerking van je inschrijving en je lidmaatschap bij Aegir Gent.
+                Raadpleeg ons <a href="/documents/privacy.pdf" target="_blank" style="color:var(--navy)">privacybeleid</a>.
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:13px">
+                Inschrijving indienen
+              </button>
+            </form>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div class="info-box" style="border-left:3px solid var(--gold)">
+              <h4>Wat daarna?</h4>
+              <div class="step-list" style="margin-top:.75rem">
+                <div class="step">
+                  <div class="step-num" style="width:28px;height:28px;font-size:.8rem">1</div>
+                  <div><strong style="font-size:.87rem">Bevestiging</strong><p style="font-size:.82rem">Je ontvangt een bevestigingsmail van ons.</p></div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="width:28px;height:28px;font-size:.8rem">2</div>
+                  <div><strong style="font-size:.87rem">Proeftraining</strong><p style="font-size:.82rem">Je kan een proeftraining komen volgen.</p></div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="width:28px;height:28px;font-size:.8rem">3</div>
+                  <div><strong style="font-size:.87rem">Betaling</strong><p style="font-size:.82rem">Na goedkeuring betaal je het lidgeld.</p></div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="width:28px;height:28px;font-size:.8rem">4</div>
+                  <div><strong style="font-size:.87rem">Welkom!</strong><p style="font-size:.82rem">Je krijgt toegang tot het ledenplatform en de trainingen.</p></div>
+                </div>
+              </div>
+            </div>
+            <div class="info-box">
+              <h4>Vragen?</h4>
+              <p style="font-size:.85rem;margin-top:.4rem">Contacteer Piet voor info over inschrijving en onthaal.</p>
+              <p style="font-size:.84rem;margin-top:.5rem"><a href="tel:0465094268" style="color:var(--navy);font-weight:600">0465 09 42 68</a></p>
+              <p style="font-size:.84rem"><a href="mailto:info@aegir-gent.be" style="color:var(--navy)">info@aegir-gent.be</a></p>
+            </div>
+            <div class="info-box">
+              <h4>Al lid?</h4>
+              <p style="font-size:.85rem;margin-top:.4rem">Vernieuw je lidmaatschap via AssistOnline.</p>
+              <a href="https://app.assistonline.eu" target="_blank" rel="noopener" class="btn btn-navy" style="margin-top:.75rem;font-size:.83rem">AssistOnline →</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div id="site-footer"></div>
+  <script src="/js/lib/supabase.js"></script>
+  <script src="/js/components/nav.js"></script>
+  <script src="/js/components/footer.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/forms/membership.js"></script>
+</body>
+</html>

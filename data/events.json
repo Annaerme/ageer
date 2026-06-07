@@ -1,0 +1,42 @@
+[
+  {
+    "id": "bijscholing-2026",
+    "datum": "2026-03-25",
+    "dag": "25",
+    "maand": "MRT",
+    "type": "Opleiding",
+    "titel": "Bijscholing 2026",
+    "omschrijving": "Verplichte bijscholing voor brevethoudende leden. Inschrijven via opleiding@aegir-gent.be.",
+    "aanmelden_vereist": true
+  },
+  {
+    "id": "training-wekelijks",
+    "datum": "wekelijks",
+    "dag": "wo",
+    "maand": "wekelijks",
+    "type": "Training",
+    "titel": "Wekelijkse training — Zwembad Strop",
+    "omschrijving": "Elke woensdag van 19:30 tot 21:00. Aanmelden via je persoonlijke link of QR-code.",
+    "aanmelden_vereist": true
+  },
+  {
+    "id": "redfed-competitie",
+    "datum": "2026-TBA",
+    "dag": "TBA",
+    "maand": "2026",
+    "type": "Competitie",
+    "titel": "RedFed competitiedagen",
+    "omschrijving": "Data worden gepubliceerd op redfed.be. Live uitslagen via onze LiveResults-pagina.",
+    "aanmelden_vereist": true
+  },
+  {
+    "id": "seizoenseinde-2026",
+    "datum": "2026-06",
+    "dag": "juni",
+    "maand": "2026",
+    "type": "Seizoensafsluiting",
+    "titel": "Einde trainingsseizoen",
+    "omschrijving": "Het trainingsseizoen loopt af in juni. Hervatting in september 2026.",
+    "aanmelden_vereist": false
+  }
+]

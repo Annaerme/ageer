@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Competitie | Aegir Gent</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page">
+
+    <section class="page-hero">
+      <div class="wrap">
+        <nav class="breadcrumb"><span aria-current="page">Competitie</span></nav>
+        <h1>Competitie</h1>
+        <p>Disciplines, clubrecords, wedstrijden en anti-dopingbeleid van Aegir Gent.</p>
+      </div>
+    </section>
+
+    <section class="section" id="reeks-a">
+      <div class="wrap">
+        <div class="label">Reeks A — Open water</div>
+        <h2 style="margin-bottom:.5rem">Disciplines reeks A</h2>
+        <p style="margin-bottom:2.5rem;max-width:600px">Reeks A-disciplines worden afgelegd in open water. Ze simuleren reële reddingssituaties.</p>
+        <div id="disciplines-a" class="grid-3" style="gap:1rem">
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">A1</div><h4>Beach sprint</h4><p style="font-size:.85rem;margin-top:.4rem">90 m sprint op het strand. Snelheid en explosiviteit.</p></div></div>
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">A2</div><h4>Wade</h4><p style="font-size:.85rem;margin-top:.4rem">Waden door ondiep water. Kracht en techniek bepalen het verschil.</p></div></div>
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">A3</div><h4>Beach flags</h4><p style="font-size:.85rem;margin-top:.4rem">Liggend starten, 20 m sprint en grip op een stok. Reflexen.</p></div></div>
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">A4</div><h4>Rescue tube rescue</h4><p style="font-size:.85rem;margin-top:.4rem">Zwemmen met rescuetube, slachtoffer redden en terugbrengen.</p></div></div>
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">A5</div><h4>Board rescue</h4><p style="font-size:.85rem;margin-top:.4rem">Rescue board gebruiken om een slachtoffer te redden.</p></div></div>
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">A6</div><h4>Surf ski rescue</h4><p style="font-size:.85rem;margin-top:.4rem">Kajakachtige surf ski inzetten voor een reddingsactie.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-off" id="reeks-b">
+      <div class="wrap">
+        <div class="label">Reeks B — Zwembad</div>
+        <h2 style="margin-bottom:.5rem">Disciplines reeks B</h2>
+        <p style="margin-bottom:2.5rem;max-width:600px">Reeks B-disciplines vinden plaats in het zwembad. Zwemtechniek gecombineerd met reddingshandelingen.</p>
+        <div id="disciplines-b" class="grid-3" style="gap:1rem">
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">B1</div><h4>50 m obstacle race</h4><p style="font-size:.85rem;margin-top:.4rem">Zwemmen over en onder obstakels. Wendbaarheid en snelheid.</p></div></div>
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">B2</div><h4>100 m manikin carry</h4><p style="font-size:.85rem;margin-top:.4rem">Duiken, dummy ophalen van de bodem en 100 m slepen.</p></div></div>
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">B3</div><h4>100 m manikin carry with fins</h4><p style="font-size:.85rem;margin-top:.4rem">Zelfde als B2 maar met flippers. Snelheid en kracht.</p></div></div>
+          <div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">B4</div><h4>200 m super lifesaver</h4><p style="font-size:.85rem;margin-top:.4rem">Combinatie van zwemmen, duiken, ophalen en slepen over 200 m.</p></div></div>
+        </div>
+      </div>
+    </section>
+    <script>
+    (()=>{
+      const SB='https://wlmehcbxeseigxwougwd.supabase.co';
+      const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+      const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      fetch(`${SB}/rest/v1/disciplines?order=reeks.asc,volgorde.asc`,{headers:{apikey:KEY}})
+        .then(r=>r.json())
+        .then(items=>{
+          if(!items||!items.length) return;
+          const card=i=>`<div class="card"><div class="card-body"><div class="card-tag" style="margin-bottom:.5rem">${esc(i.code)}</div><h4>${esc(i.naam)}</h4>${i.beschrijving?`<p style="font-size:.85rem;margin-top:.4rem">${esc(i.beschrijving)}</p>`:''}</div></div>`;
+          const a=items.filter(x=>x.reeks==='A'); const b=items.filter(x=>x.reeks==='B');
+          if(a.length) document.getElementById('disciplines-a').innerHTML=a.map(card).join('');
+          if(b.length) document.getElementById('disciplines-b').innerHTML=b.map(card).join('');
+        }).catch(()=>{});
+    })();
+    </script>
+
+    <section class="section" id="klassement">
+      <div class="wrap">
+        <div class="label">Beste prestaties</div>
+        <h2 style="margin-bottom:.5rem">Clubrecords</h2>
+        <p style="max-width:640px;margin-bottom:1.5rem;color:var(--text-muted);font-size:.9rem">Gegevens sinds aanpassing reglementering van de proeven.</p>
+
+        <!-- Filter tabs -->
+        <div style="display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap">
+          <button class="cr-tab active" data-type="ind">Individueel</button>
+          <button class="cr-tab" data-type="ploeg">Ploeg</button>
+        </div>
+
+        <div id="cr-container">
+          <div style="color:var(--text-muted);font-size:.9rem">Records laden…</div>
+        </div>
+
+        <div class="info-box" style="margin-top:2rem;max-width:640px">
+          <p style="font-size:.87rem">Record verbeterd? Mail <a href="mailto:competitie@aegir-gent.be" style="color:var(--navy)">competitie@aegir-gent.be</a> met je officiële tijd en wedstrijddatum.</p>
+        </div>
+      </div>
+    </section>
+    <style>
+      .cr-tab {
+        padding: .45rem 1.1rem; border-radius: 6px; border: 1.5px solid var(--border);
+        background: white; font-size: .82rem; font-weight: 600; cursor: pointer;
+        color: var(--text-mid); font-family: var(--font-body); transition: all .15s;
+      }
+      .cr-tab.active { background: var(--navy); color: white; border-color: var(--navy); }
+      .cr-tab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+      .cr-block { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+      .cr-head {
+        display: flex; align-items: center; gap: .75rem;
+        padding: .85rem 1.1rem; background: white; cursor: pointer;
+        border: none; width: 100%; text-align: left; font-family: var(--font-body);
+        transition: background .12s;
+      }
+      .cr-head:hover { background: var(--bg); }
+      .cr-head[aria-expanded="true"] { background: var(--navy); color: white; }
+      .cr-code {
+        font-family: var(--font-head); font-size: .8rem; font-weight: 700;
+        background: var(--gold); color: var(--navy); padding: 2px 8px; border-radius: 4px;
+        flex-shrink: 0;
+      }
+      .cr-head[aria-expanded="true"] .cr-code { background: rgba(240,180,41,.25); color: var(--gold); }
+      .cr-title { font-weight: 600; font-size: .9rem; flex: 1; }
+      .cr-count { font-size: .75rem; opacity: .5; flex-shrink: 0; }
+      .cr-chevron-btn { transition: transform .2s; opacity: .4; flex-shrink: 0; }
+      .cr-head[aria-expanded="true"] .cr-chevron-btn { transform: rotate(180deg); opacity: .7; }
+      .cr-body { display: none; }
+      .cr-body.open { display: block; }
+      .cr-gender-head {
+        padding: .5rem 1.1rem; background: var(--bg); font-size: .73rem;
+        font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+        color: var(--text-muted); border-top: 1px solid var(--border);
+      }
+      .cr-table { width: 100%; border-collapse: collapse; font-size: .82rem; table-layout: fixed; }
+      .cr-table col:nth-child(1) { width: 16%; }
+      .cr-table col:nth-child(2) { width: 11%; }
+      .cr-table col:nth-child(3) { width: 22%; }
+      .cr-table col:nth-child(4) { width: 12%; }
+      .cr-table col:nth-child(5) { width: 39%; }
+      .cr-table th {
+        padding: .45rem 1.1rem; background: var(--bg); font-size: .71rem;
+        font-weight: 700; text-transform: uppercase; letter-spacing: .07em;
+        color: var(--text-muted); text-align: left; border-bottom: 1px solid var(--border);
+      }
+      .cr-table tr:nth-child(even) td { background: rgba(244,245,248,.5); }
+      .cr-table td { padding: .55rem 1.1rem; border-bottom: 1px solid var(--border); vertical-align: top; overflow: hidden; text-overflow: ellipsis; }
+      .cr-table tr:last-child td { border-bottom: none; }
+      .cr-table td:nth-child(1) { color: var(--text-muted); font-size:.75rem; white-space:nowrap; }
+      .cr-table td:nth-child(2) { font-family: monospace; font-weight: 700; color: var(--navy); white-space:nowrap; }
+      .cr-table td:nth-child(3) { font-weight: 500; }
+      .cr-table td:nth-child(4) { color: var(--text-muted); font-size:.76rem; white-space:nowrap; }
+      .cr-table td:nth-child(5) { color: var(--text-muted); font-size:.76rem; }
+    </style>
+    <script>
+    (async () => {
+      const container = document.getElementById('cr-container');
+      const tabs = document.querySelectorAll('.cr-tab');
+      let records = [], activeType = 'ind';
+
+      try {
+        records = await fetch('/data/clubrecords.json').then(r => r.json());
+      } catch { container.textContent = 'Kon records niet laden.'; return; }
+
+      function render(type) {
+        const filtered = records.filter(r => r.type === type);
+        // Group by code+discipline
+        const groups = {};
+        filtered.forEach(r => {
+          const key = r.code + '|' + r.discipline;
+          if (!groups[key]) groups[key] = { code: r.code, discipline: r.discipline, records: [] };
+          groups[key].records.push(r);
+        });
+
+        container.innerHTML = Object.values(groups).map((g, gi) => {
+          // sub-group by geslacht
+          const byGender = {};
+          g.records.forEach(r => {
+            const gk = r.geslacht + '|' + r.bad;
+            if (!byGender[gk]) byGender[gk] = { geslacht: r.geslacht, bad: r.bad, rows: [] };
+            byGender[gk].rows.push(r);
+          });
+
+          const bodyHtml = Object.values(byGender).map(sg => {
+            const label = (sg.geslacht === 'V' ? 'Dames' : 'Heren') + ' — ' + sg.bad + 'm bad';
+            const rows = sg.rows.map(r =>
+              `<tr><td>${r.categorie}</td><td>${r.tijd}</td><td>${r.atleet}</td><td>${r.datum}</td><td>${r.wedstrijd}</td></tr>`
+            ).join('');
+            return `<div class="cr-gender-head">${label}</div>
+              <table class="cr-table">
+                <colgroup><col/><col/><col/><col/><col/></colgroup>
+                <thead><tr><th>Categorie</th><th>Tijd</th><th>Atleet</th><th>Datum</th><th>Wedstrijd</th></tr></thead>
+                <tbody>${rows}</tbody>
+              </table>`;
+          }).join('');
+
+          const id = 'cr-' + gi;
+          return `<div class="cr-block">
+            <button class="cr-head" aria-expanded="false" aria-controls="${id}" onclick="
+              const b=this;const open=b.getAttribute('aria-expanded')==='true';
+              b.setAttribute('aria-expanded',!open);
+              document.getElementById('${id}').classList.toggle('open',!open);
+            ">
+              <span class="cr-code">${g.code}</span>
+              <span class="cr-title">${g.discipline}</span>
+              <span class="cr-count">${g.records.length} records</span>
+              <svg class="cr-chevron-btn" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 1l4 4 4-4"/></svg>
+            </button>
+            <div class="cr-body" id="${id}">${bodyHtml}</div>
+          </div>`;
+        }).join('');
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          render(tab.dataset.type);
+        });
+      });
+
+      render('ind');
+    })();
+    </script>
+
+    <section class="section bg-off" id="wedstrijden">
+      <div class="wrap">
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:3rem;align-items:start">
+          <div>
+            <div class="label">Wedstrijden</div>
+            <h2>Competitiekalender</h2>
+            <p style="margin-top:.75rem;margin-bottom:2rem">De kalender wordt gepubliceerd door RedFed. Raadpleeg steeds de meest recente versie op <a href="http://www.redfed.be" target="_blank" rel="noopener" style="color:var(--navy)">redfed.be</a>.</p>
+            <div class="info-box" style="border-left:3px solid var(--gold)">
+              <h4>Live uitslagen</h4>
+              <p style="font-size:.87rem;margin-top:.4rem;margin-bottom:1rem">Volg de live-uitslagen tijdens wedstrijden via onze LiveResults-pagina.</p>
+              <a href="http://www.aegir-gent.be/LiveResults/" target="_blank" rel="noopener" class="btn btn-navy">Live uitslagen bekijken</a>
+            </div>
+          </div>
+          <div>
+            <div class="info-box">
+              <h4>Contacteer competitie</h4>
+              <p style="font-size:.87rem;margin-top:.4rem;margin-bottom:.75rem">Vragen over deelname of wedstrijdorganisatie?</p>
+              <a href="mailto:competitie@aegir-gent.be" style="color:var(--navy);font-weight:600;word-break:break-all;font-size:.87rem">competitie@aegir-gent.be</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="anti-doping">
+      <div class="wrap">
+        <div class="label">Anti-doping</div>
+        <h2 style="margin-bottom:.5rem">Dopingbeleid</h2>
+        <p style="max-width:680px;margin-bottom:2rem">Reddingszwemmen valt onder het Vlaamse en Belgische anti-dopingbeleid. Aegir Gent ondersteunt een sportieve en eerlijke reddingssport.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem">
+          <div class="info-box"><h4>NADO Belgium</h4><p style="font-size:.85rem;margin-top:.4rem">Het Nationaal Anti-Doping Agentschap Belgium. Meer info op <a href="http://www.nado.be" target="_blank" rel="noopener" style="color:var(--navy)">nado.be</a>.</p></div>
+          <div class="info-box"><h4>Verboden middelen</h4><p style="font-size:.85rem;margin-top:.4rem">Raadpleeg de verboden lijst via WADA of NADO. Medicijnen controleren via <a href="http://www.globalDRO.com" target="_blank" rel="noopener" style="color:var(--navy)">globalDRO.com</a>.</p></div>
+          <div class="info-box"><h4>TUE-aanvraag</h4><p style="font-size:.85rem;margin-top:.4rem">Medische noodzaak voor een verboden middel? Vraag tijdig een Therapeutic Use Exemption aan via NADO.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div id="site-footer"></div>
+  <script src="/js/components/nav.js"></script>
+  <script src="/js/components/footer.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

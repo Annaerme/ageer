@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beheer | Aegir Gent</title>
+  <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--navy:#1A2B50;--gold:#F0B429;--bg:#F4F6FA;--w:#fff;--bdr:#E2E5EC;--tx:#1A2030;--mid:#4B5568;--mut:#9CA3AF;--red:#E53E3E;--grn:#38A169;--f:'Plus Jakarta Sans',system-ui,sans-serif}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--f);background:var(--bg);color:var(--tx);min-height:100vh}
+    .lw{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:linear-gradient(135deg,#0f1c38,#1A2B50)}
+    .lc{background:var(--w);border-radius:16px;padding:3rem 2.5rem;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,.22)}
+    .llo{text-align:center;margin-bottom:1.75rem}.llo img{height:48px}
+    .lh{font-size:1.35rem;font-weight:700;color:var(--navy);text-align:center;margin-bottom:.3rem}
+    .ls{font-size:.86rem;color:var(--mid);text-align:center;margin-bottom:1.75rem}
+    .sh{display:grid;grid-template-rows:56px 1fr;min-height:100vh}
+    .tb{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:10}
+    .tbl{display:flex;align-items:center;gap:.65rem;color:white;font-weight:700;font-size:.95rem}
+    .tbl img{height:24px;filter:brightness(0) invert(1);opacity:.85}
+    .bd{display:grid;grid-template-columns:196px 1fr;height:calc(100vh - 56px)}
+    .sb{background:var(--w);border-right:1px solid var(--bdr);padding:.75rem 0;display:flex;flex-direction:column;gap:.1rem;overflow-y:auto}
+    .sn{display:flex;align-items:center;gap:.55rem;padding:.58rem 1.1rem;font-size:.86rem;font-weight:500;color:var(--mid);border:none;background:none;cursor:pointer;width:100%;text-align:left;text-decoration:none;transition:background .12s,color .12s}
+    .sn:hover,.sn.act{background:#EEF2FF;color:var(--navy)}
+    .sn svg{opacity:.55;flex-shrink:0}.sn.act svg{opacity:1}
+    .sd{height:1px;background:var(--bdr);margin:.4rem 1.1rem}
+    .mn{overflow-y:auto;padding:1.5rem}
+    .pn{background:var(--w);border-radius:12px;border:1px solid var(--bdr)}
+    .ph{padding:1rem 1.4rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+    .pt{font-size:.98rem;font-weight:700;color:var(--navy)}
+    .dt{width:100%;border-collapse:collapse;font-size:.86rem}
+    .dt th{text-align:left;padding:.58rem 1rem;font-weight:600;font-size:.73rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mid);border-bottom:2px solid var(--bdr)}
+    .dt td{padding:.62rem 1rem;border-bottom:1px solid var(--bdr);vertical-align:middle}
+    .dt tr:last-child td{border-bottom:none}
+    .dt tr:hover td{background:#FAFBFE}
+    .tg{display:inline-block;padding:.18rem .48rem;border-radius:5px;font-size:.72rem;font-weight:600;text-transform:capitalize}
+    .t-training{background:#EBF8FF;color:#2B6CB0}.t-competitie{background:#FEFCE8;color:#92400E}
+    .t-opleiding{background:#F0FFF4;color:#276749}.t-activiteit{background:#FFF5F5;color:#C53030}
+    .t-club{background:#FAF5FF;color:#553C9A}.t-trainingen{background:#EBF8FF;color:#2B6CB0}
+    .t-ja{background:#F0FFF4;color:#276749}.t-nee{background:#FFF5F5;color:#C53030}
+    .t-a{background:#EBF8FF;color:#2B6CB0}.t-b{background:#F0FFF4;color:#276749}
+    .s-nieuw{background:#FEF3C7;color:#92400E}.s-behandeld{background:#F0FFF4;color:#276749}
+    .s-afgewezen{background:#FFF5F5;color:#C53030}.s-bevestigd{background:#EBF8FF;color:#2B6CB0}
+    .s-afgehaald{background:#F0FFF4;color:#276749}
+    .btn{display:inline-flex;align-items:center;gap:.35rem;padding:.48rem .95rem;border-radius:7px;font-size:.84rem;font-weight:600;cursor:pointer;border:none;font-family:var(--f);transition:all .14s}
+    .bp{background:var(--navy);color:var(--gold);border:1.5px solid var(--gold)}.bp:hover{background:var(--gold);color:var(--navy)}
+    .bg{background:var(--w);color:var(--mid);border:1.5px solid var(--bdr)}.bg:hover{background:var(--bg);color:var(--navy)}
+    .bd2{background:#FFF5F5;color:var(--red);border:1.5px solid #FEB2B2}.bd2:hover{background:var(--red);color:var(--w)}
+    .bs{padding:.3rem .6rem;font-size:.77rem}
+    .blo{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2);font-size:.82rem}.blo:hover{background:rgba(255,255,255,.18);color:white}
+    .fg{display:flex;flex-direction:column;gap:.28rem;margin-bottom:.85rem}
+    .fg label{font-size:.8rem;font-weight:600;color:var(--mid)}
+    .fg input,.fg select,.fg textarea{border:1.5px solid var(--bdr);border-radius:7px;padding:.55rem .8rem;font-family:var(--f);font-size:.87rem;color:var(--tx);width:100%;transition:border-color .12s;background:var(--w)}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--navy)}
+    .fg textarea{resize:vertical;min-height:80px;line-height:1.5}
+    .fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .ck{display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.86rem;font-weight:500;color:var(--mid)}
+    .ck input[type=checkbox]{width:16px;height:16px;accent-color:var(--navy);cursor:pointer}
+    .fa{display:flex;gap:.6rem;padding-top:.5rem;border-top:1px solid var(--bdr);margin-top:.4rem}
+    .fp{background:var(--w);border-radius:12px;border:1px solid var(--bdr);margin-top:1.2rem}
+    .fph{padding:.9rem 1.4rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
+    .fpt{font-size:.92rem;font-weight:700;color:var(--navy)}
+    .fpb{padding:1.25rem 1.4rem}
+    .al{padding:.75rem 1rem;border-radius:7px;font-size:.86rem}
+    .ale{background:#FFF5F5;color:var(--red);border:1px solid #FEB2B2}
+    .alo{background:#F0FFF4;color:var(--grn);border:1px solid #9AE6B4}
+    .hi{display:none!important}
+    .ld{padding:2rem;text-align:center;color:var(--mid);font-size:.87rem}
+    .em{padding:2.5rem 1rem;text-align:center;color:var(--mid);font-size:.87rem}
+    .alw{margin:.65rem 1.4rem .2rem}
+    /* INBOX */
+    .itb{padding:.35rem .8rem;border-radius:6px;border:1.5px solid var(--bdr);background:var(--w);font-size:.82rem;font-weight:600;cursor:pointer;font-family:var(--f);color:var(--mid);display:inline-flex;align-items:center;gap:.35rem;transition:all .14s}
+    .itb.act{background:var(--navy);color:white;border-color:var(--navy)}
+    .itb:hover:not(.act){border-color:var(--navy);color:var(--navy)}
+    .ib{background:var(--red);color:white;border-radius:10px;padding:0 6px;font-size:.69rem;min-width:16px;text-align:center;line-height:16px;height:16px;display:inline-block}
+    .ib0{background:var(--mut)}
+    .ii{border-bottom:1px solid var(--bdr)}
+    .ii:last-child{border-bottom:none}
+    .ii-h{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.4rem;cursor:pointer;transition:background .12s;font-size:.87rem;flex-wrap:nowrap;min-width:0}
+    .ii-h:hover{background:var(--bg)}
+    .ii-dot{width:8px;height:8px;border-radius:50%;background:var(--navy);flex-shrink:0}
+    .ii.read .ii-dot{background:var(--mut);opacity:.4}
+    .ii-nm{font-weight:700;flex-shrink:0;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .ii-em{color:var(--mid);font-size:.81rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+    .ii-dt{color:var(--mut);font-size:.76rem;white-space:nowrap;flex-shrink:0}
+    .ii-body{padding:1rem 1.4rem 1.25rem 2.6rem;background:#FAFBFE;display:none;border-top:1px solid var(--bdr)}
+    .ii.open .ii-body{display:block}
+    .ii-field{display:grid;grid-template-columns:130px 1fr;gap:.3rem .75rem;padding:.28rem 0;border-bottom:1px solid var(--bdr);font-size:.86rem}
+    .ii-field:last-of-type{border:none}
+    .ii-fl{color:var(--mid);font-weight:600;font-size:.77rem;padding-top:.1rem}
+    .ii-msg{background:white;border:1px solid var(--bdr);border-radius:8px;padding:.85rem 1rem;margin:.75rem 0;font-size:.86rem;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+    .ii-acts{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap;align-items:center}
+    .ii-select{padding:.35rem .65rem;font-size:.82rem;border:1.5px solid var(--bdr);border-radius:7px;font-family:var(--f);background:var(--w);color:var(--tx);cursor:pointer}
+    /* FOTOS */
+    .fo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;padding:1.25rem 1.4rem}
+    .fo-item{border-radius:8px;overflow:hidden;border:1px solid var(--bdr);position:relative;background:var(--bg)}
+    .fo-img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+    .fo-name{font-size:.71rem;color:var(--mid);padding:.35rem .5rem;border-top:1px solid var(--bdr);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .fo-actions{position:absolute;top:.3rem;right:.3rem;display:none;gap:.25rem}
+    .fo-item:hover .fo-actions{display:flex}
+    /* SETTINGS */
+    .set-row{display:grid;grid-template-columns:210px 1fr auto;gap:.5rem 1rem;padding:.72rem 1.4rem;border-bottom:1px solid var(--bdr);align-items:center;font-size:.87rem}
+    .set-row:last-child{border-bottom:none}
+    .set-row:hover{background:var(--bg)}
+    .set-lbl{color:var(--mid);font-size:.79rem;font-weight:600}
+    .set-val{font-family:monospace;font-size:.85rem;word-break:break-all}
+    /* SIDEBAR BADGE */
+    .sn-badge{background:var(--red);color:white;border-radius:10px;padding:0 6px;font-size:.68rem;min-width:16px;text-align:center;line-height:16px;height:16px;display:inline-block;margin-left:auto}
+    .sn-badge.zero{background:transparent}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="sl" class="lw">
+  <div class="lc">
+    <div class="llo"><img src="/images/logo/logo.png" alt="Aegir" onerror="this.style.display='none'" /></div>
+    <h1 class="lh">Aegir Beheer</h1>
+    <p class="ls">Aanmelden met je beheerdersaccount</p>
+    <div id="lerr" class="al ale hi"></div>
+    <form id="lf">
+      <div class="fg"><label for="le">E-mailadres</label><input type="email" id="le" autocomplete="username" required placeholder="jouw@email.be" /></div>
+      <div class="fg"><label for="lp">Wachtwoord</label><input type="password" id="lp" autocomplete="current-password" required /></div>
+      <button type="submit" class="btn bp" style="width:100%;justify-content:center;padding:11px;margin-top:.4rem">Aanmelden →</button>
+    </form>
+    <p style="font-size:.76rem;color:var(--mid);text-align:center;margin-top:1rem">
+      Wachtwoord vergeten? <a href="https://supabase.com/dashboard/project/wlmehcbxeseigxwougwd/auth/users" target="_blank" style="color:var(--navy)">Supabase-dashboard</a>
+    </p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="sa" class="sh hi">
+  <header class="tb">
+    <div class="tbl"><img src="/images/logo/logo.png" alt="" /><span>Aegir Beheer</span></div>
+    <button class="btn blo" id="lout">Afmelden</button>
+  </header>
+  <div class="bd">
+    <aside class="sb">
+      <button class="sn act" data-s="inbox">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Inbox
+        <span class="sn-badge zero" id="inbox-sb-badge"></span>
+      </button>
+      <div class="sd"></div>
+      <button class="sn" data-s="agenda"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Agenda</button>
+      <button class="sn" data-s="nieuws"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Nieuws</button>
+      <button class="sn" data-s="shop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Shop</button>
+      <button class="sn" data-s="fotos"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Foto's</button>
+      <div class="sd"></div>
+      <button class="sn" data-s="bestuur"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Bestuur</button>
+      <button class="sn" data-s="partners"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Partners</button>
+      <button class="sn" data-s="ereleden"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>Ereleden</button>
+      <div class="sd"></div>
+      <button class="sn" data-s="disciplines"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4l3 3"/></svg>Disciplines</button>
+      <button class="sn" data-s="niveaugroepen"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Niveaugroepen</button>
+      <button class="sn" data-s="locaties"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Locaties</button>
+      <div class="sd"></div>
+      <button class="sn" data-s="stats"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Homepage stats</button>
+      <button class="sn" data-s="instellingen"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Instellingen</button>
+      <button class="sn" data-s="records"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Clubrecords</button>
+      <div class="sd"></div>
+      <a href="/" class="sn" style="text-decoration:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Website →</a>
+    </aside>
+    <main class="mn">
+
+      <!-- INBOX -->
+      <div id="s-inbox">
+        <div class="pn">
+          <div class="ph">
+            <span class="pt">Inbox</span>
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+              <button class="itb act" data-t="contact" id="itb-contact">Contact <span class="ib ib0" id="ct-badge"></span></button>
+              <button class="itb" data-t="inschrijvingen" id="itb-inschrijvingen">Inschrijvingen <span class="ib ib0" id="in-badge"></span></button>
+              <button class="itb" data-t="bestellingen" id="itb-bestellingen">Bestellingen <span class="ib ib0" id="be-badge"></span></button>
+            </div>
+          </div>
+          <div id="inbox-al"></div>
+          <div id="inbox-contact"><div class="ld">Laden…</div></div>
+          <div id="inbox-inschrijvingen" class="hi"><div class="ld">Laden…</div></div>
+          <div id="inbox-bestellingen" class="hi"><div class="ld">Laden…</div></div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div id="s-agenda" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Agenda-items</span><button class="btn bp bs" id="ag-new">+ Nieuw item</button></div>
+          <div id="ag-al"></div><div id="ag-li"><div class="ld">Laden…</div></div></div>
+        <div id="ag-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="ag-ft">Nieuw agenda-item</span><button class="btn bg bs" id="ag-can">Annuleren</button></div>
+          <div class="fpb"><form id="ag-form">
+            <input type="hidden" id="ag-id" />
+            <div class="fg"><label>Titel *</label><input type="text" id="ag-titel" required placeholder="Training / Bijscholing redder…" /></div>
+            <div class="fr"><div class="fg"><label>Datum *</label><input type="date" id="ag-datum" required /></div><div class="fg"><label>Einddatum (optioneel)</label><input type="date" id="ag-datum2" /></div></div>
+            <div class="fr"><div class="fg"><label>Tijdstip</label><input type="text" id="ag-tijd" placeholder="19:30–21:00" /></div><div class="fg"><label>Type</label><select id="ag-type"><option value="training">Training</option><option value="competitie">Competitie</option><option value="opleiding">Opleiding</option><option value="activiteit">Activiteit</option></select></div></div>
+            <div class="fg"><label>Locatie</label><input type="text" id="ag-loc" placeholder="Zwembad Strop, Gent" /></div>
+            <div class="fg"><label>Beschrijving</label><textarea id="ag-descr" rows="3" placeholder="Omschrijving…"></textarea></div>
+            <div class="fr"><div class="fg"><label>Doelgroep</label><input type="text" id="ag-doel" placeholder="Alle leden / Nemo, Otter…" /></div><div class="fg"><label>Inschrijvings-link</label><input type="url" id="ag-url" placeholder="https://redfed.be/…" /></div></div>
+            <div class="fg"><label class="ck"><input type="checkbox" id="ag-pub" checked /><span>Gepubliceerd</span></label></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="ag-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- NIEUWS -->
+      <div id="s-nieuws" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Nieuwsberichten</span><button class="btn bp bs" id="nw-new">+ Nieuw bericht</button></div>
+          <div id="nw-al"></div><div id="nw-li"><div class="ld">Laden…</div></div></div>
+        <div id="nw-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="nw-ft">Nieuw nieuwsbericht</span><button class="btn bg bs" id="nw-can">Annuleren</button></div>
+          <div class="fpb"><form id="nw-form">
+            <input type="hidden" id="nw-id" />
+            <div class="fg"><label>Titel *</label><input type="text" id="nw-titel" required placeholder="Bijscholingen 2026…" /></div>
+            <div class="fr"><div class="fg"><label>Datum *</label><input type="date" id="nw-datum" required /></div><div class="fg"><label>Categorie</label><select id="nw-cat"><option value="club">Club</option><option value="trainingen">Trainingen</option><option value="competitie">Competitie</option><option value="opleiding">Opleiding</option><option value="activiteit">Activiteit</option></select></div></div>
+            <div class="fg"><label>Samenvatting (voor de nieuwslijst)</label><input type="text" id="nw-sum" placeholder="Één zin die het artikel samenvat…" /></div>
+            <div class="fg"><label>Cover foto URL</label>
+              <div style="display:flex;gap:.5rem">
+                <input type="url" id="nw-foto" placeholder="https://…supabase.co/storage/…/foto.jpg" style="flex:1" />
+                <label class="btn bg bs" style="cursor:pointer;white-space:nowrap;align-self:flex-end">📤 Upload<input type="file" id="nw-foto-file" accept="image/*" style="display:none" /></label>
+              </div>
+            </div>
+            <div class="fg"><label>Volledige inhoud</label><textarea id="nw-body" rows="10" placeholder="Volledige tekst. Lege regel = nieuw paragraaf. **vet** voor vetgedrukt."></textarea></div>
+            <div class="fg"><label class="ck"><input type="checkbox" id="nw-pub" checked /><span>Gepubliceerd</span></label></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="nw-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- SHOP -->
+      <div id="s-shop" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Shop producten</span><button class="btn bp bs" id="sh-new">+ Nieuw product</button></div>
+          <div id="sh-al"></div><div id="sh-li"><div class="ld">Laden…</div></div></div>
+        <div id="sh-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="sh-ft">Nieuw product</span><button class="btn bg bs" id="sh-can">Annuleren</button></div>
+          <div class="fpb"><form id="sh-form">
+            <input type="hidden" id="sh-id" />
+            <div class="fr"><div class="fg"><label>Naam *</label><input type="text" id="sh-naam" required placeholder="T-shirt (basic)" /></div><div class="fg"><label>Slug</label><input type="text" id="sh-slug" placeholder="tshirt-basic" /></div></div>
+            <div class="fg"><label>Beschrijving</label><textarea id="sh-descr" rows="3"></textarea></div>
+            <div class="fr"><div class="fg"><label>Prijs (€) *</label><input type="number" id="sh-prijs" required min="0" step="0.01" placeholder="15.00" /></div><div class="fg"><label>Maten (kommagescheiden)</label><input type="text" id="sh-maten" placeholder="XS, S, M, L, XL, XXL" /></div></div>
+            <div class="fg"><label>Foto</label>
+              <div style="display:flex;gap:.5rem">
+                <input type="url" id="sh-foto" placeholder="https://…supabase.co/storage/…/foto.jpg" style="flex:1" />
+                <label class="btn bg bs" style="cursor:pointer;white-space:nowrap;align-self:flex-end">📤 Upload<input type="file" id="sh-foto-file" accept="image/*" style="display:none" /></label>
+              </div>
+            </div>
+            <div class="fr"><div class="fg"><label>Volgorde</label><input type="number" id="sh-volgorde" placeholder="10" min="0" /></div><div class="fg" style="justify-content:flex-end;padding-top:1.4rem"><label class="ck"><input type="checkbox" id="sh-beschikbaar" checked /><span>Beschikbaar</span></label></div></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="sh-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- FOTOS -->
+      <div id="s-fotos" class="hi">
+        <div class="pn">
+          <div class="ph">
+            <span class="pt">Foto's &amp; media</span>
+            <label class="btn bp bs" style="cursor:pointer">📤 Foto's uploaden<input type="file" id="foto-file" accept="image/*" multiple style="display:none" /></label>
+          </div>
+          <div id="foto-al"></div>
+          <div id="foto-progress" class="hi" style="padding:.5rem 1.4rem"></div>
+          <div id="foto-grid" class="fo-grid"><div class="ld">Laden…</div></div>
+        </div>
+      </div>
+
+      <!-- BESTUUR -->
+      <div id="s-bestuur" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Bestuur</span><button class="btn bp bs" id="bs-new">+ Nieuw lid</button></div>
+          <div id="bs-al"></div><div id="bs-li"><div class="ld">Laden…</div></div></div>
+        <div id="bs-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="bs-ft">Nieuw bestuurslid</span><button class="btn bg bs" id="bs-can">Annuleren</button></div>
+          <div class="fpb"><form id="bs-form">
+            <input type="hidden" id="bs-id" />
+            <div class="fg"><label>Naam *</label><input type="text" id="bs-naam" required placeholder="Voornaam Naam" /></div>
+            <div class="fr"><div class="fg"><label>Functie</label><input type="text" id="bs-func" placeholder="Voorzitter / Secretaris…" /></div><div class="fg"><label>Extra functies</label><input type="text" id="bs-extra" placeholder="Jeugd · Communicatie…" /></div></div>
+            <div class="fr"><div class="fg"><label>E-mail</label><input type="email" id="bs-email" placeholder="naam@aegir-gent.be" /></div><div class="fg"><label>Telefoon</label><input type="tel" id="bs-tel" placeholder="0465 09 42 68" /></div></div>
+            <div class="fr"><div class="fg"><label>Volgorde</label><input type="number" id="bs-volgorde" placeholder="10" min="0" /></div><div class="fg" style="justify-content:flex-end;padding-top:1.4rem"><label class="ck"><input type="checkbox" id="bs-actief" checked /><span>Actief</span></label></div></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="bs-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- PARTNERS -->
+      <div id="s-partners" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Partners &amp; sponsors</span><button class="btn bp bs" id="pt-new">+ Nieuw partner</button></div>
+          <div id="pt-al"></div><div id="pt-li"><div class="ld">Laden…</div></div></div>
+        <div id="pt-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="pt-ft">Nieuwe partner</span><button class="btn bg bs" id="pt-can">Annuleren</button></div>
+          <div class="fpb"><form id="pt-form">
+            <input type="hidden" id="pt-id" />
+            <div class="fg"><label>Naam *</label><input type="text" id="pt-naam" required placeholder="Sportdienst Stad Gent" /></div>
+            <div class="fr"><div class="fg"><label>Website</label><input type="url" id="pt-web" placeholder="https://www.gent.be/sport" /></div><div class="fg"><label>Beschrijving / label</label><input type="text" id="pt-descr" placeholder="Subsidies en infrastructuur" /></div></div>
+            <div class="fr"><div class="fg"><label>Volgorde</label><input type="number" id="pt-volgorde" placeholder="10" min="0" /></div><div class="fg" style="justify-content:flex-end;padding-top:1.4rem"><label class="ck"><input type="checkbox" id="pt-actief" checked /><span>Actief</span></label></div></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="pt-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- ERELEDEN -->
+      <div id="s-ereleden" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Ereleden</span><button class="btn bp bs" id="er-new">+ Nieuw erelid</button></div>
+          <div id="er-al"></div><div id="er-li"><div class="ld">Laden…</div></div></div>
+        <div id="er-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="er-ft">Nieuw erelid</span><button class="btn bg bs" id="er-can">Annuleren</button></div>
+          <div class="fpb"><form id="er-form">
+            <input type="hidden" id="er-id" />
+            <div class="fg"><label>Naam *</label><input type="text" id="er-naam" required placeholder="Voornaam Naam" /></div>
+            <div class="fr"><div class="fg"><label>Jaar toekenning</label><input type="number" id="er-jaar" placeholder="2025" min="1900" max="2100" /></div><div class="fg"><label>Notitie (bv. † 2015)</label><input type="text" id="er-nota" placeholder="† 2015" /></div></div>
+            <div class="fg"><label>Volgorde</label><input type="number" id="er-volgorde" placeholder="10" min="0" /></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="er-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- DISCIPLINES -->
+      <div id="s-disciplines" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Disciplines (competitie)</span><button class="btn bp bs" id="di-new">+ Nieuwe discipline</button></div>
+          <div id="di-al"></div><div id="di-li"><div class="ld">Laden…</div></div></div>
+        <div id="di-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="di-ft">Nieuwe discipline</span><button class="btn bg bs" id="di-can">Annuleren</button></div>
+          <div class="fpb"><form id="di-form">
+            <input type="hidden" id="di-id" />
+            <div class="fr"><div class="fg"><label>Code *</label><input type="text" id="di-code" required placeholder="A1 / B3…" /></div><div class="fg"><label>Reeks</label><select id="di-reeks"><option value="A">Reeks A – Open water</option><option value="B">Reeks B – Zwembad</option></select></div></div>
+            <div class="fg"><label>Naam *</label><input type="text" id="di-naam" required placeholder="Beach sprint" /></div>
+            <div class="fg"><label>Beschrijving</label><textarea id="di-descr" rows="3" placeholder="Korte omschrijving van de discipline…"></textarea></div>
+            <div class="fg"><label>Volgorde</label><input type="number" id="di-volgorde" placeholder="10" min="0" /></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="di-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- NIVEAUGROEPEN -->
+      <div id="s-niveaugroepen" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Niveaugroepen (trainingen)</span><button class="btn bp bs" id="ng-new">+ Nieuwe groep</button></div>
+          <div id="ng-al"></div><div id="ng-li"><div class="ld">Laden…</div></div></div>
+        <div id="ng-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="ng-ft">Nieuwe niveaugroep</span><button class="btn bg bs" id="ng-can">Annuleren</button></div>
+          <div class="fpb"><form id="ng-form">
+            <input type="hidden" id="ng-id" />
+            <div class="fr"><div class="fg"><label>Naam *</label><input type="text" id="ng-naam" required placeholder="Pinguïn / Haai…" /></div><div class="fg"><label>Emoji</label><input type="text" id="ng-emoji" placeholder="🐧" /></div></div>
+            <div class="fr"><div class="fg"><label>Baan</label><input type="text" id="ng-baan" placeholder="Baan 1 / Baan 4–5…" /></div><div class="fg"><label>Trainer(s)</label><input type="text" id="ng-trainer" placeholder="Pascal / Julie &amp; Ben…" /></div></div>
+            <div class="fg"><label>Beschrijving</label><textarea id="ng-descr" rows="3" placeholder="Korte beschrijving van de groep…"></textarea></div>
+            <div class="fr"><div class="fg"><label>Volgorde</label><input type="number" id="ng-volgorde" placeholder="10" min="0" /></div><div class="fg" style="justify-content:flex-end;padding-top:1.4rem"><label class="ck"><input type="checkbox" id="ng-actief" checked /><span>Actief</span></label></div></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="ng-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- LOCATIES -->
+      <div id="s-locaties" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Trainingslocaties</span><button class="btn bp bs" id="lc-new">+ Nieuwe locatie</button></div>
+          <div id="lc-al"></div><div id="lc-li"><div class="ld">Laden…</div></div></div>
+        <div id="lc-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="lc-ft">Nieuwe locatie</span><button class="btn bg bs" id="lc-can">Annuleren</button></div>
+          <div class="fpb"><form id="lc-form">
+            <input type="hidden" id="lc-id" />
+            <div class="fg"><label>Naam *</label><input type="text" id="lc-naam" required placeholder="Zwembad Strop" /></div>
+            <div class="fg"><label>Adres</label><input type="text" id="lc-adres" placeholder="Stropstraat, 9000 Gent" /></div>
+            <div class="fr"><div class="fg"><label>Dag</label><input type="text" id="lc-dag" placeholder="Woensdag" /></div><div class="fg"><label>Tijdstip</label><input type="text" id="lc-tijd" placeholder="19:30 – 21:00" /></div></div>
+            <div class="fr"><div class="fg"><label>Seizoen</label><input type="text" id="lc-seizoen" placeholder="September – juni" /></div><div class="fg"><label>Gebruik</label><input type="text" id="lc-gebruik" placeholder="Wekelijkse training" /></div></div>
+            <div class="fg"><label>Extra info</label><textarea id="lc-info" rows="3" placeholder="Parkeerinformatie…"></textarea></div>
+            <div class="fr"><div class="fg"><label>Volgorde</label><input type="number" id="lc-volgorde" placeholder="10" min="0" /></div><div class="fg" style="justify-content:flex-end;padding-top:1.4rem"><label class="ck"><input type="checkbox" id="lc-actief" checked /><span>Actief</span></label></div></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="lc-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- HOMEPAGE STATS -->
+      <div id="s-stats" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Homepage statistieken</span><button class="btn bp bs" id="st-new">+ Nieuwe stat</button></div>
+          <div id="st-al"></div><div id="st-li"><div class="ld">Laden…</div></div></div>
+        <div id="st-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="st-ft">Nieuwe statistiek</span><button class="btn bg bs" id="st-can">Annuleren</button></div>
+          <div class="fpb"><form id="st-form">
+            <input type="hidden" id="st-id" />
+            <div class="fr"><div class="fg"><label>Waarde *</label><input type="text" id="st-waarde" required placeholder="40+ / 100+ / 7…" /></div><div class="fg"><label>Label *</label><input type="text" id="st-label" required placeholder="Jaar actief / Leden…" /></div></div>
+            <div class="fg"><label>Volgorde</label><input type="number" id="st-volgorde" placeholder="1" min="0" /></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="st-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- INSTELLINGEN -->
+      <div id="s-instellingen" class="hi">
+        <div class="pn">
+          <div class="ph"><span class="pt">Websiteinstellingen</span><p style="font-size:.8rem;color:var(--mid);margin-top:.1rem">IBAN, e-mails, teksten en andere configuratie</p></div>
+          <div id="set-al"></div>
+          <div id="set-list"><div class="ld">Laden…</div></div>
+        </div>
+      </div>
+
+      <!-- CLUBRECORDS -->
+      <div id="s-records" class="hi">
+        <div class="pn">
+          <div class="ph"><span class="pt">Clubrecords</span>
+            <div style="display:flex;gap:.5rem"><button class="btn bg bs" id="rc-import">Importeer uit JSON</button><button class="btn bp bs" id="rc-new">+ Nieuw record</button></div>
+          </div>
+          <div id="rc-al"></div><div id="rc-li"><div class="ld">Laden…</div></div>
+        </div>
+        <div id="rc-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="rc-ft">Nieuw clubrecord</span><button class="btn bg bs" id="rc-can">Annuleren</button></div>
+          <div class="fpb"><form id="rc-form">
+            <input type="hidden" id="rc-id" />
+            <div class="fr"><div class="fg"><label>Code</label><select id="rc-code"><option>A1</option><option>A2</option><option>A3</option><option>A4</option><option>A5</option><option>A6</option><option>A7</option><option>B1</option><option>B2</option><option>B3</option><option>B4</option><option>B5</option></select></div><div class="fg"><label>Type</label><select id="rc-type"><option value="ind">Individueel</option><option value="ploeg">Ploeg</option></select></div></div>
+            <div class="fg"><label>Discipline *</label><input type="text" id="rc-disc" required placeholder="100m Hinderniszwemmen" /></div>
+            <div class="fr"><div class="fg"><label>Bad (m)</label><select id="rc-bad"><option value="25">25</option><option value="50">50</option></select></div><div class="fg"><label>Geslacht</label><select id="rc-gesl"><option value="V">V (Dames)</option><option value="M">M (Heren)</option></select></div></div>
+            <div class="fr"><div class="fg"><label>Categorie</label><input type="text" id="rc-cat" placeholder="Open / Junioren / M40…" /></div><div class="fg"><label>Tijd *</label><input type="text" id="rc-tijd" required placeholder="01:22,09" /></div></div>
+            <div class="fg"><label>Atleet</label><input type="text" id="rc-atleet" placeholder="Naam Atleet" /></div>
+            <div class="fr"><div class="fg"><label>Datum</label><input type="text" id="rc-datum" placeholder="15/04/2023" /></div><div class="fg"><label>Wedstrijd</label><input type="text" id="rc-wedstrijd" placeholder="VK Brugge, Brugge" /></div></div>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="rc-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+const SB  = 'https://wlmehcbxeseigxwougwd.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+const tok  = () => sessionStorage.getItem('ag_tok');
+const g    = id => document.getElementById(id);
+
+// ── AUTH ────────────────────────────────────────────────────────
+async function sbAuth(email, pw) {
+  const r = await fetch(`${SB}/auth/v1/token?grant_type=password`, {
+    method:'POST', headers:{ apikey:KEY, 'Content-Type':'application/json' },
+    body: JSON.stringify({ email, password:pw })
+  });
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.error_description || d.message || 'Aanmelden mislukt');
+  sessionStorage.setItem('ag_tok', d.access_token);
+}
+
+async function api(method, table, body, qs='') {
+  const r = await fetch(`${SB}/rest/v1/${table}${qs}`, {
+    method, headers:{ apikey:KEY, Authorization:`Bearer ${tok()}`, 'Content-Type':'application/json', Prefer:'return=representation' },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (r.status===204) return null;
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.message || d.error || `HTTP ${r.status}`);
+  return d;
+}
+
+// ── HELPERS ─────────────────────────────────────────────────────
+const fmt  = s => { if(!s) return ''; const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; };
+const esc  = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const tg   = (v,cls) => `<span class="tg ${cls||'t-'+v}">${esc(v)}</span>`;
+const jnl  = s => s?.join ? s.join(', ') : (s||'—');
+const al   = (id,msg,ok) => { const e=g(id); if(!e) return; e.innerHTML=`<div class="al ${ok?'alo':'ale'} alw">${esc(msg)}</div>`; setTimeout(()=>{if(e)e.innerHTML=''},4500); };
+const fmtDT = s => { if(!s) return ''; const d=new Date(s); return d.toLocaleDateString('nl-BE',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('nl-BE',{hour:'2-digit',minute:'2-digit'}); };
+
+// ── GENERIC SECTION CRUD ─────────────────────────────────────────
+let DATA = { agenda:{}, nieuws:{}, shop:{}, bestuur:{}, partners:{}, ereleden:{}, records:{}, disciplines:{}, niveaugroepen:{}, locaties:{}, stats:{} };
+
+async function loadSec(sec) {
+  const cfg = SECS[sec];
+  g(`${cfg.p}-li`).innerHTML = '<div class="ld">Laden…</div>';
+  try {
+    DATA[sec] = await api('GET', cfg.table, null, cfg.qs || '?order='+cfg.order);
+    cfg.render();
+  } catch(e) { g(`${cfg.p}-li`).innerHTML = `<div class="al ale alw">${esc(e.message)}</div>`; }
+}
+
+async function saveSec(sec, id, body) {
+  const cfg = SECS[sec];
+  if (id) {
+    const upd = await api('PATCH', cfg.table, body, `?id=eq.${id}`);
+    const idx = DATA[sec].findIndex(i=>i.id===id);
+    if (upd && upd[0]) DATA[sec][idx] = upd[0];
+    al(`${cfg.p}-al`, 'Opgeslagen!', true);
+  } else {
+    const cr = await api('POST', cfg.table, body);
+    if (cr && cr[0]) DATA[sec].unshift(cr[0]);
+    al(`${cfg.p}-al`, 'Toegevoegd!', true);
+  }
+  cfg.render(); hideFP(sec);
+}
+
+async function delSec(sec, id) {
+  if (!confirm('Definitief verwijderen?')) return;
+  const cfg = SECS[sec];
+  try {
+    await api('DELETE', cfg.table, null, `?id=eq.${id}`);
+    DATA[sec] = DATA[sec].filter(i=>i.id!==id);
+    cfg.render();
+    al(`${cfg.p}-al`, 'Verwijderd.', true);
+  } catch(e) { al(`${cfg.p}-al`, e.message, false); }
+}
+
+function hideFP(sec) { const cfg=SECS[sec]; g(`${cfg.p}-fp`).classList.add('hi'); cfg.reset(); }
+function showFP(sec) { const cfg=SECS[sec]; g(`${cfg.p}-fp`).classList.remove('hi'); g(`${cfg.p}-fp`).scrollIntoView({behavior:'smooth',block:'nearest'}); }
+function actBtns(p, id) { return `<button class="btn bg bs" onclick="doEdit('${p}','${id}')">Bewerken</button> <button class="btn bd2 bs" onclick="doDelete('${p}','${id}')">Verw.</button>`; }
+function doEdit(sec, id) { SECS[sec].edit(id); }
+function doDelete(sec, id) { delSec(sec, id); }
+
+// ── SECS CONFIG ──────────────────────────────────────────────────
+const SECS = {
+  agenda: {
+    p:'ag', table:'agenda_items', order:'datum.desc',
+    render() {
+      const el = g('ag-li');
+      if (!DATA.agenda.length) { el.innerHTML='<div class="em">Geen items.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Datum</th><th>Type</th><th>Titel</th><th>Zichtbaar</th><th></th></tr></thead><tbody>
+      ${DATA.agenda.map(i=>`<tr><td style="white-space:nowrap">${fmt(i.datum)}</td><td>${tg(i.type)}</td>
+      <td><strong>${esc(i.titel)}</strong>${i.tijdstip?`<br><small style="color:var(--mid)">${esc(i.tijdstip)}</small>`:''}</td>
+      <td><span class="tg ${i.gepubliceerd?'t-ja':'t-nee'}">${i.gepubliceerd?'Ja':'Nee'}</span></td>
+      <td style="white-space:nowrap">${actBtns('agenda',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.agenda.find(x=>x.id===id); if(!i) return;
+      g('ag-id').value=i.id; g('ag-titel').value=i.titel||''; g('ag-datum').value=i.datum||'';
+      g('ag-datum2').value=i.datum_einde||''; g('ag-tijd').value=i.tijdstip||'';
+      g('ag-type').value=i.type||'training'; g('ag-loc').value=i.locatie||'';
+      g('ag-descr').value=i.beschrijving||''; g('ag-doel').value=i.doelgroep||'';
+      g('ag-url').value=i.inschrijven_url||''; g('ag-pub').checked=i.gepubliceerd!==false;
+      g('ag-ft').textContent='Item bewerken'; showFP('agenda');
+    },
+    reset() { g('ag-form').reset(); g('ag-id').value=''; g('ag-ft').textContent='Nieuw agenda-item'; g('ag-pub').checked=true; }
+  },
+  nieuws: {
+    p:'nw', table:'nieuws_items', order:'datum.desc',
+    render() {
+      const el = g('nw-li');
+      if (!DATA.nieuws.length) { el.innerHTML='<div class="em">Geen berichten.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Datum</th><th>Cat.</th><th>Titel</th><th>Zichtbaar</th><th></th></tr></thead><tbody>
+      ${DATA.nieuws.map(i=>`<tr><td style="white-space:nowrap">${fmt(i.datum)}</td><td>${tg(i.categorie,'t-'+i.categorie)}</td>
+      <td><strong>${esc(i.titel)}</strong>${i.samenvatting?`<br><small style="color:var(--mid);max-width:300px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(i.samenvatting)}</small>`:''}</td>
+      <td><span class="tg ${i.gepubliceerd?'t-ja':'t-nee'}">${i.gepubliceerd?'Ja':'Nee'}</span></td>
+      <td style="white-space:nowrap">${actBtns('nieuws',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.nieuws.find(x=>x.id===id); if(!i) return;
+      g('nw-id').value=i.id; g('nw-titel').value=i.titel||''; g('nw-datum').value=i.datum||'';
+      g('nw-cat').value=i.categorie||'club'; g('nw-sum').value=i.samenvatting||'';
+      g('nw-foto').value=i.foto_url||''; g('nw-body').value=i.inhoud||'';
+      g('nw-pub').checked=i.gepubliceerd!==false; g('nw-ft').textContent='Bericht bewerken'; showFP('nieuws');
+    },
+    reset() { g('nw-form').reset(); g('nw-id').value=''; g('nw-ft').textContent='Nieuw nieuwsbericht'; g('nw-pub').checked=true; }
+  },
+  shop: {
+    p:'sh', table:'shop_producten', order:'volgorde.asc',
+    render() {
+      const el = g('sh-li');
+      if (!DATA.shop.length) { el.innerHTML='<div class="em">Geen producten.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Naam</th><th>Prijs</th><th>Maten</th><th>Beschikbaar</th><th></th></tr></thead><tbody>
+      ${DATA.shop.map(i=>`<tr>
+      <td><strong>${esc(i.naam)}</strong><br><small style="color:var(--mid)">${esc(i.slug)}</small></td>
+      <td style="font-weight:700;color:var(--navy)">€${Number(i.prijs).toFixed(2)}</td>
+      <td style="font-size:.82rem;color:var(--mid)">${jnl(i.maten)}</td>
+      <td><span class="tg ${i.beschikbaar?'t-ja':'t-nee'}">${i.beschikbaar?'Ja':'Nee'}</span></td>
+      <td style="white-space:nowrap">${actBtns('shop',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.shop.find(x=>x.id===id); if(!i) return;
+      g('sh-id').value=i.id; g('sh-naam').value=i.naam||''; g('sh-slug').value=i.slug||'';
+      g('sh-descr').value=i.beschrijving||''; g('sh-prijs').value=i.prijs||'';
+      g('sh-maten').value=i.maten?i.maten.join(', '):''; g('sh-foto').value=i.foto_url||'';
+      g('sh-volgorde').value=i.volgorde||0; g('sh-beschikbaar').checked=i.beschikbaar!==false;
+      g('sh-ft').textContent='Product bewerken'; showFP('shop');
+    },
+    reset() { g('sh-form').reset(); g('sh-id').value=''; g('sh-ft').textContent='Nieuw product'; g('sh-beschikbaar').checked=true; }
+  },
+  bestuur: {
+    p:'bs', table:'bestuur', order:'volgorde.asc',
+    render() {
+      const el = g('bs-li');
+      if (!DATA.bestuur.length) { el.innerHTML='<div class="em">Geen bestuursleden.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Naam</th><th>Functie</th><th>Contact</th><th>Actief</th><th></th></tr></thead><tbody>
+      ${DATA.bestuur.map(i=>`<tr><td><strong>${esc(i.naam)}</strong></td>
+      <td>${esc(i.functie||'—')}${i.extra_functies?`<br><small style="color:var(--mid)">${esc(i.extra_functies)}</small>`:''}</td>
+      <td style="font-size:.82rem">${i.email?`<a href="mailto:${esc(i.email)}" style="color:var(--navy)">${esc(i.email)}</a>`:''} ${i.telefoon?`<br>${esc(i.telefoon)}`:''}</td>
+      <td><span class="tg ${i.actief?'t-ja':'t-nee'}">${i.actief?'Ja':'Nee'}</span></td>
+      <td style="white-space:nowrap">${actBtns('bestuur',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.bestuur.find(x=>x.id===id); if(!i) return;
+      g('bs-id').value=i.id; g('bs-naam').value=i.naam||''; g('bs-func').value=i.functie||'';
+      g('bs-extra').value=i.extra_functies||''; g('bs-email').value=i.email||'';
+      g('bs-tel').value=i.telefoon||''; g('bs-volgorde').value=i.volgorde||0;
+      g('bs-actief').checked=i.actief!==false; g('bs-ft').textContent='Bestuurslid bewerken'; showFP('bestuur');
+    },
+    reset() { g('bs-form').reset(); g('bs-id').value=''; g('bs-ft').textContent='Nieuw bestuurslid'; g('bs-actief').checked=true; }
+  },
+  partners: {
+    p:'pt', table:'partners', order:'volgorde.asc',
+    render() {
+      const el = g('pt-li');
+      if (!DATA.partners.length) { el.innerHTML='<div class="em">Geen partners.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Naam</th><th>Website</th><th>Beschrijving</th><th>Actief</th><th></th></tr></thead><tbody>
+      ${DATA.partners.map(i=>`<tr><td><strong>${esc(i.naam)}</strong></td>
+      <td style="font-size:.82rem">${i.website?`<a href="${esc(i.website)}" target="_blank" style="color:var(--navy)">${esc(i.website)}</a>`:'—'}</td>
+      <td style="color:var(--mid);font-size:.83rem">${esc(i.beschrijving||'—')}</td>
+      <td><span class="tg ${i.actief?'t-ja':'t-nee'}">${i.actief?'Ja':'Nee'}</span></td>
+      <td style="white-space:nowrap">${actBtns('partners',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.partners.find(x=>x.id===id); if(!i) return;
+      g('pt-id').value=i.id; g('pt-naam').value=i.naam||''; g('pt-web').value=i.website||'';
+      g('pt-descr').value=i.beschrijving||''; g('pt-volgorde').value=i.volgorde||0;
+      g('pt-actief').checked=i.actief!==false; g('pt-ft').textContent='Partner bewerken'; showFP('partners');
+    },
+    reset() { g('pt-form').reset(); g('pt-id').value=''; g('pt-ft').textContent='Nieuwe partner'; g('pt-actief').checked=true; }
+  },
+  ereleden: {
+    p:'er', table:'ereleden', order:'volgorde.asc',
+    render() {
+      const el = g('er-li');
+      if (!DATA.ereleden.length) { el.innerHTML='<div class="em">Geen ereleden.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Naam</th><th>Jaar</th><th>Notitie</th><th></th></tr></thead><tbody>
+      ${DATA.ereleden.map(i=>`<tr><td><strong>${esc(i.naam)}</strong></td>
+      <td>${esc(i.jaar||'—')}</td><td style="color:var(--mid)">${esc(i.notitie||'—')}</td>
+      <td style="white-space:nowrap">${actBtns('ereleden',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.ereleden.find(x=>x.id===id); if(!i) return;
+      g('er-id').value=i.id; g('er-naam').value=i.naam||''; g('er-jaar').value=i.jaar||'';
+      g('er-nota').value=i.notitie||''; g('er-volgorde').value=i.volgorde||0;
+      g('er-ft').textContent='Erelid bewerken'; showFP('ereleden');
+    },
+    reset() { g('er-form').reset(); g('er-id').value=''; g('er-ft').textContent='Nieuw erelid'; }
+  },
+  disciplines: {
+    p:'di', table:'disciplines', order:'reeks.asc,volgorde.asc',
+    render() {
+      const el = g('di-li');
+      if (!DATA.disciplines.length) { el.innerHTML='<div class="em">Geen disciplines.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Code</th><th>Reeks</th><th>Naam</th><th>Beschrijving</th><th></th></tr></thead><tbody>
+      ${DATA.disciplines.map(i=>`<tr>
+      <td><strong>${esc(i.code)}</strong></td>
+      <td>${tg(i.reeks,'t-'+i.reeks.toLowerCase())}</td>
+      <td>${esc(i.naam)}</td>
+      <td style="font-size:.82rem;color:var(--mid);max-width:260px">${esc(i.beschrijving||'—')}</td>
+      <td style="white-space:nowrap">${actBtns('disciplines',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.disciplines.find(x=>x.id===id); if(!i) return;
+      g('di-id').value=i.id; g('di-code').value=i.code||''; g('di-reeks').value=i.reeks||'A';
+      g('di-naam').value=i.naam||''; g('di-descr').value=i.beschrijving||''; g('di-volgorde').value=i.volgorde||0;
+      g('di-ft').textContent='Discipline bewerken'; showFP('disciplines');
+    },
+    reset() { g('di-form').reset(); g('di-id').value=''; g('di-ft').textContent='Nieuwe discipline'; }
+  },
+  niveaugroepen: {
+    p:'ng', table:'niveaugroepen', order:'volgorde.asc',
+    render() {
+      const el = g('ng-li');
+      if (!DATA.niveaugroepen.length) { el.innerHTML='<div class="em">Geen groepen.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Groep</th><th>Baan</th><th>Trainer</th><th>Actief</th><th></th></tr></thead><tbody>
+      ${DATA.niveaugroepen.map(i=>`<tr>
+      <td>${i.emoji?`<span style="font-size:1.1rem;margin-right:.35rem">${i.emoji}</span>`:''}<strong>${esc(i.naam)}</strong></td>
+      <td style="font-size:.84rem;color:var(--mid)">${esc(i.baan||'—')}</td>
+      <td style="font-size:.84rem;color:var(--mid)">${esc(i.trainer||'—')}</td>
+      <td><span class="tg ${i.actief?'t-ja':'t-nee'}">${i.actief?'Ja':'Nee'}</span></td>
+      <td style="white-space:nowrap">${actBtns('niveaugroepen',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.niveaugroepen.find(x=>x.id===id); if(!i) return;
+      g('ng-id').value=i.id; g('ng-naam').value=i.naam||''; g('ng-emoji').value=i.emoji||'';
+      g('ng-baan').value=i.baan||''; g('ng-trainer').value=i.trainer||'';
+      g('ng-descr').value=i.beschrijving||''; g('ng-volgorde').value=i.volgorde||0;
+      g('ng-actief').checked=i.actief!==false; g('ng-ft').textContent='Groep bewerken'; showFP('niveaugroepen');
+    },
+    reset() { g('ng-form').reset(); g('ng-id').value=''; g('ng-ft').textContent='Nieuwe niveaugroep'; g('ng-actief').checked=true; }
+  },
+  locaties: {
+    p:'lc', table:'locaties', order:'volgorde.asc',
+    render() {
+      const el = g('lc-li');
+      if (!DATA.locaties.length) { el.innerHTML='<div class="em">Geen locaties.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Naam</th><th>Adres</th><th>Training</th><th>Gebruik</th><th>Actief</th><th></th></tr></thead><tbody>
+      ${DATA.locaties.map(i=>`<tr>
+      <td><strong>${esc(i.naam)}</strong></td>
+      <td style="font-size:.83rem;color:var(--mid)">${esc(i.adres||'—')}</td>
+      <td style="font-size:.83rem">${i.dag?`${esc(i.dag)} ${esc(i.tijdstip||'')}`:i.seizoen?esc(i.seizoen):'—'}</td>
+      <td style="font-size:.83rem;color:var(--mid)">${esc(i.gebruik||'—')}</td>
+      <td><span class="tg ${i.actief?'t-ja':'t-nee'}">${i.actief?'Ja':'Nee'}</span></td>
+      <td style="white-space:nowrap">${actBtns('locaties',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.locaties.find(x=>x.id===id); if(!i) return;
+      g('lc-id').value=i.id; g('lc-naam').value=i.naam||''; g('lc-adres').value=i.adres||'';
+      g('lc-dag').value=i.dag||''; g('lc-tijd').value=i.tijdstip||''; g('lc-seizoen').value=i.seizoen||'';
+      g('lc-gebruik').value=i.gebruik||''; g('lc-info').value=i.info||''; g('lc-volgorde').value=i.volgorde||0;
+      g('lc-actief').checked=i.actief!==false; g('lc-ft').textContent='Locatie bewerken'; showFP('locaties');
+    },
+    reset() { g('lc-form').reset(); g('lc-id').value=''; g('lc-ft').textContent='Nieuwe locatie'; g('lc-actief').checked=true; }
+  },
+  stats: {
+    p:'st', table:'homepage_stats', order:'volgorde.asc',
+    render() {
+      const el = g('st-li');
+      if (!DATA.stats.length) { el.innerHTML='<div class="em">Geen statistieken.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Waarde</th><th>Label</th><th>Volgorde</th><th></th></tr></thead><tbody>
+      ${DATA.stats.map(i=>`<tr>
+      <td><strong style="font-size:1.1rem;color:var(--navy)">${esc(i.waarde)}</strong></td>
+      <td>${esc(i.label)}</td><td style="color:var(--mid)">${esc(i.volgorde)}</td>
+      <td style="white-space:nowrap">${actBtns('stats',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.stats.find(x=>x.id===id); if(!i) return;
+      g('st-id').value=i.id; g('st-waarde').value=i.waarde||''; g('st-label').value=i.label||'';
+      g('st-volgorde').value=i.volgorde||0; g('st-ft').textContent='Statistiek bewerken'; showFP('stats');
+    },
+    reset() { g('st-form').reset(); g('st-id').value=''; g('st-ft').textContent='Nieuwe statistiek'; }
+  },
+  records: {
+    p:'rc', table:'clubrecords', order:'code.asc,discipline.asc,geslacht.asc,bad.asc',
+    render() {
+      const el = g('rc-li');
+      if (!DATA.records.length) {
+        el.innerHTML=`<div class="em">Geen records. Klik op <strong>Importeer uit JSON</strong>.</div>`; return;
+      }
+      el.innerHTML = `<div style="padding:.5rem 1rem;font-size:.8rem;color:var(--mid);border-bottom:1px solid var(--bdr)">${DATA.records.length} records</div>
+      <table class="dt"><thead><tr><th>Code</th><th>Discipline</th><th>Bad</th><th>Gesl.</th><th>Cat.</th><th>Tijd</th><th>Atleet</th><th></th></tr></thead><tbody>
+      ${DATA.records.slice(0,200).map(i=>`<tr>
+      <td><strong>${esc(i.code)}</strong></td><td style="font-size:.82rem">${esc(i.discipline)}</td>
+      <td>${esc(i.bad)}m</td><td>${esc(i.geslacht)}</td><td style="font-size:.82rem">${esc(i.categorie)}</td>
+      <td style="font-family:monospace;font-weight:600;color:var(--navy)">${esc(i.tijd)}</td>
+      <td style="font-size:.82rem">${esc(i.atleet||'—')}</td>
+      <td style="white-space:nowrap">${actBtns('records',i.id)}</td></tr>`).join('')}
+      ${DATA.records.length>200?`<tr><td colspan="8" style="text-align:center;padding:1rem;color:var(--mid);font-size:.84rem">+ ${DATA.records.length-200} meer…</td></tr>`:''}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.records.find(x=>x.id===id); if(!i) return;
+      g('rc-id').value=i.id; g('rc-code').value=i.code||'A1'; g('rc-type').value=i.type||'ind';
+      g('rc-disc').value=i.discipline||''; g('rc-bad').value=String(i.bad||25);
+      g('rc-gesl').value=i.geslacht||'M'; g('rc-cat').value=i.categorie||'';
+      g('rc-tijd').value=i.tijd||''; g('rc-atleet').value=i.atleet||'';
+      g('rc-datum').value=i.datum||''; g('rc-wedstrijd').value=i.wedstrijd||'';
+      g('rc-ft').textContent='Record bewerken'; showFP('records');
+    },
+    reset() { g('rc-form').reset(); g('rc-id').value=''; g('rc-ft').textContent='Nieuw clubrecord'; }
+  }
+};
+
+// ── FORM MAP ─────────────────────────────────────────────────────
+const formMap = {
+  agenda: { form:'ag-form', id:'ag-id', read:()=>({ titel:g('ag-titel').value.trim(), datum:g('ag-datum').value, datum_einde:g('ag-datum2').value||null, tijdstip:g('ag-tijd').value.trim()||null, type:g('ag-type').value, locatie:g('ag-loc').value.trim()||null, beschrijving:g('ag-descr').value.trim()||null, doelgroep:g('ag-doel').value.trim()||null, inschrijven_url:g('ag-url').value.trim()||null, gepubliceerd:g('ag-pub').checked }) },
+  nieuws: { form:'nw-form', id:'nw-id', read:()=>({ titel:g('nw-titel').value.trim(), datum:g('nw-datum').value, categorie:g('nw-cat').value, samenvatting:g('nw-sum').value.trim()||null, foto_url:g('nw-foto').value.trim()||null, inhoud:g('nw-body').value.trim()||null, gepubliceerd:g('nw-pub').checked }) },
+  shop: { form:'sh-form', id:'sh-id', read:()=>{ const m=g('sh-maten').value.trim(); return { naam:g('sh-naam').value.trim(), slug:g('sh-slug').value.trim()||g('sh-naam').value.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-'), beschrijving:g('sh-descr').value.trim()||null, prijs:parseFloat(g('sh-prijs').value)||0, maten:m?m.split(',').map(x=>x.trim()).filter(Boolean):null, foto_url:g('sh-foto').value.trim()||null, volgorde:parseInt(g('sh-volgorde').value)||0, beschikbaar:g('sh-beschikbaar').checked }; } },
+  bestuur: { form:'bs-form', id:'bs-id', read:()=>({ naam:g('bs-naam').value.trim(), functie:g('bs-func').value.trim()||null, extra_functies:g('bs-extra').value.trim()||null, email:g('bs-email').value.trim()||null, telefoon:g('bs-tel').value.trim()||null, volgorde:parseInt(g('bs-volgorde').value)||0, actief:g('bs-actief').checked }) },
+  partners: { form:'pt-form', id:'pt-id', read:()=>({ naam:g('pt-naam').value.trim(), website:g('pt-web').value.trim()||null, beschrijving:g('pt-descr').value.trim()||null, volgorde:parseInt(g('pt-volgorde').value)||0, actief:g('pt-actief').checked }) },
+  ereleden: { form:'er-form', id:'er-id', read:()=>({ naam:g('er-naam').value.trim(), jaar:parseInt(g('er-jaar').value)||null, notitie:g('er-nota').value.trim()||null, volgorde:parseInt(g('er-volgorde').value)||0 }) },
+  disciplines: { form:'di-form', id:'di-id', read:()=>({ code:g('di-code').value.trim(), reeks:g('di-reeks').value, naam:g('di-naam').value.trim(), beschrijving:g('di-descr').value.trim()||null, volgorde:parseInt(g('di-volgorde').value)||0 }) },
+  niveaugroepen: { form:'ng-form', id:'ng-id', read:()=>({ naam:g('ng-naam').value.trim(), emoji:g('ng-emoji').value.trim()||null, baan:g('ng-baan').value.trim()||null, trainer:g('ng-trainer').value.trim()||null, beschrijving:g('ng-descr').value.trim()||null, volgorde:parseInt(g('ng-volgorde').value)||0, actief:g('ng-actief').checked }) },
+  locaties: { form:'lc-form', id:'lc-id', read:()=>({ naam:g('lc-naam').value.trim(), adres:g('lc-adres').value.trim()||null, dag:g('lc-dag').value.trim()||null, tijdstip:g('lc-tijd').value.trim()||null, seizoen:g('lc-seizoen').value.trim()||null, gebruik:g('lc-gebruik').value.trim()||null, info:g('lc-info').value.trim()||null, volgorde:parseInt(g('lc-volgorde').value)||0, actief:g('lc-actief').checked }) },
+  stats: { form:'st-form', id:'st-id', read:()=>({ waarde:g('st-waarde').value.trim(), label:g('st-label').value.trim(), volgorde:parseInt(g('st-volgorde').value)||0 }) },
+  records: { form:'rc-form', id:'rc-id', read:()=>({ code:g('rc-code').value, type:g('rc-type').value, discipline:g('rc-disc').value.trim(), bad:parseInt(g('rc-bad').value), geslacht:g('rc-gesl').value, categorie:g('rc-cat').value.trim(), tijd:g('rc-tijd').value.trim(), atleet:g('rc-atleet').value.trim()||null, datum:g('rc-datum').value.trim()||null, wedstrijd:g('rc-wedstrijd').value.trim()||null }) }
+};
+
+Object.entries(formMap).forEach(([sec, cfg]) => {
+  g(cfg.form).addEventListener('submit', async e => {
+    e.preventDefault();
+    const id = g(cfg.id).value;
+    try { await saveSec(sec, id, cfg.read()); }
+    catch(err) { al(`${SECS[sec].p}-al`, err.message, false); }
+  });
+});
+
+// ── NEW / CANCEL BUTTONS ─────────────────────────────────────────
+Object.keys(formMap).forEach(sec => {
+  const p = SECS[sec].p;
+  if (g(`${p}-new`)) g(`${p}-new`).onclick = () => { hideFP(sec); SECS[sec].reset(); showFP(sec); };
+  if (g(`${p}-can`))  g(`${p}-can`).onclick  = () => hideFP(sec);
+  if (g(`${p}-can2`)) g(`${p}-can2`).onclick = () => hideFP(sec);
+});
+
+// ── CLUBRECORDS IMPORT ───────────────────────────────────────────
+g('rc-import').onclick = async () => {
+  if (!confirm('Records uit /data/clubrecords.json importeren? Bestaande records blijven staan.')) return;
+  g('rc-al').innerHTML = '<div class="al alo alw">Bezig…</div>';
+  try {
+    const records = await fetch('/data/clubrecords.json').then(r=>r.json());
+    const BATCH = 50; let imported = 0;
+    for (let i=0; i<records.length; i+=BATCH) {
+      await api('POST', 'clubrecords', records.slice(i,i+BATCH));
+      imported += Math.min(BATCH, records.length-i);
+      g('rc-al').innerHTML = `<div class="al alo alw">${imported}/${records.length} geïmporteerd…</div>`;
+    }
+    al('rc-al', `${imported} records geïmporteerd!`, true);
+    loadSec('records');
+  } catch(e) { al('rc-al', e.message, false); }
+};
+
+// ── FOTO UPLOAD (generic helper) ─────────────────────────────────
+async function uploadFoto(file, folder) {
+  const safe = (folder?folder+'/':'') + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  const res = await fetch(`${SB}/storage/v1/object/fotos/${safe}`, {
+    method:'PUT',
+    headers:{ Authorization:`Bearer ${tok()}`, 'Content-Type':file.type, 'x-upsert':'true' },
+    body: file
+  });
+  if (!res.ok) { const d=await res.json(); throw new Error(d.message||'Upload mislukt'); }
+  return `${SB}/storage/v1/object/public/fotos/${safe}`;
+}
+
+// Shop foto upload
+g('sh-foto-file').onchange = async function() {
+  const file = this.files[0]; if (!file) return;
+  try { g('sh-foto').value = await uploadFoto(file,'shop'); al('sh-al','Foto geüpload!',true); }
+  catch(e) { al('sh-al',e.message,false); }
+  this.value='';
+};
+
+// Nieuws foto upload
+g('nw-foto-file').onchange = async function() {
+  const file = this.files[0]; if (!file) return;
+  try { g('nw-foto').value = await uploadFoto(file,'nieuws'); al('nw-al','Foto geüpload!',true); }
+  catch(e) { al('nw-al',e.message,false); }
+  this.value='';
+};
+
+// ── FOTO GALLERY ─────────────────────────────────────────────────
+async function loadFotoGallery() {
+  const el = g('foto-grid');
+  el.innerHTML = '<div class="ld">Laden…</div>';
+  try {
+    const res = await fetch(`${SB}/storage/v1/object/list/fotos`, {
+      method:'POST',
+      headers:{ Authorization:`Bearer ${tok()}`, apikey:KEY, 'Content-Type':'application/json' },
+      body: JSON.stringify({ limit:200, offset:0, sortBy:{ column:'created_at', order:'desc' } })
+    });
+    const files = await res.json();
+    if (!res.ok) throw new Error(files.message||'Fout bij laden');
+    const valid = files.filter(f=>f.name && f.name!=='.emptyFolderPlaceholder');
+    if (!valid.length) { el.innerHTML='<div class="em" style="padding:2rem">Nog geen foto\'s. Upload er een!</div>'; return; }
+    el.innerHTML = valid.map(f => {
+      const url = `${SB}/storage/v1/object/public/fotos/${f.name}`;
+      return `<div class="fo-item">
+        <img class="fo-img" src="${url}" alt="${esc(f.name)}" loading="lazy"
+             onerror="this.style.objectFit='contain';this.style.padding='1.5rem';this.style.opacity='.3'" />
+        <div class="fo-actions">
+          <button class="btn bg bs" title="URL kopiëren" onclick="copyUrl('${url}')">📋</button>
+          <button class="btn bd2 bs" title="Verwijderen" onclick="delFoto('${esc(f.name)}')">×</button>
+        </div>
+        <div class="fo-name" title="${esc(f.name)}">${esc(f.name)}</div>
+      </div>`;
+    }).join('');
+  } catch(e) { el.innerHTML=`<div class="al ale alw">${esc(e.message)}</div>`; }
+}
+
+async function copyUrl(url) {
+  try { await navigator.clipboard.writeText(url); al('foto-al','URL gekopieerd naar klembord!',true); }
+  catch { al('foto-al','Kopiëren mislukt — URL: '+url,false); }
+}
+
+async function delFoto(name) {
+  if (!confirm(`Foto "${name}" definitief verwijderen?`)) return;
+  try {
+    const res = await fetch(`${SB}/storage/v1/object/fotos/${encodeURIComponent(name)}`, {
+      method:'DELETE', headers:{ Authorization:`Bearer ${tok()}`, apikey:KEY }
+    });
+    if (!res.ok) { const d=await res.json(); throw new Error(d.message||'Verwijderen mislukt'); }
+    al('foto-al','Foto verwijderd.',true); loadFotoGallery();
+  } catch(e) { al('foto-al',e.message,false); }
+}
+
+g('foto-file').onchange = async function() {
+  const files = Array.from(this.files); if (!files.length) return;
+  const prog = g('foto-progress'); prog.classList.remove('hi');
+  let done=0;
+  for (const file of files) {
+    prog.innerHTML=`<div class="al alo alw">Uploaden ${done+1}/${files.length}: ${esc(file.name)}…</div>`;
+    try { await uploadFoto(file,''); done++; }
+    catch(e) { al('foto-al',`Fout ${file.name}: ${e.message}`,false); }
+  }
+  prog.classList.add('hi');
+  al('foto-al',`${done}/${files.length} foto('s) geüpload!`,true);
+  this.value=''; loadFotoGallery();
+};
+
+// ── INSTELLINGEN ─────────────────────────────────────────────────
+let SETTINGS = [];
+
+async function loadSettings() {
+  g('set-list').innerHTML='<div class="ld">Laden…</div>';
+  try {
+    SETTINGS = await api('GET','site_settings',null,'?order=sleutel.asc');
+    renderSettings();
+  } catch(e) { g('set-list').innerHTML=`<div class="al ale alw">${esc(e.message)}</div>`; }
+}
+
+function renderSettings() {
+  g('set-list').innerHTML = SETTINGS.map(s=>`
+    <div class="set-row" id="setrow-${esc(s.sleutel)}">
+      <span class="set-lbl">${esc(s.label||s.sleutel)}</span>
+      <span class="set-val">${esc(s.waarde||'—')}</span>
+      <button class="btn bg bs" onclick="editSetting('${esc(s.sleutel)}')">Bewerken</button>
+    </div>`).join('');
+}
+
+function editSetting(key) {
+  const s=SETTINGS.find(x=>x.sleutel===key); if(!s) return;
+  g(`setrow-${key}`).innerHTML=`
+    <span class="set-lbl">${esc(s.label||s.sleutel)}</span>
+    <input id="seti-${esc(key)}" type="text" value="${esc(s.waarde||'')}"
+           style="border:1.5px solid var(--bdr);border-radius:7px;padding:.38rem .6rem;font-size:.86rem;font-family:var(--f);width:100%" />
+    <div style="display:flex;gap:.4rem">
+      <button class="btn bp bs" onclick="saveSetting('${esc(key)}')">Opslaan</button>
+      <button class="btn bg bs" onclick="renderSettings()">✕</button>
+    </div>`;
+  const inp=g(`seti-${key}`); if(inp) inp.focus();
+}
+
+async function saveSetting(key) {
+  const inp=g(`seti-${key}`); if(!inp) return;
+  try {
+    await api('PATCH','site_settings',{waarde:inp.value.trim()},`?sleutel=eq.${encodeURIComponent(key)}`);
+    const s=SETTINGS.find(x=>x.sleutel===key); if(s) s.waarde=inp.value.trim();
+    renderSettings(); al('set-al','Opgeslagen!',true);
+  } catch(e) { al('set-al',e.message,false); }
+}
+
+// ── INBOX ────────────────────────────────────────────────────────
+const INBOX = { contact:null, inschrijvingen:null, bestellingen:null };
+
+async function loadInboxTab(type) {
+  const tables={contact:'contact_berichten',inschrijvingen:'inschrijvingen',bestellingen:'shop_bestellingen'};
+  const el=g(`inbox-${type}`);
+  try {
+    INBOX[type]=await api('GET',tables[type],null,'?order=ingediend_op.desc&limit=200');
+    renderInboxTab(type); updateInboxBadges();
+  } catch(e) { el.innerHTML=`<div class="al ale alw">${esc(e.message)}</div>`; }
+}
+
+function updateInboxBadges() {
+  const c=INBOX.contact?INBOX.contact.filter(x=>!x.gelezen).length:0;
+  const i=INBOX.inschrijvingen?INBOX.inschrijvingen.filter(x=>x.status==='nieuw').length:0;
+  const b=INBOX.bestellingen?INBOX.bestellingen.filter(x=>x.status==='nieuw').length:0;
+  const badge=(el,n)=>{ if(!el) return; el.textContent=n||''; el.className='ib'+(n?'':' ib0'); };
+  badge(g('ct-badge'),c); badge(g('in-badge'),i); badge(g('be-badge'),b);
+  const tot=c+i+b;
+  const sb=g('inbox-sb-badge'); if(sb){ sb.textContent=tot||''; sb.className='sn-badge'+(tot?'':' zero'); }
+}
+
+function iiOpen(id,type) {
+  const el=g(`ii-${id}`); if(!el) return;
+  el.classList.toggle('open');
+  if(type==='contact' && el.classList.contains('open')) {
+    const item=INBOX.contact.find(x=>x.id===id);
+    if(item && !item.gelezen) setGelezen(id,true);
+  }
+}
+
+function renderInboxTab(type) {
+  const items=INBOX[type]; const el=g(`inbox-${type}`);
+  if(!items||!items.length){el.innerHTML='<div class="em">Geen berichten.</div>';return;}
+
+  if(type==='contact') {
+    el.innerHTML=items.map(i=>`<div class="ii ${i.gelezen?'read':''}" id="ii-${i.id}">
+      <div class="ii-h" onclick="iiOpen('${i.id}','contact')">
+        <span class="ii-dot"></span>
+        <span class="ii-nm">${esc(i.voornaam+' '+i.naam)}</span>
+        <span class="ii-em">${i.onderwerp?'— '+esc(i.onderwerp):esc(i.email)}</span>
+        <span class="ii-dt">${fmtDT(i.ingediend_op)}</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0"><path d="M1 1l4 4 4-4"/></svg>
+      </div>
+      <div class="ii-body">
+        <div class="ii-field"><span class="ii-fl">E-mail</span><span><a href="mailto:${esc(i.email)}" style="color:var(--navy)">${esc(i.email)}</a></span></div>
+        ${i.onderwerp?`<div class="ii-field"><span class="ii-fl">Onderwerp</span><span>${esc(i.onderwerp)}</span></div>`:''}
+        <div class="ii-msg">${esc(i.bericht||'')}</div>
+        <div class="ii-acts">
+          <button class="btn ${i.gelezen?'bg':'bp'} bs" onclick="setGelezen('${i.id}',${!i.gelezen})">${i.gelezen?'Markeer ongelezen':'✓ Gelezen'}</button>
+          <a href="mailto:${esc(i.email)}" class="btn bg bs">Beantwoorden</a>
+          <button class="btn bd2 bs" onclick="delInbox('contact','${i.id}')">Verwijderen</button>
+        </div>
+      </div></div>`).join('');
+
+  } else if(type==='inschrijvingen') {
+    el.innerHTML=items.map(i=>`<div class="ii ${i.status!=='nieuw'?'read':''}" id="ii-${i.id}">
+      <div class="ii-h" onclick="iiOpen('${i.id}','inschrijvingen')">
+        <span class="ii-dot"></span>
+        <span class="ii-nm">${esc(i.voornaam+' '+i.naam)}</span>
+        <span class="ii-em">${esc(i.email)} — ${esc(i.type_lid||'')}</span>
+        <span class="tg s-${esc(i.status||'nieuw')}" style="flex-shrink:0;font-size:.71rem">${esc(i.status||'nieuw')}</span>
+        <span class="ii-dt">${fmtDT(i.ingediend_op)}</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0"><path d="M1 1l4 4 4-4"/></svg>
+      </div>
+      <div class="ii-body">
+        <div class="ii-field"><span class="ii-fl">E-mail</span><span><a href="mailto:${esc(i.email)}" style="color:var(--navy)">${esc(i.email)}</a></span></div>
+        ${i.telefoon?`<div class="ii-field"><span class="ii-fl">Telefoon</span><span><a href="tel:${esc(i.telefoon.replace(/\s/g,''))}" style="color:var(--navy)">${esc(i.telefoon)}</a></span></div>`:''}
+        ${i.geboortedatum?`<div class="ii-field"><span class="ii-fl">Geboortedatum</span><span>${esc(i.geboortedatum)}</span></div>`:''}
+        ${i.adres?`<div class="ii-field"><span class="ii-fl">Adres</span><span>${esc(i.adres)}</span></div>`:''}
+        <div class="ii-field"><span class="ii-fl">Type lid</span><span>${esc(i.type_lid||'—')}</span></div>
+        <div class="ii-field"><span class="ii-fl">Niveau</span><span>${esc(i.niveau||'—')}</span></div>
+        ${i.opmerking?`<div class="ii-msg">${esc(i.opmerking)}</div>`:''}
+        <div class="ii-acts">
+          <select class="ii-select" onchange="setInscStatus('${i.id}',this.value)">
+            <option value="nieuw" ${i.status==='nieuw'?'selected':''}>Nieuw</option>
+            <option value="behandeld" ${i.status==='behandeld'?'selected':''}>Behandeld</option>
+            <option value="afgewezen" ${i.status==='afgewezen'?'selected':''}>Afgewezen</option>
+          </select>
+          <a href="mailto:${esc(i.email)}" class="btn bg bs">Beantwoorden</a>
+          <button class="btn bd2 bs" onclick="delInbox('inschrijvingen','${i.id}')">Verwijderen</button>
+        </div>
+      </div></div>`).join('');
+
+  } else {
+    el.innerHTML=items.map(i=>{
+      let regels=[]; try{regels=Array.isArray(i.regels)?i.regels:JSON.parse(i.regels||'[]');}catch{}
+      const regelHtml=regels.map(r=>`<div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid var(--bdr);font-size:.84rem">
+        <span><strong>${esc(r.naam||r.product_naam||'?')}</strong>${r.maat?' — '+esc(r.maat):''} ×${r.aantal||1}</span>
+        <span style="font-weight:700;color:var(--navy)">€${Number(r.totaal||0).toFixed(2)}</span>
+      </div>`).join('');
+      return `<div class="ii ${i.status!=='nieuw'?'read':''}" id="ii-${i.id}">
+        <div class="ii-h" onclick="iiOpen('${i.id}','bestellingen')">
+          <span class="ii-dot"></span>
+          <span class="ii-nm">${esc(i.voornaam+' '+i.naam)}</span>
+          <span class="ii-em">${esc(i.email)}</span>
+          <strong style="flex-shrink:0;color:var(--navy);font-size:.87rem">€${Number(i.totaal||0).toFixed(2)}</strong>
+          <span class="tg s-${esc(i.status||'nieuw')}" style="flex-shrink:0;font-size:.71rem">${esc(i.status||'nieuw')}</span>
+          <span class="ii-dt">${fmtDT(i.ingediend_op)}</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0"><path d="M1 1l4 4 4-4"/></svg>
+        </div>
+        <div class="ii-body">
+          <div class="ii-field"><span class="ii-fl">E-mail</span><span><a href="mailto:${esc(i.email)}" style="color:var(--navy)">${esc(i.email)}</a></span></div>
+          ${i.telefoon?`<div class="ii-field"><span class="ii-fl">Telefoon</span><span><a href="tel:${esc(i.telefoon.replace(/\s/g,''))}" style="color:var(--navy)">${esc(i.telefoon)}</a></span></div>`:''}
+          <div style="margin:.75rem 0;border:1px solid var(--bdr);border-radius:8px;overflow:hidden">
+            <div style="padding:.4rem 1rem;background:var(--bg);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--mid);border-bottom:1px solid var(--bdr)">Bestelling</div>
+            <div style="padding:.25rem 1rem">${regelHtml}</div>
+            <div style="padding:.4rem 1rem;border-top:1px solid var(--bdr);text-align:right;font-size:.88rem"><strong>Totaal: €${Number(i.totaal||0).toFixed(2)}</strong></div>
+          </div>
+          ${i.opmerking?`<div class="ii-field"><span class="ii-fl">Opmerking</span><span>${esc(i.opmerking)}</span></div>`:''}
+          <div class="ii-acts">
+            <select class="ii-select" onchange="setBestStatus('${i.id}',this.value)">
+              <option value="nieuw" ${i.status==='nieuw'?'selected':''}>Nieuw</option>
+              <option value="bevestigd" ${i.status==='bevestigd'?'selected':''}>Bevestigd</option>
+              <option value="afgehaald" ${i.status==='afgehaald'?'selected':''}>Afgehaald</option>
+            </select>
+            <a href="mailto:${esc(i.email)}" class="btn bg bs">Beantwoorden</a>
+            <button class="btn bd2 bs" onclick="delInbox('bestellingen','${i.id}')">Verwijderen</button>
+          </div>
+        </div></div>`;
+    }).join('');
+  }
+}
+
+async function setGelezen(id,val) {
+  try {
+    await api('PATCH','contact_berichten',{gelezen:val},`?id=eq.${id}`);
+    const item=INBOX.contact.find(x=>x.id===id); if(item) item.gelezen=val;
+    renderInboxTab('contact'); updateInboxBadges();
+  } catch(e){ al('inbox-al',e.message,false); }
+}
+async function setInscStatus(id,status) {
+  try {
+    await api('PATCH','inschrijvingen',{status},`?id=eq.${id}`);
+    const item=INBOX.inschrijvingen.find(x=>x.id===id); if(item) item.status=status;
+    updateInboxBadges();
+  } catch(e){ al('inbox-al',e.message,false); }
+}
+async function setBestStatus(id,status) {
+  try {
+    await api('PATCH','shop_bestellingen',{status},`?id=eq.${id}`);
+    const item=INBOX.bestellingen.find(x=>x.id===id); if(item) item.status=status;
+    updateInboxBadges();
+  } catch(e){ al('inbox-al',e.message,false); }
+}
+async function delInbox(type,id) {
+  if(!confirm('Definitief verwijderen?')) return;
+  const tables={contact:'contact_berichten',inschrijvingen:'inschrijvingen',bestellingen:'shop_bestellingen'};
+  try {
+    await api('DELETE',tables[type],null,`?id=eq.${id}`);
+    INBOX[type]=INBOX[type].filter(x=>x.id!==id);
+    renderInboxTab(type); updateInboxBadges();
+    al('inbox-al','Verwijderd.',true);
+  } catch(e){ al('inbox-al',e.message,false); }
+}
+
+// Inbox tab switching
+document.querySelectorAll('.itb').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('.itb').forEach(x=>x.classList.remove('act'));
+    btn.classList.add('act');
+    ['contact','inschrijvingen','bestellingen'].forEach(t=>{
+      g(`inbox-${t}`).classList.toggle('hi', t!==btn.dataset.t);
+    });
+    if(!INBOX[btn.dataset.t]) loadInboxTab(btn.dataset.t);
+  };
+});
+
+// ── SIDEBAR NAV ──────────────────────────────────────────────────
+const ALL_SECS = ['inbox','agenda','nieuws','shop','fotos','bestuur','partners','ereleden','disciplines','niveaugroepen','locaties','stats','instellingen','records'];
+
+document.querySelectorAll('.sn[data-s]').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.sn').forEach(x=>x.classList.remove('act'));
+    btn.classList.add('act');
+    ALL_SECS.forEach(s=>{ const el=g(`s-${s}`); if(el) el.classList.toggle('hi',s!==btn.dataset.s); });
+    const s=btn.dataset.s;
+    if(s==='inbox') {
+      if(!INBOX.contact) loadInboxTab('contact');
+      if(!INBOX.inschrijvingen) loadInboxTab('inschrijvingen');
+      if(!INBOX.bestellingen) loadInboxTab('bestellingen');
+    } else if(s==='fotos') {
+      loadFotoGallery();
+    } else if(s==='instellingen') {
+      if(!SETTINGS.length) loadSettings();
+    } else if(SECS[s] && (!Array.isArray(DATA[s]) || !DATA[s].length) && s!=='records') {
+      loadSec(s);
+    }
+  };
+});
+
+// ── AUTH ─────────────────────────────────────────────────────────
+g('lf').onsubmit = async e => {
+  e.preventDefault();
+  const err=g('lerr'); err.classList.add('hi');
+  try { await sbAuth(g('le').value.trim(), g('lp').value); showDash(); }
+  catch(e) { err.textContent=e.message; err.classList.remove('hi'); }
+};
+g('lout').onclick = () => { sessionStorage.removeItem('ag_tok'); g('sa').classList.add('hi'); g('sl').classList.remove('hi'); };
+
+function showDash() {
+  g('sl').classList.add('hi'); g('sa').classList.remove('hi');
+  loadInboxTab('contact');
+  loadInboxTab('inschrijvingen');
+  loadInboxTab('bestellingen');
+}
+
+if (tok()) api('GET','agenda_items',null,'?limit=1').then(()=>showDash()).catch(()=>sessionStorage.removeItem('ag_tok'));
+</script>
+</body>
+</html>

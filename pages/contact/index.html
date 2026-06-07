@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Aegir Gent</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page">
+
+    <section class="page-hero">
+      <div class="wrap">
+        <nav class="breadcrumb"><span aria-current="page">Contact</span></nav>
+        <h1>Contact</h1>
+        <p>Stel je vraag, of kom langs bij een training.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
+
+          <div>
+            <div class="label">Stuur een bericht</div>
+            <h2 style="margin-bottom:2rem">Contactformulier</h2>
+
+            <div id="contact-success" class="form-success">
+              Je bericht is verstuurd! We nemen zo snel mogelijk contact op.
+            </div>
+            <div id="contact-error" class="form-error"></div>
+
+            <form id="contact-form" class="form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="voornaam">Voornaam *</label>
+                  <input type="text" id="voornaam" name="voornaam" required placeholder="Voornaam" />
+                </div>
+                <div class="form-group">
+                  <label for="naam">Naam *</label>
+                  <input type="text" id="naam" name="naam" required placeholder="Naam" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">E-mailadres *</label>
+                <input type="email" id="email" name="email" required placeholder="jouw@email.be" />
+              </div>
+              <div class="form-group">
+                <label for="onderwerp">Onderwerp</label>
+                <select id="onderwerp" name="onderwerp">
+                  <option value="">Kies een onderwerp</option>
+                  <option value="lid-worden">Lid worden</option>
+                  <option value="trainingen">Trainingen</option>
+                  <option value="competitie">Competitie</option>
+                  <option value="opleiding">Opleiding</option>
+                  <option value="verzekering">Verzekering</option>
+                  <option value="shop">Clubshop</option>
+                  <option value="andere">Andere vraag</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="bericht">Bericht *</label>
+                <textarea id="bericht" name="bericht" rows="6" required placeholder="Jouw vraag of bericht…"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:13px">
+                Verstuur bericht
+              </button>
+            </form>
+          </div>
+
+          <div>
+            <div class="label">Wie contacteren</div>
+            <h2 style="margin-bottom:2rem">Contactpersonen</h2>
+            <div style="display:flex;flex-direction:column;gap:1rem">
+              <div class="info-box">
+                <h4>Algemeen · Onthaal</h4>
+                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a href="mailto:info@aegir-gent.be" style="color:var(--navy)">info@aegir-gent.be</a></span></div>
+                <div class="info-row"><span class="info-label">Tel.</span><span class="info-val"><a href="tel:0465094268" style="color:var(--navy)">0465 09 42 68</a> (Piet)</span></div>
+              </div>
+              <div class="info-box">
+                <h4>Competitie</h4>
+                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a href="mailto:competitie@aegir-gent.be" style="color:var(--navy)">competitie@aegir-gent.be</a></span></div>
+              </div>
+              <div class="info-box">
+                <h4>Opleiding &amp; bijscholingen</h4>
+                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a href="mailto:gaetan@aegir-gent.be" style="color:var(--navy)">gaetan@aegir-gent.be</a></span></div>
+              </div>
+              <div class="info-box" style="border-left:3px solid var(--gold)">
+                <h4>Trainingslocaties</h4>
+                <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.75rem">
+                  <div>
+                    <p style="font-weight:600;font-size:.87rem;margin-bottom:.25rem">Zwembad Strop</p>
+                    <div class="info-row"><span class="info-label">Adres</span><span class="info-val">Stropstraat, 9000 Gent</span></div>
+                    <div class="info-row"><span class="info-label">Training</span><span class="info-val">Woensdag 19:30 – 21:00</span></div>
+                  </div>
+                  <div style="border-top:1px solid var(--border);padding-top:.75rem">
+                    <p style="font-weight:600;font-size:.87rem;margin-bottom:.25rem">Zwembad Rozebroeken</p>
+                    <div class="info-row"><span class="info-label">Adres</span><span class="info-val">Victor Braeckmanstraat, Sint-Amandsberg, Gent</span></div>
+                    <div class="info-row"><span class="info-label">Gebruik</span><span class="info-val">Incidenteel — zie agenda</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="info-box">
+                <h4>Postadres</h4>
+                <div class="info-row" style="margin-top:.5rem"><span class="info-label">Post</span><span class="info-val">Poortbilk 5, 9032 Wondelgem</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div id="site-footer"></div>
+  <script src="/js/lib/supabase.js"></script>
+  <script src="/js/components/nav.js"></script>
+  <script src="/js/components/footer.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/forms/contact.js"></script>
+</body>
+</html>
