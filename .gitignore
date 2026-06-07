@@ -1,0 +1,6 @@
+.env
+.env.*
+.mcp.json
+supabase/.temp/
+node_modules/
+.DS_Store
