@@ -1,5 +1,5 @@
 .page-hero {
-  background: var(--navy-deep);
+  background: url('/images/banner/aegirbanner009.jpg') center / cover no-repeat;
   color: white;
   padding: calc(var(--nav-h) + 4rem) 0 4rem;
   margin-top: calc(-1 * var(--nav-h));
@@ -10,8 +10,12 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 100% 0%, rgba(240,180,41,.08) 0%, transparent 70%),
-              radial-gradient(ellipse 60% 80% at 0% 100%, rgba(36,53,100,.6) 0%, transparent 70%);
+  background: linear-gradient(
+    160deg,
+    rgba(8,14,32,.55) 0%,
+    rgba(8,14,32,.82) 50%,
+    rgba(8,14,32,.96) 100%
+  );
   pointer-events: none;
 }
 .page-hero .wrap { position: relative; }
