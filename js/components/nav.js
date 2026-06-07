@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <li><a href="/pages/agenda/">Agenda</a></li>
 
       <li class="has-dropdown">
-        <a href="/pages/club/">Club ${chevron}</a>
+        <a href="/pages/club/" class="nav-parent">Club ${chevron}</a>
         <div class="nav-dropdown">
           <a href="/pages/club/#over">Over Aegir Gent</a>
           <a href="/pages/club/#bestuur">Bestuur</a>
@@ -34,17 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
 
       <li class="has-dropdown">
-        <a href="/pages/trainingen/">Trainingen ${chevron}</a>
+        <a href="/pages/trainingen/" class="nav-parent">Trainingen ${chevron}</a>
         <div class="nav-dropdown">
           <a href="/pages/trainingen/#uurrooster">Uurrooster</a>
           <a href="/pages/trainingen/#groepen">Niveaugroepen</a>
         </div>
       </li>
 
-      <li><a href="/pages/shop/">Clubshop</a></li>
-
       <li class="has-dropdown">
-        <a href="/pages/competitie/">Competitie ${chevron}</a>
+        <a href="/pages/competitie/" class="nav-parent">Competitie ${chevron}</a>
         <div class="nav-dropdown">
           <a href="/pages/competitie/#reeks-a">Disciplines reeks A</a>
           <a href="/pages/competitie/#reeks-b">Disciplines reeks B</a>
@@ -55,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
 
       <li class="has-dropdown">
-        <a href="/pages/opleiding/">Opleiding ${chevron}</a>
+        <a href="/pages/opleiding/" class="nav-parent">Opleiding ${chevron}</a>
         <div class="nav-dropdown">
           <a href="/pages/opleiding/#bijscholing">Bijscholing 2026</a>
           <a href="/pages/opleiding/#brevet">Reddersbrevet</a>
@@ -64,13 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
 
       <li class="has-dropdown">
-        <a href="/pages/leden/">Leden ${chevron}</a>
+        <a href="/pages/leden/" class="nav-parent">Leden ${chevron}</a>
         <div class="nav-dropdown">
           <a href="/pages/leden/inschrijven.html">Inschrijven</a>
           <a href="/pages/leden/#lidgeld">Lidgeld &amp; kortingen</a>
           <a href="/pages/leden/#verzekering">Verzekering</a>
         </div>
       </li>
+
+      <li><a href="/pages/shop/">Shop</a></li>
 
       <li><a href="/pages/contact/">Contact</a></li>
     </ul>
@@ -81,12 +81,63 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </nav>`;
 
-  const nav = navEl.querySelector('.nav');
+  const nav    = navEl.querySelector('.nav');
+  const burger = navEl.querySelector('.nav-burger');
+  const links  = navEl.querySelector('.nav-links');
 
-  // Transparent homepage nav: toggle .scrolled on scroll
+  // Transparent homepage nav
   if (isHome) {
     const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   }
+
+  // Burger open/close
+  if (burger && links) {
+    burger.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open);
+      burger.classList.toggle('is-open', open);
+    });
+  }
+
+  // Mobile accordion: toggle sub-menu on parent click
+  navEl.querySelectorAll('.has-dropdown .nav-parent').forEach(a => {
+    a.addEventListener('click', e => {
+      if (window.innerWidth > 768) return;
+      e.preventDefault();
+      const li = a.closest('.has-dropdown');
+      const wasOpen = li.classList.contains('mob-open');
+      navEl.querySelectorAll('.has-dropdown.mob-open').forEach(el => el.classList.remove('mob-open'));
+      if (!wasOpen) li.classList.add('mob-open');
+    });
+  });
+
+  // Close menu when a sub-link or leaf link is clicked
+  navEl.querySelectorAll('.nav-dropdown a, .nav-links > li:not(.has-dropdown) a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      burger.classList.remove('is-open');
+      navEl.querySelectorAll('.has-dropdown.mob-open').forEach(el => el.classList.remove('mob-open'));
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (!navEl.contains(e.target)) {
+      links.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      burger.classList.remove('is-open');
+      navEl.querySelectorAll('.has-dropdown.mob-open').forEach(el => el.classList.remove('mob-open'));
+    }
+  });
+
+  // Active nav link
+  const path = window.location.pathname;
+  navEl.querySelectorAll('.nav-links a').forEach(a => {
+    const href = a.getAttribute('href');
+    if (href === '/' && path === '/') a.classList.add('active');
+    else if (href && href !== '/' && !href.startsWith('http') && path.startsWith(href.split('#')[0])) a.classList.add('active');
+  });
 });

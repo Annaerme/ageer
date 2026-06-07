@@ -59,3 +59,35 @@
 }
 .has-dropdown:hover .nav-chevron { transform: rotate(180deg); opacity: .75; }
 .nav-chevron svg { width: 8px; height: 5px; }
+
+/* ── Mobile accordion dropdown ── */
+@media (max-width: 768px) {
+  .has-dropdown { position: static; }
+
+  .nav-dropdown {
+    position: static;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    background: var(--bg);
+    display: none;
+  }
+
+  .has-dropdown.mob-open .nav-dropdown { display: block; }
+
+  .nav-dropdown a {
+    padding: .7rem 1.5rem .7rem 2.5rem !important;
+    font-size: .88rem !important;
+    border-bottom: 1px solid rgba(0,0,0,.04) !important;
+    color: var(--text-mid) !important;
+    background: transparent !important;
+    white-space: normal !important;
+  }
+  .nav-dropdown a:hover { background: rgba(0,0,0,.04) !important; color: var(--navy) !important; }
+
+  .nav-dropdown-divider { display: none; }
+}

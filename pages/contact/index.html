@@ -72,38 +72,33 @@
           <div>
             <div class="label">Wie contacteren</div>
             <h2 style="margin-bottom:2rem">Contactpersonen</h2>
-            <div style="display:flex;flex-direction:column;gap:1rem">
+            <div id="contact-info" style="display:flex;flex-direction:column;gap:1rem">
               <div class="info-box">
                 <h4>Algemeen · Onthaal</h4>
-                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a href="mailto:info@aegir-gent.be" style="color:var(--navy)">info@aegir-gent.be</a></span></div>
-                <div class="info-row"><span class="info-label">Tel.</span><span class="info-val"><a href="tel:0465094268" style="color:var(--navy)">0465 09 42 68</a> (Piet)</span></div>
+                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a id="ct-email-info" href="mailto:info@aegir-gent.be" style="color:var(--navy)">info@aegir-gent.be</a></span></div>
+                <div class="info-row"><span class="info-label">Tel.</span><span class="info-val"><a id="ct-tel-piet-link" href="tel:0465094268" style="color:var(--navy)"><span id="ct-tel-piet">0465 09 42 68</span></a> (Piet)</span></div>
               </div>
               <div class="info-box">
                 <h4>Competitie</h4>
-                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a href="mailto:competitie@aegir-gent.be" style="color:var(--navy)">competitie@aegir-gent.be</a></span></div>
+                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a id="ct-email-comp" href="mailto:competitie@aegir-gent.be" style="color:var(--navy)">competitie@aegir-gent.be</a></span></div>
               </div>
               <div class="info-box">
                 <h4>Opleiding &amp; bijscholingen</h4>
-                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a href="mailto:gaetan@aegir-gent.be" style="color:var(--navy)">gaetan@aegir-gent.be</a></span></div>
+                <div class="info-row" style="margin-top:.5rem"><span class="info-label">E-mail</span><span class="info-val"><a id="ct-email-opl" href="mailto:gaetan@aegir-gent.be" style="color:var(--navy)">gaetan@aegir-gent.be</a></span></div>
               </div>
               <div class="info-box" style="border-left:3px solid var(--gold)">
                 <h4>Trainingslocaties</h4>
-                <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.75rem">
+                <div id="ct-locaties" style="margin-top:.75rem;display:flex;flex-direction:column;gap:.75rem">
                   <div>
                     <p style="font-weight:600;font-size:.87rem;margin-bottom:.25rem">Zwembad Strop</p>
                     <div class="info-row"><span class="info-label">Adres</span><span class="info-val">Stropstraat, 9000 Gent</span></div>
                     <div class="info-row"><span class="info-label">Training</span><span class="info-val">Woensdag 19:30 – 21:00</span></div>
                   </div>
-                  <div style="border-top:1px solid var(--border);padding-top:.75rem">
-                    <p style="font-weight:600;font-size:.87rem;margin-bottom:.25rem">Zwembad Rozebroeken</p>
-                    <div class="info-row"><span class="info-label">Adres</span><span class="info-val">Victor Braeckmanstraat, Sint-Amandsberg, Gent</span></div>
-                    <div class="info-row"><span class="info-label">Gebruik</span><span class="info-val">Incidenteel — zie agenda</span></div>
-                  </div>
                 </div>
               </div>
               <div class="info-box">
                 <h4>Postadres</h4>
-                <div class="info-row" style="margin-top:.5rem"><span class="info-label">Post</span><span class="info-val">Poortbilk 5, 9032 Wondelgem</span></div>
+                <div class="info-row" style="margin-top:.5rem"><span class="info-label">Post</span><span class="info-val" id="ct-postadres">Poortbilk 5, 9032 Wondelgem</span></div>
               </div>
             </div>
           </div>
@@ -119,5 +114,49 @@
   <script src="/js/components/footer.js"></script>
   <script src="/js/main.js"></script>
   <script src="/js/forms/contact.js"></script>
+  <script>
+  (()=>{
+    const SB='https://wlmehcbxeseigxwougwd.supabase.co';
+    const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+    const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const h=headers=>({headers:{apikey:KEY,...headers}});
+
+    // Site settings
+    fetch(`${SB}/rest/v1/site_settings?sleutel=in.(email_info,email_competitie,email_opleiding,tel_piet,adres_post)`,h())
+      .then(r=>r.json()).then(items=>{
+        const m={}; items.forEach(x=>m[x.sleutel]=x.waarde);
+        if(m.email_info){
+          document.getElementById('ct-email-info').textContent=m.email_info;
+          document.getElementById('ct-email-info').href='mailto:'+m.email_info;
+        }
+        if(m.email_competitie){
+          document.getElementById('ct-email-comp').textContent=m.email_competitie;
+          document.getElementById('ct-email-comp').href='mailto:'+m.email_competitie;
+        }
+        if(m.email_opleiding){
+          document.getElementById('ct-email-opl').textContent=m.email_opleiding;
+          document.getElementById('ct-email-opl').href='mailto:'+m.email_opleiding;
+        }
+        if(m.tel_piet){
+          document.getElementById('ct-tel-piet').textContent=m.tel_piet;
+          document.getElementById('ct-tel-piet-link').href='tel:'+m.tel_piet.replace(/\s/g,'');
+        }
+        if(m.adres_post) document.getElementById('ct-postadres').textContent=m.adres_post;
+      }).catch(()=>{});
+
+    // Locaties
+    fetch(`${SB}/rest/v1/locaties?actief=eq.true&order=volgorde.asc`,h())
+      .then(r=>r.json()).then(items=>{
+        if(!items||!items.length) return;
+        document.getElementById('ct-locaties').innerHTML=items.map((l,i)=>`
+          <div${i>0?' style="border-top:1px solid var(--border);padding-top:.75rem"':''}>
+            <p style="font-weight:600;font-size:.87rem;margin-bottom:.25rem">${esc(l.naam)}</p>
+            ${l.adres?`<div class="info-row"><span class="info-label">Adres</span><span class="info-val">${esc(l.adres)}</span></div>`:''}
+            ${l.dag&&l.tijdstip?`<div class="info-row"><span class="info-label">Training</span><span class="info-val">${esc(l.dag)} ${esc(l.tijdstip)}</span></div>`:''}
+            ${l.gebruik?`<div class="info-row"><span class="info-label">Gebruik</span><span class="info-val">${esc(l.gebruik)}</span></div>`:''}
+          </div>`).join('');
+      }).catch(()=>{});
+  })();
+  </script>
 </body>
 </html>

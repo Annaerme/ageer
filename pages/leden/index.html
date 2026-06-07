@@ -59,16 +59,16 @@
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
           <div class="info-box">
             <h4>2e familielid</h4>
-            <p style="font-size:.87rem;margin-top:.4rem">Elk volgend gezinslid krijgt <strong>€15 korting</strong>.</p>
+            <p style="font-size:.87rem;margin-top:.4rem">Elk volgend gezinslid krijgt <strong id="korting-familie">€15 korting</strong>.</p>
           </div>
           <div class="info-box">
             <h4>Verhoogde tegemoetkoming</h4>
-            <p style="font-size:.87rem;margin-top:.4rem">Rechthebbenden krijgen <strong>€11 korting</strong>. Bewijs meebrengen.</p>
+            <p style="font-size:.87rem;margin-top:.4rem">Rechthebbenden krijgen <strong id="korting-vt">€11 korting</strong>. Bewijs meebrengen.</p>
           </div>
           <div class="info-box">
             <h4>Afbetalingsplan</h4>
             <p style="font-size:.87rem;margin-top:.4rem">Moeilijkheden? Contacteer Piet voor een plan op maat.</p>
-            <p style="font-size:.82rem;margin-top:.4rem"><a href="tel:0465094268" style="color:var(--navy)">0465 09 42 68</a></p>
+            <p style="font-size:.82rem;margin-top:.4rem"><a id="tel-piet-link" href="tel:0465094268" style="color:var(--navy)"><span id="tel-piet">0465 09 42 68</span></a></p>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
             <h4 style="margin:.3rem 0">Lichamelijke ongelukken</h4>
             <p style="font-size:.85rem;margin-bottom:.75rem">Dekt letsels opgelopen tijdens clubactiviteiten.</p>
             <div class="divider"></div>
-            <div class="info-row"><span class="info-label">Polis</span><span class="info-val" style="font-family:monospace;font-size:.83rem">45.236.716</span></div>
+            <div class="info-row"><span class="info-label">Polis</span><span class="info-val" style="font-family:monospace;font-size:.83rem" id="polis-sporta">45.236.716</span></div>
             <div class="info-row"><span class="info-label">Verzekeraar</span><span class="info-val">Ethias</span></div>
           </div></div>
           <div class="card"><div class="card-body">
@@ -93,8 +93,8 @@
             <h4 style="margin:.3rem 0">BA &amp; rechtsbijstand</h4>
             <p style="font-size:.85rem;margin-bottom:.75rem">Voor brevethoudende leden tijdens reddingsactiviteiten.</p>
             <div class="divider"></div>
-            <div class="info-row"><span class="info-label">LO-polis</span><span class="info-val" style="font-family:monospace;font-size:.83rem">1.102.192</span></div>
-            <div class="info-row"><span class="info-label">BA-polis</span><span class="info-val" style="font-family:monospace;font-size:.83rem">1.102.193</span></div>
+            <div class="info-row"><span class="info-label">LO-polis</span><span class="info-val" style="font-family:monospace;font-size:.83rem" id="polis-redfed-lo">1.102.192</span></div>
+            <div class="info-row"><span class="info-label">BA-polis</span><span class="info-val" style="font-family:monospace;font-size:.83rem" id="polis-redfed-ba">1.102.193</span></div>
             <div class="info-row"><span class="info-label">Verzekeraar</span><span class="info-val">Arena nv</span></div>
           </div></div>
         </div>
@@ -126,11 +126,20 @@
   (()=>{
     const SB='https://wlmehcbxeseigxwougwd.supabase.co';
     const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
-    fetch(`${SB}/rest/v1/site_settings?sleutel=in.(iban_club,lidgeld_vervaldag,korting_familie,korting_vt)`,{headers:{apikey:KEY}})
+    fetch(`${SB}/rest/v1/site_settings?sleutel=in.(iban_club,korting_familie,korting_vt,tel_piet,polis_sporta,polis_redfed_lo,polis_redfed_ba)`,{headers:{apikey:KEY}})
       .then(r=>r.json())
       .then(items=>{
         const m={}; items.forEach(x=>m[x.sleutel]=x.waarde);
         if(m.iban_club) document.getElementById('leden-iban').textContent=m.iban_club;
+        if(m.korting_familie) document.getElementById('korting-familie').textContent=m.korting_familie+' korting';
+        if(m.korting_vt) document.getElementById('korting-vt').textContent=m.korting_vt+' korting';
+        if(m.tel_piet){
+          document.getElementById('tel-piet').textContent=m.tel_piet;
+          document.getElementById('tel-piet-link').href='tel:'+m.tel_piet.replace(/\s/g,'');
+        }
+        if(m.polis_sporta) document.getElementById('polis-sporta').textContent=m.polis_sporta;
+        if(m.polis_redfed_lo) document.getElementById('polis-redfed-lo').textContent=m.polis_redfed_lo;
+        if(m.polis_redfed_ba) document.getElementById('polis-redfed-ba').textContent=m.polis_redfed_ba;
       }).catch(()=>{});
   })();
   </script>

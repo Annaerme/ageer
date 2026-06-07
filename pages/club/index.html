@@ -30,9 +30,9 @@
               <h3>Reddingsclub Aegir Gent vzw</h3>
               <p style="margin-top:.5rem;font-size:.9rem">Algemene clubwerking, wekelijkse trainingen en nevenactiviteiten voor leden van alle niveaus.</p>
               <div class="divider"></div>
-              <div class="info-row"><span class="info-label">E-mail</span><span class="info-val"><a href="mailto:info@aegir-gent.be">info@aegir-gent.be</a></span></div>
-              <div class="info-row"><span class="info-label">Rekening</span><span class="info-val" style="font-family:monospace;font-size:.84rem">BE17 8907 3409 5021</span></div>
-              <div class="info-row"><span class="info-label">BIC</span><span class="info-val" style="font-family:monospace;font-size:.84rem">VDSPBE91</span></div>
+              <div class="info-row"><span class="info-label">E-mail</span><span class="info-val"><a id="cl-email-info" href="mailto:info@aegir-gent.be">info@aegir-gent.be</a></span></div>
+              <div class="info-row"><span class="info-label">Rekening</span><span id="cl-iban" class="info-val" style="font-family:monospace;font-size:.84rem">BE17 8907 3409 5021</span></div>
+              <div class="info-row"><span class="info-label">BIC</span><span id="cl-bic" class="info-val" style="font-family:monospace;font-size:.84rem">VDSPBE91</span></div>
             </div>
           </div>
           <div class="card">
@@ -41,10 +41,10 @@
               <h3>Rescue Aegir Gent vzw</h3>
               <p style="margin-top:.5rem;font-size:.9rem">Reddingscompetitie op Belgisch en internationaal niveau en de organisatie van opleidingen en bijscholingen.</p>
               <div class="divider"></div>
-              <div class="info-row"><span class="info-label">E-mail</span><span class="info-val"><a href="mailto:opleiding@aegir-gent.be">opleiding@aegir-gent.be</a></span></div>
-              <div class="info-row"><span class="info-label">Competitie</span><span class="info-val"><a href="mailto:competitie@aegir-gent.be">competitie@aegir-gent.be</a></span></div>
-              <div class="info-row"><span class="info-label">Rekening</span><span class="info-val" style="font-family:monospace;font-size:.84rem">BE58 8917 0402 3279</span></div>
-              <div class="info-row"><span class="info-label">BIC</span><span class="info-val" style="font-family:monospace;font-size:.84rem">VDSPBE91</span></div>
+              <div class="info-row"><span class="info-label">E-mail</span><span class="info-val"><a id="cl-email-opl" href="mailto:opleiding@aegir-gent.be">opleiding@aegir-gent.be</a></span></div>
+              <div class="info-row"><span class="info-label">Competitie</span><span class="info-val"><a id="cl-email-comp" href="mailto:competitie@aegir-gent.be">competitie@aegir-gent.be</a></span></div>
+              <div class="info-row"><span class="info-label">Rekening</span><span id="cl-iban-rescue" class="info-val" style="font-family:monospace;font-size:.84rem">BE58 8917 0402 3279</span></div>
+              <div class="info-row"><span class="info-label">BIC</span><span id="cl-bic-rescue" class="info-val" style="font-family:monospace;font-size:.84rem">VDSPBE91</span></div>
             </div>
           </div>
         </div>
@@ -52,8 +52,8 @@
           <div class="info-box">
             <h4>Contactgegevens</h4>
             <div class="divider" style="margin:.75rem 0"></div>
-            <div class="info-row"><span class="info-label">Post</span><span class="info-val">Poortbilk 5, 9032 Wondelgem</span></div>
-            <div class="info-row"><span class="info-label">Algemeen</span><span class="info-val"><a href="mailto:info@aegir-gent.be">info@aegir-gent.be</a></span></div>
+            <div class="info-row"><span class="info-label">Post</span><span id="cl-postadres" class="info-val">Poortbilk 5, 9032 Wondelgem</span></div>
+            <div class="info-row"><span class="info-label">Algemeen</span><span class="info-val"><a id="cl-email-info2" href="mailto:info@aegir-gent.be">info@aegir-gent.be</a></span></div>
             <div class="info-row"><span class="info-label">Training</span><span class="info-val">Zwembad Strop, Stropstraat, Gent</span></div>
           </div>
           <div class="info-box" style="display:flex;flex-direction:column;justify-content:center;gap:1rem">
@@ -103,6 +103,23 @@
   <script src="/js/components/footer.js"></script>
   <script src="/js/main.js"></script>
   <script>
+// Site settings
+(()=>{
+  const SB2='https://wlmehcbxeseigxwougwd.supabase.co';
+  const KEY2='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+  fetch(`${SB2}/rest/v1/site_settings?sleutel=in.(iban_club,bic_club,iban_rescue,bic_rescue,email_info,email_competitie,email_opleiding,adres_post)`,{headers:{apikey:KEY2}})
+    .then(r=>r.json()).then(items=>{
+      const m={}; items.forEach(x=>m[x.sleutel]=x.waarde);
+      const set=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.textContent=val;};
+      const setLink=(id,val)=>{const el=document.getElementById(id);if(el&&val){el.textContent=val;el.href='mailto:'+val;}};
+      set('cl-iban',m.iban_club); set('cl-bic',m.bic_club);
+      set('cl-iban-rescue',m.iban_rescue); set('cl-bic-rescue',m.bic_rescue);
+      set('cl-postadres',m.adres_post);
+      setLink('cl-email-info',m.email_info); setLink('cl-email-info2',m.email_info);
+      setLink('cl-email-comp',m.email_competitie); setLink('cl-email-opl',m.email_opleiding);
+    }).catch(()=>{});
+})();
+
 const SB  = 'https://wlmehcbxeseigxwougwd.supabase.co';
 const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
 

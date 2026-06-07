@@ -24,22 +24,8 @@
         <h2 style="margin-bottom:.5rem">Bijscholingen</h2>
         <p style="max-width:620px;margin-bottom:2rem">Houders van het reddersbrevet zijn verplicht regelmatig bijscholingen te volgen. Aegir Gent organiseert bijscholingen in samenwerking met de Vlaamse Reddingsfederatie. <strong>Inschrijven is verplicht via redfed.be.</strong></p>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:2rem">
-          <div class="info-box" style="border-left:3px solid var(--gold)">
-            <div class="info-row" style="align-items:center"><span class="info-label">Datum</span><span class="info-val" style="font-weight:700">Vrijdag 26/06/2026</span></div>
-            <div class="info-row"><span class="info-label">Locatie</span><span class="info-val">Zwembad Strop</span></div>
-            <a href="http://www.redfed.be" target="_blank" rel="noopener" class="btn btn-navy" style="margin-top:.75rem;font-size:.83rem">Inschrijven via redfed.be →</a>
-          </div>
-          <div class="info-box" style="border-left:3px solid var(--gold)">
-            <div class="info-row"><span class="info-label">Datum</span><span class="info-val" style="font-weight:700">Vrijdag 10/07/2026</span></div>
-            <div class="info-row"><span class="info-label">Locatie</span><span class="info-val">Zwembad Strop</span></div>
-            <a href="http://www.redfed.be" target="_blank" rel="noopener" class="btn btn-navy" style="margin-top:.75rem;font-size:.83rem">Inschrijven via redfed.be →</a>
-          </div>
-          <div class="info-box" style="border-left:3px solid var(--gold)">
-            <div class="info-row"><span class="info-label">Datum</span><span class="info-val" style="font-weight:700">Vrijdag 28/08/2026</span></div>
-            <div class="info-row"><span class="info-label">Locatie</span><span class="info-val">Zwembad Strop</span></div>
-            <a href="http://www.redfed.be" target="_blank" rel="noopener" class="btn btn-navy" style="margin-top:.75rem;font-size:.83rem">Inschrijven via redfed.be →</a>
-          </div>
+        <div id="bijscholingen-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:2rem">
+          <div style="color:var(--text-muted);font-size:.9rem">Laden…</div>
         </div>
 
         <div style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start">
@@ -106,5 +92,35 @@
   <script src="/js/components/nav.js"></script>
   <script src="/js/components/footer.js"></script>
   <script src="/js/main.js"></script>
+  <script>
+  (()=>{
+    const SB='https://wlmehcbxeseigxwougwd.supabase.co';
+    const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+    const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const today=new Date().toISOString().split('T')[0];
+    fetch(`${SB}/rest/v1/agenda_items?type=eq.opleiding&datum=gte.${today}&gepubliceerd=eq.true&order=datum.asc`,{headers:{apikey:KEY}})
+      .then(r=>r.json()).then(items=>{
+        const grid=document.getElementById('bijscholingen-grid');
+        if(!items||!items.length){
+          grid.innerHTML='<p style="color:var(--text-muted);font-size:.9rem">Geen geplande bijscholingen op dit moment.</p>';
+          return;
+        }
+        const MAANDEN=['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+        grid.innerHTML=items.map(i=>{
+          const d=i.datum?new Date(i.datum+'T12:00:00'):null;
+          const datumStr=d?`${d.getDate()} ${MAANDEN[d.getMonth()]} ${d.getFullYear()}`:'';
+          return `<div class="info-box" style="border-left:3px solid var(--gold)">
+            <div class="info-row" style="align-items:center"><span class="info-label">Datum</span><span class="info-val" style="font-weight:700">${esc(datumStr)}</span></div>
+            ${i.locatie?`<div class="info-row"><span class="info-label">Locatie</span><span class="info-val">${esc(i.locatie)}</span></div>`:''}
+            ${i.tijdstip?`<div class="info-row"><span class="info-label">Tijdstip</span><span class="info-val">${esc(i.tijdstip)}</span></div>`:''}
+            ${i.beschrijving?`<p style="font-size:.83rem;margin-top:.5rem;color:var(--text-muted)">${esc(i.beschrijving)}</p>`:''}
+            ${i.inschrijven_url?`<a href="${esc(i.inschrijven_url)}" target="_blank" rel="noopener" class="btn btn-navy" style="margin-top:.75rem;font-size:.83rem">Inschrijven →</a>`:'<a href="http://www.redfed.be" target="_blank" rel="noopener" class="btn btn-navy" style="margin-top:.75rem;font-size:.83rem">Inschrijven via redfed.be →</a>'}
+          </div>`;
+        }).join('');
+      }).catch(()=>{
+        document.getElementById('bijscholingen-grid').innerHTML='<p style="color:var(--text-muted);font-size:.9rem">Kon bijscholingen niet laden.</p>';
+      });
+  })();
+  </script>
 </body>
 </html>

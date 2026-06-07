@@ -74,6 +74,12 @@ const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZi
 
 const MAANDEN = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
 const TYPE_LABELS = { training:'Training', competitie:'Competitie', opleiding:'Opleiding', activiteit:'Activiteit' };
+const TYPE_COLORS = {
+  training:  { bg:'#EFF6FF', border:'#3B82F6', text:'#1D4ED8' },
+  competitie:{ bg:'#FFF7ED', border:'#F97316', text:'#C2410C' },
+  opleiding: { bg:'#F0FDF4', border:'#22C55E', text:'#15803D' },
+  activiteit:{ bg:'#FDF4FF', border:'#A855F7', text:'#7E22CE' }
+};
 
 let allItems = [];
 let activeType = '';
@@ -90,26 +96,27 @@ function render(items) {
     return;
   }
   el.innerHTML = filtered.map(item => {
-    const tag = `<div class="event-tag">${TYPE_LABELS[item.type]||item.type}</div>`;
+    const c = TYPE_COLORS[item.type] || { bg:'#F9FAFB', border:'#6B7280', text:'#374151' };
+    const tag = `<span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:${c.bg};color:${c.text};border:1px solid ${c.border}">${TYPE_LABELS[item.type]||item.type}</span>`;
     const desc = item.beschrijving
-      ? `<p>${item.beschrijving.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>` : '';
+      ? `<p style="margin-top:.3rem">${item.beschrijving.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>` : '';
     const details = [
-      item.tijdstip ? `<span style="font-size:.83rem;color:var(--text-mid)">🕐 ${item.tijdstip}</span>` : '',
-      item.locatie  ? `<span style="font-size:.83rem;color:var(--text-mid)">📍 ${item.locatie}</span>` : '',
-      item.doelgroep ? `<span style="font-size:.83rem;color:var(--text-mid)">👥 ${item.doelgroep}</span>` : ''
-    ].filter(Boolean).join('');
+      item.tijdstip ? `<span style="font-size:.83rem;color:var(--text-mid)">${item.tijdstip}</span>` : '',
+      item.locatie  ? `<span style="font-size:.83rem;color:var(--text-mid)">${item.locatie}</span>` : '',
+      item.doelgroep ? `<span style="font-size:.83rem;color:var(--text-mid)">${item.doelgroep}</span>` : ''
+    ].filter(Boolean).join(' · ');
     const inschrijven = item.inschrijven_url
       ? `<a href="${item.inschrijven_url}" target="_blank" rel="noopener" class="btn btn-navy" style="font-size:.8rem;margin-top:.5rem;display:inline-flex">Inschrijven →</a>` : '';
 
-    return `<div class="event-item">
+    return `<div class="event-item" style="border-left:3px solid ${c.border}">
       <div class="event-date">
         <span class="event-day">${fmtDay(item.datum)}</span>
         <span class="event-month">${fmtMaand(item.datum)}</span>
       </div>
       <div class="event-body">
         ${tag}
-        <h4>${item.titel}</h4>
-        ${details ? `<div style="display:flex;flex-direction:column;gap:.2rem;margin:.3rem 0">${details}</div>` : ''}
+        <h4 style="margin-top:.35rem">${item.titel}</h4>
+        ${details ? `<div style="margin:.2rem 0;color:var(--text-muted)">${details}</div>` : ''}
         ${desc}
         ${inschrijven}
       </div>

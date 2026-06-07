@@ -133,12 +133,11 @@
   <div id="site-nav"></div>
   <div class="page">
 
-    <!-- HERO -->
-    <section class="shop-hero">
+    <section class="page-hero">
       <div class="wrap">
-        <nav class="breadcrumb"><span aria-current="page">Clubshop</span></nav>
-        <h1 style="color:white;margin-top:.75rem">Clubshop</h1>
-        <p style="color:rgba(255,255,255,.48);margin-top:.75rem;max-width:500px">Bestel officiële Aegir Gent-artikelen. Selecteer je producten, kies maat en vul je gegevens in. Afhalen aan het zwembad.</p>
+        <nav class="breadcrumb"><span aria-current="page">Shop</span></nav>
+        <h1>Clubshop</h1>
+        <p>Bestel officiële Aegir Gent-artikelen. Selecteer je producten, kies maat en vul je gegevens in. Afhalen aan het zwembad.</p>
       </div>
     </section>
 
@@ -196,7 +195,7 @@
                 </div>
                 <div class="info-box" style="font-size:.83rem;margin-bottom:.5rem">
                   Afhaling aan <strong>Zwembad Strop</strong> tijdens een training. Betaling bij afhaling of via overschrijving
-                  <span style="font-family:monospace">BE17 8907 3409 5021</span>.
+                  <span id="shop-iban" style="font-family:monospace">BE17 8907 3409 5021</span>.
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:14px">
                   Bestelling plaatsen
@@ -232,6 +231,16 @@
 
   </div>
   <div id="site-footer"></div>
+  <script>
+  (()=>{
+    const SB='https://wlmehcbxeseigxwougwd.supabase.co';
+    const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+    fetch(`${SB}/rest/v1/site_settings?sleutel=eq.iban_club`,{headers:{apikey:KEY}})
+      .then(r=>r.json()).then(items=>{
+        if(items[0]) document.getElementById('shop-iban').textContent=items[0].waarde;
+      }).catch(()=>{});
+  })();
+  </script>
   <script src="/js/lib/supabase.js"></script>
   <script src="/js/components/nav.js"></script>
   <script src="/js/components/footer.js"></script>
