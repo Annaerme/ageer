@@ -22,7 +22,7 @@
       <div class="wrap">
         <div class="label">Wanneer &amp; waar</div>
         <h2 style="margin-bottom:2rem">Uurrooster &amp; locaties</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem">
+        <div id="locaties-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem">
           <div class="info-box" style="border-left:3px solid var(--gold)">
             <h4>Zwembad Strop</h4>
             <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.3rem">
@@ -30,19 +30,6 @@
               <div class="info-row"><span class="info-label">Tijdstip</span><span class="info-val">19:30 – 21:00</span></div>
               <div class="info-row"><span class="info-label">Adres</span><span class="info-val">Stropstraat, 9000 Gent</span></div>
               <div class="info-row"><span class="info-label">Seizoen</span><span class="info-val">September – juni</span></div>
-            </div>
-            <div class="info-box" style="margin-top:1rem;background:var(--bg)">
-              <p style="font-size:.84rem"><strong>Parking:</strong> gratis parking naast het zwembad, soms vol. Straatparkeren is ook mogelijk.</p>
-            </div>
-          </div>
-          <div class="info-box">
-            <h4>Zwembad Rozebroeken</h4>
-            <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.3rem">
-              <div class="info-row"><span class="info-label">Adres</span><span class="info-val">Victor Braeckmanstraat, Sint-Amandsberg, Gent</span></div>
-              <div class="info-row"><span class="info-label">Gebruik</span><span class="info-val">Incidenteel / inhaaltraining</span></div>
-            </div>
-            <div class="info-box" style="margin-top:1rem;background:var(--bg)">
-              <p style="font-size:.84rem">Kijk de agenda na voor eventuele trainingen op Rozebroeken.</p>
             </div>
           </div>
         </div>
@@ -129,6 +116,28 @@
     const SB='https://wlmehcbxeseigxwougwd.supabase.co';
     const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
     const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    // Laad locaties dynamisch
+    fetch(`${SB}/rest/v1/locaties?actief=eq.true&order=volgorde.asc`,{headers:{apikey:KEY}})
+      .then(r=>r.json())
+      .then(items=>{
+        if(!items||!items.length) return;
+        const cols = items.length === 1 ? '1fr' : '1fr 1fr';
+        const grid = document.getElementById('locaties-grid');
+        grid.style.gridTemplateColumns = cols;
+        grid.innerHTML = items.map((l,i)=>`
+          <div class="info-box"${i===0?' style="border-left:3px solid var(--gold)"':''}>
+            <h4>${esc(l.naam)}</h4>
+            <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.3rem">
+              ${l.dag?`<div class="info-row"><span class="info-label">Dag</span><span class="info-val">${esc(l.dag)}</span></div>`:''}
+              ${l.tijdstip?`<div class="info-row"><span class="info-label">Tijdstip</span><span class="info-val">${esc(l.tijdstip)}</span></div>`:''}
+              ${l.adres?`<div class="info-row"><span class="info-label">Adres</span><span class="info-val">${esc(l.adres)}</span></div>`:''}
+              ${l.seizoen?`<div class="info-row"><span class="info-label">Seizoen</span><span class="info-val">${esc(l.seizoen)}</span></div>`:''}
+              ${l.gebruik?`<div class="info-row"><span class="info-label">Gebruik</span><span class="info-val">${esc(l.gebruik)}</span></div>`:''}
+            </div>
+            ${l.info?`<div class="info-box" style="margin-top:1rem;background:var(--bg)"><p style="font-size:.84rem">${esc(l.info)}</p></div>`:''}
+          </div>`).join('');
+      }).catch(()=>{});
     fetch(`${SB}/rest/v1/niveaugroepen?actief=eq.true&order=volgorde.asc`,{headers:{apikey:KEY}})
       .then(r=>r.json())
       .then(items=>{
