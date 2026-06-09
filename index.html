@@ -9,7 +9,6 @@
   <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
   <style>
     /* ── Homepage only ── */
-    html, body { height: 100%; }
     body { background: var(--navy-deep); }
 
     .home-bg {
@@ -27,17 +26,18 @@
       );
     }
 
+    /* Exactly one viewport tall — stats always in view */
     .home-stage {
       position: relative; z-index: 1;
-      min-height: 100svh;
+      height: 100svh;
       display: flex; flex-direction: column;
+      overflow: hidden;
     }
 
-    /* ── hero content ── */
     .home-hero {
       flex: 1;
       display: flex; flex-direction: column; justify-content: flex-end;
-      padding: calc(var(--nav-h) + 2rem) 0 6rem;
+      padding: calc(var(--nav-h) + 2rem) 0 2.5rem;
     }
     .home-hero-inner {
       max-width: var(--max-w); margin: 0 auto; padding: 0 2.5rem; width: 100%;
@@ -45,7 +45,7 @@
     .home-eyebrow {
       display: inline-flex; align-items: center; gap: 12px;
       font-size: .68rem; font-weight: 700; letter-spacing: .22em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 1.75rem;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
     }
     .home-eyebrow::before {
       content: ''; display: block; width: 32px; height: 2px;
@@ -53,54 +53,28 @@
     }
     .home-h1 {
       font-family: var(--font-head);
-      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-size: clamp(3rem, 8vw, 7rem);
       font-weight: 700;
       letter-spacing: -0.035em;
       line-height: .98;
       color: white;
-      margin-bottom: 1.75rem;
+      margin-bottom: 0;
     }
     .home-h1 em { color: var(--gold); font-style: normal; display: block; }
-    .home-sub {
-      font-size: clamp(1rem, 1.8vw, 1.15rem);
-      color: rgba(255,255,255,.48);
-      margin-bottom: 2.5rem;
-      letter-spacing: .02em;
-      max-width: 520px;
-      line-height: 1.7;
-    }
-    .home-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-    /* ── scroll indicator ── */
-    .home-scroll {
-      position: fixed; bottom: 2.5rem; right: 2.5rem; z-index: 10;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      color: rgba(255,255,255,.25); font-size: .6rem; letter-spacing: .18em;
-      text-transform: uppercase; text-decoration: none;
-      transition: color .2s;
-    }
-    .home-scroll:hover { color: rgba(255,255,255,.55); }
-    .home-scroll-line {
-      width: 1px; height: 50px;
-      background: linear-gradient(to bottom, rgba(255,255,255,.25), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: .3; transform: scaleY(1); }
-      50% { opacity: .8; transform: scaleY(1.1); }
-    }
-
-    /* ── stat strip ── */
+    /* Stats strip pinned to bottom of viewport */
     .home-stats {
+      flex-shrink: 0;
       position: relative; z-index: 1;
       background: rgba(10,18,38,.85);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid rgba(255,255,255,.06);
     }
 
     @media (max-width: 768px) {
-      .home-hero { padding-bottom: 4rem; }
-      .home-h1 { font-size: clamp(3rem, 12vw, 5rem); }
+      .home-hero { padding-bottom: 2rem; }
+      .home-h1 { font-size: clamp(2.5rem, 12vw, 4.5rem); }
     }
   </style>
 </head>
@@ -110,7 +84,6 @@
   <div class="home-bg" aria-hidden="true"></div>
 
   <div class="home-stage">
-    <!-- HERO -->
     <div class="home-hero">
       <div class="home-hero-inner">
         <div class="home-eyebrow">Reddingszwemmen · Gent</div>
@@ -118,15 +91,9 @@
           Reddingsclub
           <em>Aegir Gent.</em>
         </h1>
-        <p class="home-sub">Trainingen, competitie en reddersopleiding in Zwembad Strop. Welkom bij de reddingsclub van Gent.</p>
-        <div class="home-cta">
-          <a href="/pages/leden/inschrijven.html" class="btn btn-primary btn-lg">Word lid</a>
-          <a href="/pages/club/" class="btn btn-outline btn-lg">Ontdek de club</a>
-        </div>
       </div>
     </div>
 
-    <!-- STATS -->
     <div class="home-stats">
       <div id="homepage-stats" class="stat-strip-inner" style="max-width:var(--max-w);margin:0 auto">
         <div class="stat-block"><div class="stat-n">40+</div><div class="stat-l">Jaar actief</div></div>
@@ -137,10 +104,7 @@
     </div>
   </div>
 
-  <a href="/pages/nieuws/" class="home-scroll" aria-label="Naar nieuws">
-    Scroll
-    <span class="home-scroll-line"></span>
-  </a>
+  <div id="site-footer"></div>
 
   <script src="/js/components/nav.js"></script>
   <script src="/js/components/footer.js"></script>
