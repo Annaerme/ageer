@@ -18,7 +18,8 @@
 #   DEPLOY_VIEW_ONLY=1           enkel de bestandsnamen in de doelmap tonen, niets wijzigen
 #   DB_NAME, DB_USER, DB_PASS, SETUP_TOKEN (en optioneel DB_HOST): als ingesteld en
 #                     api/config.php bestaat nog niet op de server, wordt het één keer
-#                     aangemaakt. Een bestaande config.php wordt nooit overschreven.
+#                     aangemaakt. Een bestaande config.php wordt nooit overschreven,
+#                     behalve met DEPLOY_CONFIG_REPLACE=1 (uitdrukkelijke keuze "config-vernieuwen").
 #
 # WAT ER GEBEURT
 #   Geüpload wordt exact wat scripts/maak-upload-zip.sh in de zip stopt:
@@ -192,7 +193,7 @@ echo "Upload klaar ($PROTOCOL://$DEPLOY_HOST:$PORT$REMOTE_PATH)."
 # nergens getoond; het tijdelijke bestand staat buiten de upload en wordt
 # meteen gewist.
 if [ -n "${DB_PASS:-}" ] && [ "${DEPLOY_DRY_RUN:-}" != "1" ]; then
-  if lftp_cmd "cd \"$REMOTE_PATH\"; cls api/config.php" >/dev/null 2>&1; then
+  if [ "${DEPLOY_CONFIG_REPLACE:-}" != "1" ] && lftp_cmd "cd \"$REMOTE_PATH\"; cls api/config.php" >/dev/null 2>&1; then
     echo "api/config.php bestaat al op de server: niet aangeraakt."
   else
     [ -n "${DB_NAME:-}" ] && [ -n "${DB_USER:-}" ] \
