@@ -4,10 +4,11 @@
 # Keuze: lftp (uit de Ubuntu-pakketten) in plaats van een kant-en-klare action.
 # lftp is een oud, goed onderhouden programma dat zowel FTPS (expliciete TLS,
 # met certificaatcontrole) als SFTP kent, en met "mirror" per map kan kiezen of
-# oude bestanden verwijderd worden. Alle logica staat in scripts/deploy.sh, zodat
-# je exact hetzelfde ook lokaal kan draaien. Zie dat script voor wat er wel en
-# niet overschreven/verwijderd wordt (kort: api/config.php en bestaande
-# bestanden in uploads/ nooit; oude bestanden enkel in pages/ css/ js/ api/).
+# per map kan kiezen wat overschreven wordt. Alle logica staat in
+# scripts/deploy.sh, zodat je exact hetzelfde ook lokaal kan draaien.
+# Kort: er wordt NOOIT iets verwijderd op de server; api/config.php en
+# bestaande uploads worden nooit overschreven; en er wordt enkel geüpload als
+# de doelmap aantoonbaar de nieuwe site is (nooit de oude site).
 #
 # Inloggegevens staan NOOIT in de code: vul ze in als GitHub Secrets
 # (Settings → Secrets and variables → Actions). Zie INSTALLATIE.md.

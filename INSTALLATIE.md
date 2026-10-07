@@ -33,8 +33,11 @@ ledengegevens.
 ## 3. Bestanden uploaden
 
 1. Web FTP → map van de site (bv. `sites/nieuw.aegir-gent.be`).
-2. Upload `aegir-website-upload.zip`, pak uit en verwijder de zip.
-   `index.html`, `api/`, `pages/`, … moeten **direct** in die map staan.
+2. Upload `aegir-website-upload.zip` en pak uit. `index.html`, `api/`,
+   `pages/`, … moeten **direct** in die map staan.
+3. **Werk enkel in de map van de nieuwe site.** Verwijder of wijzig niets in
+   andere mappen (`web`, `leden`, `rag`, `backups`, …): daar draaien de oude
+   site, de ledenlogin en de cloud.
 
 ## 4. Configuratie invullen
 
@@ -143,6 +146,14 @@ DEPLOY_PASSWORD='…' DEPLOY_DRY_RUN=1 ./scripts/deploy.sh
 
 ### e. Wat er nooit overschreven of verwijderd wordt
 
+- **Er wordt nooit iets verwijderd op de server.** Bestanden van de nieuwe
+  site worden enkel toegevoegd of bijgewerkt.
+- **Enkel in de map van de nieuwe site.** Voor elke upload controleert het
+  script of de doelmap de nieuwe site is (`api/index.php` staat er) en geen
+  sporen bevat van de oude site of van de hoofdmap van de hosting
+  (`news.php`, `leden/`, `rag/`, `web/`, `sites/`, …). Anders stopt het
+  zonder iets te wijzigen.
+
 - **`api/config.php`** (met het databasewachtwoord): wordt nooit geüpload,
   overschreven of verwijderd. Hetzelfde voor andere `api/config*`-bestanden,
   bv. een reservekopie.
@@ -153,11 +164,6 @@ DEPLOY_PASSWORD='…' DEPLOY_DRY_RUN=1 ./scripts/deploy.sh
   beveiligingsregels van die map) wordt altijd bijgewerkt.
 - Andere bestanden en mappen in de hoofdmap (bv. oude pagina's zoals
   `agenda.html`, of mappen van Infomaniak) blijven onaangeroerd.
-- In `images/`, `documents/` en `data/` worden bestanden bijgewerkt, maar
-  nooit verwijderd.
-- Wel opgeruimd: in de codemappen `pages/`, `css/`, `js/` en `api/` worden
-  bestanden die niet meer in git staan verwijderd, zodat er geen oude
-  PHP-code blijft staan.
 - Nooit geüpload: `database/`, `supabase/`, `scripts/`, `.github/`,
   `*.md`-bestanden, `.git*`, `.DS_Store` en de oude pagina's in de hoofdmap.
 

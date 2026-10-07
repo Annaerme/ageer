@@ -21,19 +21,21 @@
 #   index.html .htaccess pages css js images documents data uploads api
 #   (zonder .DS_Store, .git*, *.md, api/config.php).
 #
-#   NOOIT overschreven of verwijderd op de server:
+#   CONTROLE VOORAF: de doelmap moet de nieuwe site zijn (api/index.php staat
+#   er al) en mag geen sporen van de oude site of van de hoofdmap van de
+#   hosting bevatten (news.php, leden/, rag/, web/, sites/, …). Anders stopt
+#   het script zonder iets te wijzigen.
+#
+#   Er wordt NOOIT iets verwijderd op de server. Bestanden van de nieuwe site
+#   worden enkel toegevoegd of bijgewerkt; verouderde bestanden blijven staan.
+#
+#   NOOIT overschreven op de server:
 #     - api/config.php (en api/config*: bv. een backup config.php.bak)
 #     - alles in uploads/ dat al bestaat (foto's en documenten van beheerders).
 #       Enkel ontbrekende bestanden uit uploads/documenten en uploads/fotos/shop
 #       worden toegevoegd. uploads/.htaccess (beveiliging) wordt wel altijd
 #       bijgewerkt: beheerders kunnen geen .htaccess uploaden.
-#     - .user.ini, error_log en *.log (door de hosting aangemaakt)
-#     - alles wat niet in de lijst hierboven staat (bv. oude agenda.html in de
-#       hoofdmap, andere mappen van Infomaniak): daar wordt niet aan gekomen.
-#
-#   Verouderde bestanden WEL verwijderd (spiegelen) enkel in de codemappen
-#   pages/, css/, js/ en api/: zo blijven er geen oude PHP-bestanden slingeren.
-#   In images/, documents/ en data/ wordt bijgewerkt maar nooit verwijderd.
+#     - alles wat niet in de lijst hierboven staat: daar wordt niet aan gekomen.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -92,8 +94,6 @@ else
   DRY=""; PUT="put"
 fi
 M="mirror --reverse --no-perms --parallel=4 --verbose=1 $DRY"
-# Bestanden die de hosting zelf aanmaakt: nooit verwijderen.
-BESCHERMD="-x '(^|/)\.user\.ini\$' -x '(^|/)error_log\$' -x '\.log\$'"
 
 if [ "$PROTOCOL" = "ftps" ]; then
   URL="ftp://$DEPLOY_HOST:$PORT"
@@ -108,6 +108,30 @@ else
   VERBINDING="set sftp:auto-confirm yes"
 fi
 
+# ---------- 5. Controle van de doelmap (vóór er iets geschreven wordt) ----------
+# Er wordt enkel geüpload naar de map van de NIEUWE site. Staan er sporen van
+# de oude site of van de hoofdmap van de hosting, of ontbreekt api/index.php
+# (de site is daar nog niet geïnstalleerd), dan stopt alles zonder iets te wijzigen.
+lftp_cmd() {
+  LFTP_PASSWORD="$DEPLOY_PASSWORD" lftp --env-password -u "$DEPLOY_USER" "$URL" \
+    -e "set cmd:fail-exit yes; set net:timeout 30; set net:max-retries 2; $(printf '%s' "$VERBINDING" | tr '\n' ';'); $1; bye"
+}
+inhoud="$(lftp_cmd "cd \"$REMOTE_PATH\"; cls -1a" 2>/dev/null)" \
+  || fout "kan de doelmap '$REMOTE_PATH' niet openen. Niets geüpload."
+inhoud="$(printf '%s\n' "$inhoud" | sed 's#/$##')"
+for spoor in content.php news.php events.php contact.php logon.php leden rag wp LiveResults doccenter \
+             nextcloud.data web sites backups application_backups vendor; do
+  if printf '%s\n' "$inhoud" | grep -qx "$spoor"; then
+    fout "de doelmap '$REMOTE_PATH' bevat '$spoor': dat lijkt de OUDE site of de hoofdmap van de hosting. Niets geüpload en niets verwijderd. Beperk het FTP-account tot de map van nieuw.aegir-gent.be of zet DEPLOY_PATH juist."
+  fi
+done
+lftp_cmd "cd \"$REMOTE_PATH\"; cls api/index.php" >/dev/null 2>&1 \
+  || fout "in '$REMOTE_PATH' staat geen api/index.php: de nieuwe site is daar (nog) niet geïnstalleerd. Doe eerst de handmatige installatie (INSTALLATIE.md). Niets geüpload."
+echo "Doelmap gecontroleerd: dit is de nieuwe site."
+
+# ---------- 6. Uploaden ----------
+# Er wordt NOOIT iets verwijderd op de server: enkel bestanden van de nieuwe
+# site toegevoegd of bijgewerkt. Verouderde bestanden blijven gewoon staan.
 LFTP_PASSWORD="$DEPLOY_PASSWORD" lftp --env-password -u "$DEPLOY_USER" "$URL" <<EOF
 set cmd:fail-exit yes
 set net:timeout 30
@@ -117,20 +141,15 @@ $VERBINDING
 cd "$REMOTE_PATH"
 lcd "$STAGE"
 
-# Hoofdmap: enkel deze twee bestanden; andere bestanden blijven staan.
+# Hoofdmap: enkel deze twee bestanden.
 $PUT index.html
 $PUT .htaccess
 
-# Codemappen: spiegelen, verouderde bestanden worden verwijderd.
-$M --delete $BESCHERMD pages pages
-$M --delete $BESCHERMD css css
-$M --delete $BESCHERMD js js
-# api/: config.php wordt nooit geüpload; bij het opruimen worden api/config*
-# (config.php, config.php.bak, …) altijd overgeslagen.
-$M -x '^config\\.php\$' api api
-$M --delete $BESCHERMD -x '^config[^/]*\$' api api
-
-# Inhoud: bijwerken, nooit verwijderen.
+# Code en inhoud: bijwerken, nooit verwijderen. api/config.php wordt nooit geüpload.
+$M pages pages
+$M css css
+$M js js
+$M -x '^config[^/]*\$' api api
 $M images images
 $M documents documents
 $M data data
