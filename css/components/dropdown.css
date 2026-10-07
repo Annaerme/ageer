@@ -13,16 +13,27 @@
   padding: .35rem;
   min-width: 180px;
   opacity: 0;
-  pointer-events: none;
-  transition: opacity .16s ease, transform .16s ease;
+  visibility: hidden;
+  /* Sluit met een korte vertraging, zodat een schuine muisbeweging het menu niet meteen dichtklapt */
+  transition: opacity .16s ease .15s, transform .16s ease .15s, visibility 0s linear .31s;
   z-index: 200;
+}
+
+/* Onzichtbare brug over de kier tussen menu-item en uitklapmenu: anders verlies je de hover onderweg */
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: -14px;
+  height: 14px;
 }
 
 .has-dropdown:hover .nav-dropdown,
 .has-dropdown:focus-within .nav-dropdown {
   opacity: 1;
-  pointer-events: auto;
+  visibility: visible;
   transform: translateX(-50%) translateY(0);
+  transition-delay: 0s;
 }
 
 .nav-dropdown a {
@@ -70,7 +81,8 @@
     position: static;
     transform: none !important;
     opacity: 1 !important;
-    pointer-events: auto;
+    visibility: visible !important;
+    transition: none;
     box-shadow: none;
     border: none;
     border-radius: 0;
@@ -80,6 +92,7 @@
   }
 
   .has-dropdown.mob-open .nav-dropdown { display: block; }
+  .nav-dropdown::before { display: none; }
   .nav-dropdown .nav-dropdown-overview { display: block !important; font-weight: 600 !important; color: var(--navy) !important; }
 
   .nav-dropdown a {
