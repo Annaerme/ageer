@@ -25,7 +25,7 @@ on:
       actie:
         description: "uploaden, of enkel bekijken wat er op de server staat (wijzigt niets)"
         type: choice
-        options: [uploaden, bekijken]
+        options: [uploaden, bekijken, oude-kopie-verwijderen]
         default: uploaden
 
 permissions:
@@ -80,12 +80,16 @@ jobs:
         if: ${{ inputs.actie == 'bekijken' }}
         run: DEPLOY_VIEW_ONLY=1 ./scripts/deploy.sh
 
+      - name: Oude projectkopie 'aegir-gent' verwijderen (tijdelijk, eenmalig)
+        if: ${{ inputs.actie == 'oude-kopie-verwijderen' }}
+        run: DEPLOY_REMOVE_OLD_COPY=1 ./scripts/deploy.sh
+
       - name: Uploaden naar Infomaniak
-        if: ${{ inputs.actie != 'bekijken' }}
+        if: ${{ inputs.actie != 'bekijken' && inputs.actie != 'oude-kopie-verwijderen' }}
         run: ./scripts/deploy.sh
 
       - name: Rooktest op de live site
-        if: ${{ inputs.actie != 'bekijken' }}
+        if: ${{ inputs.actie != 'bekijken' && inputs.actie != 'oude-kopie-verwijderen' }}
         run: |
           if [ -z "$SITE_URL" ]; then
             echo "::notice title=Rooktest overgeslagen::SITE_URL is niet ingesteld (bv. https://nieuw.aegir-gent.be). Voeg die toe als secret of variabele om na elke upload automatisch te testen."
