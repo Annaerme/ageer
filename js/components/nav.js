@@ -65,7 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="/pages/leden/" class="nav-parent">Leden ${chevron}</a>
         <div class="nav-dropdown">
           <a href="/pages/leden/inschrijven.html">Inschrijven</a>
-          <a href="/pages/leden/#lidgeld">Lidgeld &amp; kortingen</a>
+          <a href="/pages/leden/#lidgeld">Lidgeld &amp; tarieven</a>
+          <a href="/pages/leden/#tussenkomst">Tussenkomst in lidgeld</a>
+          <a href="/pages/leden/#formulieren">Formulieren nieuwe leden</a>
           <a href="/pages/leden/#verzekering">Verzekering</a>
         </div>
       </li>

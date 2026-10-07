@@ -175,6 +175,9 @@
       <button class="sn" data-s="nieuws"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Nieuws</button>
       <button class="sn" data-s="shop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Shop</button>
       <button class="sn" data-s="fotos"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Foto's</button>
+      <button class="sn" data-s="tarieven"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Tarieven</button>
+      <button class="sn" data-s="tussenkomsten"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/></svg>Tussenkomst</button>
+      <button class="sn" data-s="documenten"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>Documenten</button>
       <div class="sd"></div>
       <button class="sn" data-s="bestuur"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Bestuur</button>
       <button class="sn" data-s="partners"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Partners</button>
@@ -341,6 +344,54 @@
             <div class="fg"><label>Volgorde</label><input type="number" id="er-volgorde" placeholder="10" min="0" /></div>
             <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="er-can2">Annuleren</button></div>
           </form></div>
+        </div>
+      </div>
+
+      <!-- TARIEVEN -->
+      <div id="s-tarieven" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Tarieven (ledenpagina)</span><button class="btn bp bs" id="tf-new">+ Nieuw tarief</button></div>
+          <div id="tf-al"></div><div id="tf-li"><div class="ld">Laden…</div></div></div>
+        <div id="tf-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="tf-ft">Nieuw tarief</span><button class="btn bg bs" id="tf-can">Annuleren</button></div>
+          <div class="fpb"><form id="tf-form">
+            <input type="hidden" id="tf-id" />
+            <div class="fr"><div class="fg"><label>Groep *</label><input type="text" id="tf-groep" required list="tf-groepen" placeholder="Lidgeld per kalenderjaar" /><datalist id="tf-groepen"></datalist></div><div class="fg"><label>Naam *</label><input type="text" id="tf-naam" required placeholder="Recreant" /></div></div>
+            <div class="fg"><label>Omschrijving</label><textarea id="tf-oms" rows="2" placeholder="Wat is inbegrepen?"></textarea></div>
+            <p style="font-size:.78rem;color:var(--mid);margin:-.3rem 0 .6rem">Vul ofwel de bedragen voor -18 en +18 in, ofwel één bedrag voor iedereen. Een korting geef je in als negatief bedrag (bv. -15).</p>
+            <div class="fr"><div class="fg"><label>Bedrag -18 jaar (€)</label><input type="number" step="0.01" id="tf-min18" /></div><div class="fg"><label>Bedrag +18 jaar (€)</label><input type="number" step="0.01" id="tf-plus18" /></div></div>
+            <div class="fr"><div class="fg"><label>Eén bedrag (€)</label><input type="number" step="0.01" id="tf-prijs" /></div><div class="fg"><label>Eenheid</label><input type="text" id="tf-eenheid" placeholder="per kalenderjaar" /></div></div>
+            <div class="fr"><div class="fg"><label>Link (optioneel)</label><input type="text" id="tf-link" placeholder="https://…" /></div><div class="fg"><label>Volgorde (bepaalt ook de volgorde van de groepen)</label><input type="number" id="tf-volgorde" placeholder="10" min="0" /></div></div>
+            <label class="ck" style="margin-bottom:.85rem"><input type="checkbox" id="tf-actief" checked /> Tonen op de website</label>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="tf-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- TUSSENKOMSTEN -->
+      <div id="s-tussenkomsten" class="hi">
+        <div class="pn"><div class="ph"><span class="pt">Tussenkomst in het lidgeld</span><button class="btn bp bs" id="tk-new">+ Nieuw item</button></div>
+          <div id="tk-al"></div><div id="tk-li"><div class="ld">Laden…</div></div></div>
+        <div id="tk-fp" class="fp hi">
+          <div class="fph"><span class="fpt" id="tk-ft">Nieuw item</span><button class="btn bg bs" id="tk-can">Annuleren</button></div>
+          <div class="fpb"><form id="tk-form">
+            <input type="hidden" id="tk-id" />
+            <div class="fg"><label>Titel *</label><input type="text" id="tk-titel" required placeholder="Ziekenfonds" /></div>
+            <div class="fg"><label>Tekst</label><textarea id="tk-tekst" rows="5" placeholder="Uitleg…"></textarea></div>
+            <div class="fg"><label>Volgorde</label><input type="number" id="tk-volgorde" placeholder="10" min="0" /></div>
+            <label class="ck" style="margin-bottom:.85rem"><input type="checkbox" id="tk-actief" checked /> Tonen op de website</label>
+            <div class="fa"><button type="submit" class="btn bp">Opslaan</button><button type="button" class="btn bg" id="tk-can2">Annuleren</button></div>
+          </form></div>
+        </div>
+      </div>
+
+      <!-- DOCUMENTEN -->
+      <div id="s-documenten" class="hi">
+        <div class="pn">
+          <div class="ph"><span class="pt">Documenten (PDF)</span>
+            <label class="btn bp bs" style="cursor:pointer">+ PDF uploaden<input type="file" id="doc-file" accept="application/pdf" style="display:none" /></label></div>
+          <p style="font-size:.82rem;color:var(--mid);padding:.75rem 1.4rem 0">Een nieuwe blanco ledenfiche of medische fiche? Upload de PDF, kopieer de link en plak die bij <strong>Instellingen</strong> → "Link blanco ledenfiche" of "Link blanco medische fiche".</p>
+          <div id="doc-al"></div>
+          <div id="doc-li"><div class="ld">Laden…</div></div>
         </div>
       </div>
 
@@ -526,7 +577,7 @@ const al   = (id,msg,ok) => { const e=g(id); if(!e) return; e.innerHTML=`<div cl
 const fmtDT = s => { if(!s) return ''; const d=new Date(s); return d.toLocaleDateString('nl-BE',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('nl-BE',{hour:'2-digit',minute:'2-digit'}); };
 
 // ── GENERIC SECTION CRUD ─────────────────────────────────────────
-let DATA = { agenda:{}, nieuws:{}, shop:{}, bestuur:{}, partners:{}, ereleden:{}, records:{}, disciplines:{}, niveaugroepen:{}, locaties:{}, stats:{} };
+let DATA = { agenda:{}, nieuws:{}, shop:{}, bestuur:{}, partners:{}, ereleden:{}, tarieven:{}, tussenkomsten:{}, records:{}, disciplines:{}, niveaugroepen:{}, locaties:{}, stats:{} };
 
 async function loadSec(sec) {
   const cfg = SECS[sec];
@@ -701,6 +752,46 @@ const SECS = {
     },
     reset() { g('er-form').reset(); g('er-id').value=''; g('er-ft').textContent='Nieuw erelid'; }
   },
+  tarieven: {
+    p:'tf', table:'tarieven', order:'volgorde.asc',
+    render() {
+      const el = g('tf-li');
+      g('tf-groepen').innerHTML = [...new Set(DATA.tarieven.map(i=>i.groep))].map(x=>`<option value="${esc(x)}">`).join('');
+      if (!DATA.tarieven.length) { el.innerHTML='<div class="em">Nog geen tarieven.</div>'; return; }
+      const eur = v => v==null ? '' : '€'+Number(v).toFixed(2).replace('.',',').replace(',00','');
+      el.innerHTML = `<table class="dt"><thead><tr><th>Groep</th><th>Naam</th><th>Bedrag</th><th>Zichtbaar</th><th></th></tr></thead><tbody>
+      ${DATA.tarieven.map(i=>`<tr><td style="color:var(--mid)">${esc(i.groep)}</td><td><strong>${esc(i.naam)}</strong></td>
+      <td style="white-space:nowrap">${i.prijs_min18!=null||i.prijs_plus18!=null ? `-18: ${eur(i.prijs_min18)||'—'} · +18: ${eur(i.prijs_plus18)||'—'}` : eur(i.prijs)||'—'}</td>
+      <td>${tg(i.actief?'ja':'nee')}</td><td style="white-space:nowrap">${actBtns('tarieven',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.tarieven.find(x=>x.id===id); if(!i) return;
+      g('tf-id').value=i.id; g('tf-groep').value=i.groep||''; g('tf-naam').value=i.naam||''; g('tf-oms').value=i.omschrijving||'';
+      g('tf-min18').value=i.prijs_min18??''; g('tf-plus18').value=i.prijs_plus18??''; g('tf-prijs').value=i.prijs??'';
+      g('tf-eenheid').value=i.eenheid||''; g('tf-link').value=i.link||''; g('tf-volgorde').value=i.volgorde||0; g('tf-actief').checked=!!i.actief;
+      g('tf-ft').textContent='Tarief bewerken'; showFP('tarieven');
+    },
+    reset() { g('tf-form').reset(); g('tf-id').value=''; g('tf-actief').checked=true; g('tf-ft').textContent='Nieuw tarief'; }
+  },
+  tussenkomsten: {
+    p:'tk', table:'tussenkomsten', order:'volgorde.asc',
+    render() {
+      const el = g('tk-li');
+      if (!DATA.tussenkomsten.length) { el.innerHTML='<div class="em">Nog geen items.</div>'; return; }
+      el.innerHTML = `<table class="dt"><thead><tr><th>Titel</th><th>Tekst</th><th>Zichtbaar</th><th></th></tr></thead><tbody>
+      ${DATA.tussenkomsten.map(i=>`<tr><td><strong>${esc(i.titel)}</strong></td><td style="color:var(--mid);max-width:420px">${esc((i.tekst||'').slice(0,110))}${(i.tekst||'').length>110?'…':''}</td>
+      <td>${tg(i.actief?'ja':'nee')}</td><td style="white-space:nowrap">${actBtns('tussenkomsten',i.id)}</td></tr>`).join('')}
+      </tbody></table>`;
+    },
+    edit(id) {
+      const i=DATA.tussenkomsten.find(x=>x.id===id); if(!i) return;
+      g('tk-id').value=i.id; g('tk-titel').value=i.titel||''; g('tk-tekst').value=i.tekst||'';
+      g('tk-volgorde').value=i.volgorde||0; g('tk-actief').checked=!!i.actief;
+      g('tk-ft').textContent='Item bewerken'; showFP('tussenkomsten');
+    },
+    reset() { g('tk-form').reset(); g('tk-id').value=''; g('tk-actief').checked=true; g('tk-ft').textContent='Nieuw item'; }
+  },
   disciplines: {
     p:'di', table:'disciplines', order:'reeks.asc,volgorde.asc',
     render() {
@@ -828,6 +919,8 @@ const formMap = {
   bestuur: { form:'bs-form', id:'bs-id', read:()=>({ naam:g('bs-naam').value.trim(), functie:g('bs-func').value.trim()||null, extra_functies:g('bs-extra').value.trim()||null, email:g('bs-email').value.trim()||null, telefoon:g('bs-tel').value.trim()||null, volgorde:parseInt(g('bs-volgorde').value)||0, actief:g('bs-actief').checked }) },
   partners: { form:'pt-form', id:'pt-id', read:()=>({ naam:g('pt-naam').value.trim(), website:g('pt-web').value.trim()||null, beschrijving:g('pt-descr').value.trim()||null, volgorde:parseInt(g('pt-volgorde').value)||0, actief:g('pt-actief').checked }) },
   ereleden: { form:'er-form', id:'er-id', read:()=>({ naam:g('er-naam').value.trim(), jaar:parseInt(g('er-jaar').value)||null, notitie:g('er-nota').value.trim()||null, volgorde:parseInt(g('er-volgorde').value)||0 }) },
+  tarieven: { form:'tf-form', id:'tf-id', read:()=>{ const n=v=>v===''?null:parseFloat(v); return { groep:g('tf-groep').value.trim(), naam:g('tf-naam').value.trim(), omschrijving:g('tf-oms').value.trim()||null, prijs_min18:n(g('tf-min18').value), prijs_plus18:n(g('tf-plus18').value), prijs:n(g('tf-prijs').value), eenheid:g('tf-eenheid').value.trim()||null, link:g('tf-link').value.trim()||null, volgorde:parseInt(g('tf-volgorde').value)||0, actief:g('tf-actief').checked }; } },
+  tussenkomsten: { form:'tk-form', id:'tk-id', read:()=>({ titel:g('tk-titel').value.trim(), tekst:g('tk-tekst').value.trim()||null, volgorde:parseInt(g('tk-volgorde').value)||0, actief:g('tk-actief').checked }) },
   disciplines: { form:'di-form', id:'di-id', read:()=>({ code:g('di-code').value.trim(), reeks:g('di-reeks').value, naam:g('di-naam').value.trim(), beschrijving:g('di-descr').value.trim()||null, volgorde:parseInt(g('di-volgorde').value)||0 }) },
   niveaugroepen: { form:'ng-form', id:'ng-id', read:()=>({ naam:g('ng-naam').value.trim(), emoji:g('ng-emoji').value.trim()||null, baan:g('ng-baan').value.trim()||null, trainer:g('ng-trainer').value.trim()||null, beschrijving:g('ng-descr').value.trim()||null, volgorde:parseInt(g('ng-volgorde').value)||0, actief:g('ng-actief').checked }) },
   locaties: { form:'lc-form', id:'lc-id', read:()=>({ naam:g('lc-naam').value.trim(), adres:g('lc-adres').value.trim()||null, dag:g('lc-dag').value.trim()||null, tijdstip:g('lc-tijd').value.trim()||null, seizoen:g('lc-seizoen').value.trim()||null, gebruik:g('lc-gebruik').value.trim()||null, info:g('lc-info').value.trim()||null, volgorde:parseInt(g('lc-volgorde').value)||0, actief:g('lc-actief').checked }) },
@@ -964,10 +1057,13 @@ function renderSettings() {
 
 function editSetting(key) {
   const s=SETTINGS.find(x=>x.sleutel===key); if(!s) return;
+  const lang = (s.waarde||'').length > 60 || /intro|tekst/.test(key);
+  const veld = lang
+    ? `<textarea id="seti-${esc(key)}" rows="4" style="border:1.5px solid var(--bdr);border-radius:7px;padding:.45rem .6rem;font-size:.86rem;font-family:var(--f);width:100%;resize:vertical">${esc(s.waarde||'')}</textarea>`
+    : `<input id="seti-${esc(key)}" type="text" value="${esc(s.waarde||'')}" style="border:1.5px solid var(--bdr);border-radius:7px;padding:.38rem .6rem;font-size:.86rem;font-family:var(--f);width:100%" />`;
   g(`setrow-${key}`).innerHTML=`
     <span class="set-lbl">${esc(s.label||s.sleutel)}</span>
-    <input id="seti-${esc(key)}" type="text" value="${esc(s.waarde||'')}"
-           style="border:1.5px solid var(--bdr);border-radius:7px;padding:.38rem .6rem;font-size:.86rem;font-family:var(--f);width:100%" />
+    ${veld}
     <div style="display:flex;gap:.4rem">
       <button class="btn bp bs" onclick="saveSetting('${esc(key)}')">Opslaan</button>
       <button class="btn bg bs" onclick="renderSettings()">✕</button>
@@ -1179,6 +1275,33 @@ document.querySelectorAll('.itb').forEach(btn=>{
   };
 });
 
+// ── DOCUMENTEN ───────────────────────────────────────────────────
+async function loadDocumenten() {
+  const el = g('doc-li'); el.innerHTML = '<div class="ld">Laden…</div>';
+  try {
+    const rows = await call('GET', '/api/documenten');
+    if (!rows.length) { el.innerHTML = '<div class="em">Nog geen documenten.</div>'; return; }
+    el.innerHTML = `<table class="dt"><thead><tr><th>Bestand</th><th>Grootte</th><th></th></tr></thead><tbody>${
+      rows.map(d => `<tr><td><a href="${esc(d.url)}" target="_blank" rel="noopener" style="color:var(--navy)">${esc(d.name)}</a></td>
+        <td style="color:var(--mid)">${Math.round(d.size/1024)} kB</td>
+        <td style="white-space:nowrap"><button class="btn bg bs" onclick="copyUrl('${esc(d.url)}')">Link kopiëren</button>
+        <button class="btn bd2 bs" onclick="delDocument('${esc(d.name)}')">Verw.</button></td></tr>`).join('')
+    }</tbody></table>`;
+  } catch(e) { el.innerHTML = `<div class="al ale alw">${esc(e.message)}</div>`; }
+}
+async function delDocument(name) {
+  if (!confirm(`Document "${name}" definitief verwijderen? Controleer eerst of de website er niet meer naar linkt.`)) return;
+  try { await call('DELETE', `/api/documenten?name=${encodeURIComponent(name)}`); al('doc-al','Verwijderd.',true); loadDocumenten(); }
+  catch(e) { al('doc-al', e.message, false); }
+}
+g('doc-file').onchange = async function() {
+  const file = this.files[0]; if (!file) return;
+  const fd = new FormData(); fd.append('bestand', file);
+  try { const d = await call('POST', '/api/documenten', fd, true); al('doc-al', `Geüpload: ${d.url}`, true); loadDocumenten(); }
+  catch(e) { al('doc-al', e.message, false); }
+  this.value = '';
+};
+
 // ── BEHEERDERS ───────────────────────────────────────────────────
 async function loadBeheerders() {
   const el = g('bh-li'); el.innerHTML = '<div class="ld">Laden…</div>';
@@ -1213,7 +1336,7 @@ g('pw-form').onsubmit = async e => {
 };
 
 // ── SIDEBAR NAV ──────────────────────────────────────────────────
-const ALL_SECS = ['beheerders','inbox','agenda','nieuws','shop','fotos','bestuur','partners','ereleden','disciplines','niveaugroepen','locaties','stats','instellingen','records'];
+const ALL_SECS = ['tarieven','tussenkomsten','documenten','beheerders','inbox','agenda','nieuws','shop','fotos','bestuur','partners','ereleden','disciplines','niveaugroepen','locaties','stats','instellingen','records'];
 
 document.querySelectorAll('.sn[data-s]').forEach(btn => {
   btn.onclick = () => {
@@ -1227,6 +1350,8 @@ document.querySelectorAll('.sn[data-s]').forEach(btn => {
       if(!INBOX.bestellingen) loadInboxTab('bestellingen');
     } else if(s==='fotos') {
       loadFotoGallery();
+    } else if(s==='documenten') {
+      loadDocumenten();
     } else if(s==='beheerders') {
       loadBeheerders();
     } else if(s==='instellingen') {

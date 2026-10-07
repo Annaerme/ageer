@@ -5,6 +5,7 @@
 //   /api/auth/login|logout|me|wachtwoord
 //   /api/beheerders          beheerders oplijsten, toevoegen, verwijderen
 //   /api/fotos               foto's oplijsten (GET), uploaden (POST), verwijderen (DELETE)
+//   /api/documenten          PDF's oplijsten, uploaden, verwijderen (bv. blanco ledenfiche)
 //   /api/setup               eenmalig de eerste beheerder aanmaken
 
 declare(strict_types=1);
@@ -73,11 +74,17 @@ try {
             send_json(['ok' => true]);
 
         case 'GET fotos':
-            handle_fotos_list();
+            handle_fotos_list('fotos');
         case 'POST fotos':
-            handle_upload();
+            handle_upload('fotos');
         case 'DELETE fotos':
-            handle_foto_delete();
+            handle_foto_delete('fotos');
+        case 'GET documenten':
+            handle_fotos_list('documenten');
+        case 'POST documenten':
+            handle_upload('documenten');
+        case 'DELETE documenten':
+            handle_foto_delete('documenten');
 
         case 'GET setup':
         case 'POST setup':

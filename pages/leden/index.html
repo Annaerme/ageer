@@ -36,41 +36,69 @@
     <section class="section" id="lidgeld">
       <div class="wrap">
         <div class="label">Financieel</div>
-        <h2 style="margin-bottom:.5rem">Lidgeld</h2>
-        <p style="max-width:580px;margin-bottom:2rem">Het lidgeld omvat de clubbijdrage én de verzekeringspremie bij Sporta. Het vervalt op 31 december van elk jaar.</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
+        <h2 style="margin-bottom:.5rem">Lidgeld &amp; tarieven</h2>
+        <p id="lidgeld-intro" class="ld-intro">Het lidgeld verloopt per kalenderjaar en vervalt op 31/12.</p>
+        <div id="tarieven" class="tarieven"><p style="color:var(--text-muted)">Tarieven laden…</p></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:2rem">
           <div class="info-box" style="border-left:3px solid var(--gold)">
             <h4>Vervaldatum</h4>
             <p style="font-size:.87rem;margin-top:.4rem">Vervalt op <strong>31 december</strong>. Na 31/12 ben je niet meer verzekerd.</p>
           </div>
           <div class="info-box">
             <h4>Vernieuwen</h4>
-            <p style="font-size:.87rem;margin-top:.4rem">In <strong>november</strong> ontvang je een herinnering per mail om te vernieuwen via AssistOnline.</p>
+            <p style="font-size:.87rem;margin-top:.4rem">In <strong>november</strong> ontvang je een mail om je lidmaatschap te hernieuwen.</p>
           </div>
           <div class="info-box">
             <h4>Betaling</h4>
-            <p style="font-size:.87rem;margin-top:.4rem">Overschrijving naar de clubrekening.</p>
+            <p style="font-size:.87rem;margin-top:.4rem">Online of via overschrijving naar de clubrekening.</p>
             <p id="leden-iban" style="font-size:.82rem;font-family:monospace;margin-top:.4rem">BE17 8907 3409 5021</p>
-          </div>
-        </div>
-        <h3 style="margin-top:2.5rem;margin-bottom:1rem">Kortingen</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
-          <div class="info-box">
-            <h4>2e familielid</h4>
-            <p style="font-size:.87rem;margin-top:.4rem">Elk volgend gezinslid krijgt <strong id="korting-familie">€15 korting</strong>.</p>
-          </div>
-          <div class="info-box">
-            <h4>Verhoogde tegemoetkoming</h4>
-            <p style="font-size:.87rem;margin-top:.4rem">Rechthebbenden krijgen <strong id="korting-vt">€11 korting</strong>. Bewijs meebrengen.</p>
-          </div>
-          <div class="info-box">
-            <h4>Afbetalingsplan</h4>
-            <p style="font-size:.87rem;margin-top:.4rem">Moeilijkheden? Contacteer Piet voor een plan op maat.</p>
-            <p style="font-size:.82rem;margin-top:.4rem"><a id="tel-piet-link" href="tel:0465094268" style="color:var(--navy)"><span id="tel-piet">0465 09 42 68</span></a></p>
           </div>
         </div>
       </div>
     </section>
+
+    <section class="section bg-off" id="tussenkomst">
+      <div class="wrap">
+        <div class="label">Minder betalen</div>
+        <h2 style="margin-bottom:.5rem">Tussenkomst in het lidgeld</h2>
+        <p id="tussenkomst-intro" class="ld-intro">Hieronder vind je enkele manieren om een deel van je lidgeld terug te krijgen.</p>
+        <div id="tussenkomsten" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem"></div>
+        <p style="font-size:.87rem;margin-top:1.25rem">Vragen? Contacteer Piet: <a id="tel-piet-link" href="tel:0465094268" style="color:var(--navy)"><span id="tel-piet">0465 09 42 68</span></a></p>
+      </div>
+    </section>
+
+    <section class="section" id="formulieren">
+      <div class="wrap">
+        <div class="label">Nieuwe leden</div>
+        <h2 style="margin-bottom:.5rem">Formulieren</h2>
+        <p id="formulieren-intro" class="ld-intro">Ben je nieuw? Vul de blanco ledenfiche en de medische fiche in en geef ze zo snel mogelijk af aan de kassa.</p>
+        <div style="display:flex;flex-direction:column;gap:.5rem;max-width:560px">
+          <a id="doc-ledenfiche" href="/uploads/documenten/blanco-ledenfiche-2026.pdf" target="_blank" rel="noopener" class="download-link"><span class="dl-icon">PDF</span><span>Blanco ledenfiche</span></a>
+          <a id="doc-medische-fiche" href="/uploads/documenten/blanco-medische-fiche-2026.pdf" target="_blank" rel="noopener" class="download-link"><span class="dl-icon">PDF</span><span>Blanco medische fiche</span></a>
+          <a id="doc-infobrochure" href="/documents/infobrochure.pdf" target="_blank" rel="noopener" class="download-link"><span class="dl-icon">PDF</span><span>Clubfolder met algemene info</span></a>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      .ld-intro { max-width:640px; margin-bottom:2rem; white-space:pre-line; }
+      .tarief-groep { margin-bottom:2rem; }
+      .tarief-groep h3 { font-size:1.05rem; margin-bottom:.75rem; }
+      .tarief { display:grid; grid-template-columns:1fr auto; gap:.25rem 1.5rem; padding:1rem 1.25rem; border:1px solid var(--border); border-radius:10px; background:white; margin-bottom:.6rem; align-items:center; }
+      .tarief-naam { font-weight:600; color:var(--navy); }
+      .tarief-oms { font-size:.85rem; color:var(--text-muted); grid-column:1; }
+      .tarief-oms a { color:var(--navy); }
+      .tarief-prijs { grid-column:2; grid-row:1 / span 2; text-align:right; font-family:var(--font-head); font-weight:700; color:var(--navy); white-space:nowrap; line-height:1.5; }
+      .tarief-prijs small { display:block; font-family:var(--font-body); font-weight:500; font-size:.72rem; color:var(--text-muted); }
+      .tarief-prijs .lft { font-size:.75rem; font-weight:600; color:var(--text-muted); margin-right:.3rem; }
+      .tussenkomst h4 { margin-bottom:.4rem; }
+      .tussenkomst p { font-size:.87rem; white-space:pre-line; }
+      @media (max-width:560px) {
+        .tarief { grid-template-columns:1fr; }
+        .tarief-oms { order:2; }
+        .tarief-prijs { grid-column:1; grid-row:auto; text-align:left; order:3; margin-top:.35rem; }
+      }
+    </style>
 
     <section class="section bg-off" id="verzekering">
       <div class="wrap">
@@ -122,23 +150,46 @@
   <script src="/js/main.js"></script>
   <script>
   (()=>{
-    const SB='/api';
-    const KEY='';
-    fetch(`${SB}/rest/v1/site_settings?sleutel=in.(iban_club,korting_familie,korting_vt,tel_piet,polis_sporta,polis_redfed_lo,polis_redfed_ba)`,{headers:{apikey:KEY}})
-      .then(r=>r.json())
-      .then(items=>{
-        const m={}; items.forEach(x=>m[x.sleutel]=x.waarde);
-        if(m.iban_club) document.getElementById('leden-iban').textContent=m.iban_club;
-        if(m.korting_familie) document.getElementById('korting-familie').textContent=m.korting_familie+' korting';
-        if(m.korting_vt) document.getElementById('korting-vt').textContent=m.korting_vt+' korting';
-        if(m.tel_piet){
-          document.getElementById('tel-piet').textContent=m.tel_piet;
-          document.getElementById('tel-piet-link').href='tel:'+m.tel_piet.replace(/\s/g,'');
-        }
-        if(m.polis_sporta) document.getElementById('polis-sporta').textContent=m.polis_sporta;
-        if(m.polis_redfed_lo) document.getElementById('polis-redfed-lo').textContent=m.polis_redfed_lo;
-        if(m.polis_redfed_ba) document.getElementById('polis-redfed-ba').textContent=m.polis_redfed_ba;
-      }).catch(()=>{});
+    const esc = v => String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    const safeUrl = u => /^(https?:\/\/|\/)/i.test(u||'') ? u : '#';
+    const euro = n => (n < 0 ? '− ' : '') + '€ ' + Math.abs(n).toLocaleString('nl-BE', { minimumFractionDigits: Number.isInteger(n) ? 0 : 2 });
+    const get = qs => fetch('/api/rest/v1/' + qs).then(r => r.ok ? r.json() : Promise.reject(r.status));
+    const $ = id => document.getElementById(id);
+
+    get('site_settings?sleutel=in.(iban_club,tel_piet,polis_sporta,polis_redfed_lo,polis_redfed_ba,lidgeld_intro,tussenkomst_intro,formulieren_intro,doc_ledenfiche,doc_medische_fiche,doc_infobrochure)')
+      .then(items => {
+        const m = {}; items.forEach(x => m[x.sleutel] = x.waarde);
+        const txt = (id, v) => { if (v) $(id).textContent = v; };
+        txt('leden-iban', m.iban_club); txt('polis-sporta', m.polis_sporta);
+        txt('polis-redfed-lo', m.polis_redfed_lo); txt('polis-redfed-ba', m.polis_redfed_ba);
+        txt('lidgeld-intro', m.lidgeld_intro); txt('tussenkomst-intro', m.tussenkomst_intro); txt('formulieren-intro', m.formulieren_intro);
+        if (m.tel_piet) { $('tel-piet').textContent = m.tel_piet; $('tel-piet-link').href = 'tel:' + m.tel_piet.replace(/\s/g, ''); }
+        [['doc-ledenfiche', m.doc_ledenfiche], ['doc-medische-fiche', m.doc_medische_fiche], ['doc-infobrochure', m.doc_infobrochure]]
+          .forEach(([id, url]) => { if (url) $(id).href = safeUrl(url); });
+      }).catch(() => {});
+
+    get('tarieven?order=volgorde.asc')
+      .then(rows => {
+        if (!rows.length) { $('tarieven').innerHTML = ''; return; }
+        const groepen = [];
+        rows.forEach(r => { let gr = groepen.find(x => x.naam === r.groep); if (!gr) groepen.push(gr = { naam: r.groep, rows: [] }); gr.rows.push(r); });
+        $('tarieven').innerHTML = groepen.map(gr => `<div class="tarief-groep"><h3>${esc(gr.naam)}</h3>${gr.rows.map(r => {
+          let prijs = '';
+          if (r.prijs_min18 != null || r.prijs_plus18 != null) {
+            prijs = [r.prijs_min18 != null ? `<span class="lft">-18j</span>${euro(r.prijs_min18)}` : '',
+                     r.prijs_plus18 != null ? `<span class="lft">+18j</span>${euro(r.prijs_plus18)}` : ''].filter(Boolean).join('<br>');
+          } else if (r.prijs != null) prijs = euro(r.prijs);
+          const link = r.link ? ` <a href="${esc(safeUrl(r.link))}" target="_blank" rel="noopener">Meer info →</a>` : '';
+          return `<div class="tarief"><div class="tarief-naam">${esc(r.naam)}</div>
+            <div class="tarief-prijs">${prijs}${r.eenheid ? `<small>${esc(r.eenheid)}</small>` : ''}</div>
+            ${r.omschrijving || link ? `<div class="tarief-oms">${esc(r.omschrijving)}${link}</div>` : ''}</div>`;
+        }).join('')}</div>`).join('');
+      }).catch(() => { $('tarieven').innerHTML = '<p>De tarieven konden niet geladen worden. Mail <a href="mailto:info@aegir-gent.be">info@aegir-gent.be</a>.</p>'; });
+
+    get('tussenkomsten?order=volgorde.asc')
+      .then(rows => {
+        $('tussenkomsten').innerHTML = rows.map(r => `<div class="info-box tussenkomst"><h4>${esc(r.titel)}</h4><p>${esc(r.tekst)}</p></div>`).join('');
+      }).catch(() => {});
   })();
   </script>
 </body>

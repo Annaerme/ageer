@@ -143,6 +143,28 @@ CREATE TABLE IF NOT EXISTS web_site_settings (
   label   VARCHAR(200) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS web_tarieven (
+  id           CHAR(36)      NOT NULL PRIMARY KEY,
+  groep        VARCHAR(100)  NOT NULL DEFAULT 'Lidgeld per kalenderjaar',
+  naam         VARCHAR(200)  NOT NULL,
+  omschrijving TEXT          NULL,
+  prijs_min18  DECIMAL(10,2) NULL COMMENT 'tarief jonger dan 18',
+  prijs_plus18 DECIMAL(10,2) NULL COMMENT 'tarief vanaf 18',
+  prijs        DECIMAL(10,2) NULL COMMENT 'één tarief voor iedereen (of korting, negatief)',
+  eenheid      VARCHAR(100)  NULL,
+  link         VARCHAR(500)  NULL,
+  volgorde     INT           NOT NULL DEFAULT 0,
+  actief       TINYINT(1)    NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS web_tussenkomsten (
+  id       CHAR(36)     NOT NULL PRIMARY KEY,
+  titel    VARCHAR(200) NOT NULL,
+  tekst    TEXT         NULL,
+  volgorde INT          NOT NULL DEFAULT 0,
+  actief   TINYINT(1)   NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ── Inbox (ingestuurd via de website, enkel leesbaar voor beheerders) ────
 
 CREATE TABLE IF NOT EXISTS web_contact_berichten (

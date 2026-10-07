@@ -124,6 +124,23 @@ function table_defs(): array
             'public_read' => true,
         ],
 
+        'tarieven' => [
+            'table' => 'web_tarieven', 'pk' => 'id',
+            'cols' => [
+                'id' => 'uuid', 'groep' => 'str', 'naam' => 'str', 'omschrijving' => 'text',
+                'prijs_min18' => 'num', 'prijs_plus18' => 'num', 'prijs' => 'num', 'eenheid' => 'str',
+                'link' => 'str', 'volgorde' => 'int', 'actief' => 'bool',
+            ],
+            'required' => ['groep', 'naam'],
+            'public_read' => true, 'public_where' => ['actief' => 1],
+        ],
+        'tussenkomsten' => [
+            'table' => 'web_tussenkomsten', 'pk' => 'id',
+            'cols' => ['id' => 'uuid', 'titel' => 'str', 'tekst' => 'text', 'volgorde' => 'int', 'actief' => 'bool'],
+            'required' => ['titel'],
+            'public_read' => true, 'public_where' => ['actief' => 1],
+        ],
+
         // ── Inbox: bezoekers mogen insturen, enkel beheerders mogen lezen ──
         'contact_berichten' => [
             'table' => 'web_contact_berichten', 'pk' => 'id',
