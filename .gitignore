@@ -7,3 +7,6 @@ node_modules/
 
 # Serverconfiguratie met databasewachtwoord: nooit in git
 api/config.php
+
+# Lokale werkmappen van Claude Code
+.claude/
