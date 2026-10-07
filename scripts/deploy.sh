@@ -118,8 +118,12 @@ lftp_cmd() {
   LFTP_PASSWORD="$DEPLOY_PASSWORD" lftp --env-password -u "$DEPLOY_USER" "$URL" \
     -e "set cmd:fail-exit yes; set net:timeout 30; set net:max-retries 2; $(printf '%s' "$VERBINDING" | tr '\n' ';'); $1; bye"
 }
-inhoud="$(lftp_cmd "cd \"$REMOTE_PATH\"; cls -1a" 2>/dev/null)" \
-  || fout "kan de doelmap '$REMOTE_PATH' niet openen. Niets geüpload."
+lftp_fout="$(mktemp)"
+inhoud="$(lftp_cmd "cd \"$REMOTE_PATH\"; cls -1a" 2>"$lftp_fout")" || {
+  echo "Melding van de server: $(grep -v -i 'pass' "$lftp_fout" | tail -3)" >&2
+  fout "kan de doelmap '$REMOTE_PATH' niet openen (zie melding hierboven: meestal een verkeerd wachtwoord of gebruikersnaam). Niets geüpload."
+}
+rm -f "$lftp_fout"
 inhoud="$(printf '%s\n' "$inhoud" | sed 's#/$##')"
 for spoor in content.php news.php events.php contact.php logon.php leden rag wp LiveResults doccenter \
              nextcloud.data web sites backups application_backups vendor; do
