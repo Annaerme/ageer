@@ -1,0 +1,9 @@
+# Enkel afbeeldingen serveren; nooit code uitvoeren in de uploadmap.
+Options -Indexes -ExecCGI
+<FilesMatch "\.(php\d?|phtml|phar|pht|pl|py|cgi|sh|shtml|html?|svg|js)$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Content-Security-Policy "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'"
+</IfModule>

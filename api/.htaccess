@@ -1,0 +1,12 @@
+# Alle verzoeken naar /api/… gaan via index.php.
+Options -Indexes
+DirectoryIndex index.php
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !/api/index\.php$
+RewriteRule ^ index.php [QSA,L]
+
+# Configuratie en interne code nooit rechtstreeks bereikbaar.
+<FilesMatch "^(config.*\.php|.*\.sql|.*\.md)$">
+  Require all denied
+</FilesMatch>

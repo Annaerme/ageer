@@ -103,8 +103,8 @@
   <script>
 // Site settings
 (()=>{
-  const SB2='https://wlmehcbxeseigxwougwd.supabase.co';
-  const KEY2='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+  const SB2='/api';
+  const KEY2='';
   fetch(`${SB2}/rest/v1/site_settings?sleutel=in.(iban_club,bic_club,iban_rescue,bic_rescue,email_info,email_competitie,email_opleiding,adres_post)`,{headers:{apikey:KEY2}})
     .then(r=>r.json()).then(items=>{
       const m={}; items.forEach(x=>m[x.sleutel]=x.waarde);
@@ -118,8 +118,8 @@
     }).catch(()=>{});
 })();
 
-const SB  = 'https://wlmehcbxeseigxwougwd.supabase.co';
-const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+const SB  = '/api';
+const KEY = '';
 
 function sbGet(table, qs='') {
   return fetch(`${SB}/rest/v1/${table}${qs}`, { headers:{ apikey:KEY } }).then(r=>r.json());

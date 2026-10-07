@@ -231,8 +231,8 @@
   <div id="site-footer"></div>
   <script>
   (()=>{
-    const SB='https://wlmehcbxeseigxwougwd.supabase.co';
-    const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+    const SB='/api';
+    const KEY='';
     fetch(`${SB}/rest/v1/site_settings?sleutel=eq.iban_club`,{headers:{apikey:KEY}})
       .then(r=>r.json()).then(items=>{
         if(items[0]) document.getElementById('shop-iban').textContent=items[0].waarde;
@@ -253,8 +253,8 @@
     let cart = {}; // { id: { product, qty, maat } }
 
     // Load products from Supabase
-    const SB_URL = 'https://wlmehcbxeseigxwougwd.supabase.co';
-    const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+    const SB_URL = '/api';
+    const SB_KEY = '';
     try {
       const res = await fetch(`${SB_URL}/rest/v1/shop_producten?beschikbaar=eq.true&order=volgorde.asc`, {
         headers: { apikey: SB_KEY }

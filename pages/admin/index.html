@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Beheer | Aegir Gent</title>
+  <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" href="/images/logo/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -108,6 +109,32 @@
     /* SIDEBAR BADGE */
     .sn-badge{background:var(--red);color:white;border-radius:10px;padding:0 6px;font-size:.68rem;min-width:16px;text-align:center;line-height:16px;height:16px;display:inline-block;margin-left:auto}
     .sn-badge.zero{background:transparent}
+    /* MOBIEL */
+    .mn .pn{overflow-x:auto}
+    .ii-tools{display:flex;gap:.5rem;align-items:center;padding:.75rem 1.4rem;border-bottom:1px solid var(--bdr);flex-wrap:wrap}
+    .ii-tools input{flex:1;min-width:160px;border:1.5px solid var(--bdr);border-radius:7px;padding:.45rem .75rem;font-family:var(--f);font-size:.85rem}
+    @media (max-width: 800px){
+      .bd{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:auto;min-height:calc(100vh - 56px)}
+      .sb{flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:none;border-bottom:1px solid var(--bdr);padding:.4rem;position:sticky;top:56px;z-index:9;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .sb::-webkit-scrollbar{display:none}
+      .sn{width:auto;white-space:nowrap;padding:.55rem .8rem;border-radius:8px;flex-shrink:0}
+      .sd{width:1px;height:auto;margin:.3rem .2rem;flex-shrink:0}
+      .mn{padding:.75rem;overflow:visible}
+      .tb{padding:0 .9rem}
+      .fr{grid-template-columns:1fr}
+      .ph,.fph,.fpb{padding-left:1rem;padding-right:1rem}
+      .dt{min-width:560px}
+      .ii-h{flex-wrap:wrap;padding:.8rem 1rem;row-gap:.25rem}
+      .ii-nm{max-width:none;flex:1}
+      .ii-em{flex-basis:100%;order:5;padding-left:calc(8px + .6rem)}
+      .ii-body{padding:1rem}
+      .ii-field{grid-template-columns:1fr;gap:.1rem}
+      .set-row{grid-template-columns:1fr;gap:.3rem}
+      .fo-actions{display:flex}
+      .fa{flex-wrap:wrap}
+      .lc{padding:2rem 1.4rem}
+      .fg input,.fg select,.fg textarea{font-size:16px}
+    }
   </style>
 </head>
 <body>
@@ -125,7 +152,7 @@
       <button type="submit" class="btn bp" style="width:100%;justify-content:center;padding:11px;margin-top:.4rem">Aanmelden →</button>
     </form>
     <p style="font-size:.76rem;color:var(--mid);text-align:center;margin-top:1rem">
-      Wachtwoord vergeten? <a href="https://supabase.com/dashboard/project/wlmehcbxeseigxwougwd/auth/users" target="_blank" style="color:var(--navy)">Supabase-dashboard</a>
+      Wachtwoord vergeten? Vraag een andere beheerder om je account opnieuw aan te maken.
     </p>
   </div>
 </div>
@@ -160,6 +187,7 @@
       <button class="sn" data-s="stats"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Homepage stats</button>
       <button class="sn" data-s="instellingen"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Instellingen</button>
       <button class="sn" data-s="records"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Clubrecords</button>
+      <button class="sn" data-s="beheerders"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Beheerders</button>
       <div class="sd"></div>
       <a href="/" class="sn" style="text-decoration:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Website →</a>
     </aside>
@@ -175,6 +203,10 @@
               <button class="itb" data-t="inschrijvingen" id="itb-inschrijvingen">Inschrijvingen <span class="ib ib0" id="in-badge"></span></button>
               <button class="itb" data-t="bestellingen" id="itb-bestellingen">Bestellingen <span class="ib ib0" id="be-badge"></span></button>
             </div>
+          </div>
+          <div class="ii-tools">
+            <input type="search" id="inbox-q" placeholder="Zoek op naam, e-mail…" />
+            <button class="btn bg bs" id="inbox-csv">⬇ Exporteer CSV</button>
           </div>
           <div id="inbox-al"></div>
           <div id="inbox-contact"><div class="ld">Laden…</div></div>
@@ -216,7 +248,7 @@
             <div class="fg"><label>Samenvatting (voor de nieuwslijst)</label><input type="text" id="nw-sum" placeholder="Één zin die het artikel samenvat…" /></div>
             <div class="fg"><label>Cover foto URL</label>
               <div style="display:flex;gap:.5rem">
-                <input type="url" id="nw-foto" placeholder="https://…supabase.co/storage/…/foto.jpg" style="flex:1" />
+                <input type="text" id="nw-foto" placeholder="/uploads/fotos/…/foto.jpg" style="flex:1" />
                 <label class="btn bg bs" style="cursor:pointer;white-space:nowrap;align-self:flex-end">📤 Upload<input type="file" id="nw-foto-file" accept="image/*" style="display:none" /></label>
               </div>
             </div>
@@ -240,7 +272,7 @@
             <div class="fr"><div class="fg"><label>Prijs (€) *</label><input type="number" id="sh-prijs" required min="0" step="0.01" placeholder="15.00" /></div><div class="fg"><label>Maten (kommagescheiden)</label><input type="text" id="sh-maten" placeholder="XS, S, M, L, XL, XXL" /></div></div>
             <div class="fg"><label>Foto</label>
               <div style="display:flex;gap:.5rem">
-                <input type="url" id="sh-foto" placeholder="https://…supabase.co/storage/…/foto.jpg" style="flex:1" />
+                <input type="text" id="sh-foto" placeholder="/uploads/fotos/…/foto.jpg" style="flex:1" />
                 <label class="btn bg bs" style="cursor:pointer;white-space:nowrap;align-self:flex-end">📤 Upload<input type="file" id="sh-foto-file" accept="image/*" style="display:none" /></label>
               </div>
             </div>
@@ -389,6 +421,42 @@
         </div>
       </div>
 
+      <!-- BEHEERDERS -->
+      <div id="s-beheerders" class="hi">
+        <div class="pn">
+          <div class="ph"><span class="pt">Beheerders</span><button class="btn bp" onclick="g('bh-fp').classList.remove('hi')">+ Beheerder</button></div>
+          <div id="bh-al"></div>
+          <div id="bh-li"><div class="ld">Laden…</div></div>
+        </div>
+        <div class="fp hi" id="bh-fp">
+          <div class="fph"><span class="fpt">Nieuwe beheerder</span><button class="btn bg bs" onclick="g('bh-fp').classList.add('hi')">✕</button></div>
+          <div class="fpb">
+            <form id="bh-form">
+              <div class="fr">
+                <div class="fg"><label for="bh-naam">Naam</label><input id="bh-naam" required /></div>
+                <div class="fg"><label for="bh-email">E-mailadres</label><input id="bh-email" type="email" required /></div>
+              </div>
+              <div class="fg"><label for="bh-pw">Tijdelijk wachtwoord (min. 12 tekens)</label><input id="bh-pw" type="password" minlength="12" required autocomplete="new-password" /></div>
+              <div class="fa"><button type="submit" class="btn bp">Toevoegen</button></div>
+            </form>
+          </div>
+        </div>
+        <div class="fp">
+          <div class="fph"><span class="fpt">Mijn wachtwoord wijzigen</span></div>
+          <div class="fpb">
+            <div id="pw-al"></div>
+            <form id="pw-form">
+              <div class="fg"><label for="pw-oud">Huidig wachtwoord</label><input id="pw-oud" type="password" required autocomplete="current-password" /></div>
+              <div class="fr">
+                <div class="fg"><label for="pw-nieuw">Nieuw wachtwoord (min. 12 tekens)</label><input id="pw-nieuw" type="password" minlength="12" required autocomplete="new-password" /></div>
+                <div class="fg"><label for="pw-nieuw2">Herhaal nieuw wachtwoord</label><input id="pw-nieuw2" type="password" minlength="12" required autocomplete="new-password" /></div>
+              </div>
+              <div class="fa"><button type="submit" class="btn bp">Wachtwoord wijzigen</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
       <!-- CLUBRECORDS -->
       <div id="s-records" class="hi">
         <div class="pn">
@@ -417,32 +485,37 @@
 </div>
 
 <script>
-const SB  = 'https://wlmehcbxeseigxwougwd.supabase.co';
-const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
-const tok  = () => sessionStorage.getItem('ag_tok');
+// Sessie via een HttpOnly-cookie; het CSRF-token gaat mee bij elke wijziging.
+let CSRF = '';
+let ME = null;
 const g    = id => document.getElementById(id);
 
 // ── AUTH ────────────────────────────────────────────────────────
 async function sbAuth(email, pw) {
-  const r = await fetch(`${SB}/auth/v1/token?grant_type=password`, {
-    method:'POST', headers:{ apikey:KEY, 'Content-Type':'application/json' },
+  const r = await fetch('/api/auth/login', {
+    method:'POST', credentials:'same-origin', headers:{ 'Content-Type':'application/json' },
     body: JSON.stringify({ email, password:pw })
   });
-  const d = await r.json();
-  if (!r.ok) throw new Error(d.error_description || d.message || 'Aanmelden mislukt');
-  sessionStorage.setItem('ag_tok', d.access_token);
+  const d = await r.json().catch(()=>({}));
+  if (!r.ok) throw new Error(d.message || 'Aanmelden mislukt');
+  CSRF = d.csrf; ME = d;
 }
 
-async function api(method, table, body, qs='') {
-  const r = await fetch(`${SB}/rest/v1/${table}${qs}`, {
-    method, headers:{ apikey:KEY, Authorization:`Bearer ${tok()}`, 'Content-Type':'application/json', Prefer:'return=representation' },
-    body: body ? JSON.stringify(body) : undefined
+async function call(method, url, body, isForm) {
+  const headers = {};
+  if (method !== 'GET') headers['X-CSRF-Token'] = CSRF;
+  if (body !== undefined && body !== null && !isForm) headers['Content-Type'] = 'application/json';
+  const r = await fetch(url, {
+    method, credentials:'same-origin', headers,
+    body: body === undefined || body === null ? undefined : (isForm ? body : JSON.stringify(body))
   });
-  if (r.status===204) return null;
-  const d = await r.json();
-  if (!r.ok) throw new Error(d.message || d.error || `HTTP ${r.status}`);
+  const d = await r.json().catch(()=>null);
+  if (r.status === 401 && ME) { ME = null; g('sa').classList.add('hi'); g('sl').classList.remove('hi'); }
+  if (!r.ok) throw new Error((d && d.message) || `HTTP ${r.status}`);
   return d;
 }
+
+const api = (method, table, body, qs='') => call(method, `/api/rest/v1/${table}${qs}`, body);
 
 // ── HELPERS ─────────────────────────────────────────────────────
 const fmt  = s => { if(!s) return ''; const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; };
@@ -798,14 +871,10 @@ g('rc-import').onclick = async () => {
 
 // ── FOTO UPLOAD (generic helper) ─────────────────────────────────
 async function uploadFoto(file, folder) {
-  const safe = (folder?folder+'/':'') + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-  const res = await fetch(`${SB}/storage/v1/object/fotos/${safe}`, {
-    method:'PUT',
-    headers:{ Authorization:`Bearer ${tok()}`, 'Content-Type':file.type, 'x-upsert':'true' },
-    body: file
-  });
-  if (!res.ok) { const d=await res.json(); throw new Error(d.message||'Upload mislukt'); }
-  return `${SB}/storage/v1/object/public/fotos/${safe}`;
+  const fd = new FormData();
+  fd.append('bestand', file);
+  const d = await call('POST', `/api/fotos?map=${encodeURIComponent(folder||'algemeen')}`, fd, true);
+  return d.url;
 }
 
 // Shop foto upload
@@ -829,17 +898,10 @@ async function loadFotoGallery() {
   const el = g('foto-grid');
   el.innerHTML = '<div class="ld">Laden…</div>';
   try {
-    const res = await fetch(`${SB}/storage/v1/object/list/fotos`, {
-      method:'POST',
-      headers:{ Authorization:`Bearer ${tok()}`, apikey:KEY, 'Content-Type':'application/json' },
-      body: JSON.stringify({ limit:200, offset:0, sortBy:{ column:'created_at', order:'desc' } })
-    });
-    const files = await res.json();
-    if (!res.ok) throw new Error(files.message||'Fout bij laden');
-    const valid = files.filter(f=>f.name && f.name!=='.emptyFolderPlaceholder');
+    const valid = await call('GET', '/api/fotos');
     if (!valid.length) { el.innerHTML='<div class="em" style="padding:2rem">Nog geen foto\'s. Upload er een!</div>'; return; }
     el.innerHTML = valid.map(f => {
-      const url = `${SB}/storage/v1/object/public/fotos/${f.name}`;
+      const url = f.url;
       return `<div class="fo-item">
         <img class="fo-img" src="${url}" alt="${esc(f.name)}" loading="lazy"
              onerror="this.style.objectFit='contain';this.style.padding='1.5rem';this.style.opacity='.3'" />
@@ -861,10 +923,7 @@ async function copyUrl(url) {
 async function delFoto(name) {
   if (!confirm(`Foto "${name}" definitief verwijderen?`)) return;
   try {
-    const res = await fetch(`${SB}/storage/v1/object/fotos/${encodeURIComponent(name)}`, {
-      method:'DELETE', headers:{ Authorization:`Bearer ${tok()}`, apikey:KEY }
-    });
-    if (!res.ok) { const d=await res.json(); throw new Error(d.message||'Verwijderen mislukt'); }
+    await call('DELETE', `/api/fotos?name=${encodeURIComponent(name)}`);
     al('foto-al','Foto verwijderd.',true); loadFotoGallery();
   } catch(e) { al('foto-al',e.message,false); }
 }
@@ -956,8 +1015,32 @@ function iiOpen(id,type) {
   }
 }
 
+function activeInboxTab() { return document.querySelector('.itb.act')?.dataset.t || 'contact'; }
+
+function inboxFilter(items) {
+  const q=(g('inbox-q')?.value||'').trim().toLowerCase();
+  if(!q||!items) return items;
+  return items.filter(i=>[i.voornaam,i.naam,i.email,i.telefoon,i.onderwerp,i.type_lid,i.niveau].some(v=>String(v||'').toLowerCase().includes(q)));
+}
+
+function exportInboxCSV() {
+  const type=activeInboxTab(); const items=inboxFilter(INBOX[type]);
+  if(!items||!items.length){ al('inbox-al','Niets om te exporteren.',false); return; }
+  const cols={
+    contact:['ingediend_op','voornaam','naam','email','onderwerp','bericht','gelezen'],
+    inschrijvingen:['ingediend_op','status','voornaam','naam','geboortedatum','email','telefoon','adres','type_lid','niveau','opmerking'],
+    bestellingen:['ingediend_op','status','voornaam','naam','email','telefoon','totaal','regels','opmerking']
+  }[type];
+  const cell=v=>{ if(v==null) return ''; if(typeof v==='object') v=JSON.stringify(v); return '"'+String(v).replace(/"/g,'""')+'"'; };
+  const csv='\ufeff'+[cols.join(';'),...items.map(i=>cols.map(c=>cell(i[c])).join(';'))].join('\r\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download=`aegir-${type}-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
 function renderInboxTab(type) {
-  const items=INBOX[type]; const el=g(`inbox-${type}`);
+  const items=inboxFilter(INBOX[type]); const el=g(`inbox-${type}`);
   if(!items||!items.length){el.innerHTML='<div class="em">Geen berichten.</div>';return;}
 
   if(type==='contact') {
@@ -1081,6 +1164,9 @@ async function delInbox(type,id) {
   } catch(e){ al('inbox-al',e.message,false); }
 }
 
+g('inbox-q').addEventListener('input',()=>renderInboxTab(activeInboxTab()));
+g('inbox-csv').addEventListener('click',exportInboxCSV);
+
 // Inbox tab switching
 document.querySelectorAll('.itb').forEach(btn=>{
   btn.onclick=()=>{
@@ -1089,12 +1175,45 @@ document.querySelectorAll('.itb').forEach(btn=>{
     ['contact','inschrijvingen','bestellingen'].forEach(t=>{
       g(`inbox-${t}`).classList.toggle('hi', t!==btn.dataset.t);
     });
-    if(!INBOX[btn.dataset.t]) loadInboxTab(btn.dataset.t);
+    if(!INBOX[btn.dataset.t]) loadInboxTab(btn.dataset.t); else renderInboxTab(btn.dataset.t);
   };
 });
 
+// ── BEHEERDERS ───────────────────────────────────────────────────
+async function loadBeheerders() {
+  const el = g('bh-li'); el.innerHTML = '<div class="ld">Laden…</div>';
+  try {
+    const rows = await call('GET', '/api/beheerders');
+    el.innerHTML = `<table class="dt"><thead><tr><th>Naam</th><th>E-mail</th><th>Laatst aangemeld</th><th></th></tr></thead><tbody>${
+      rows.map(b => `<tr><td>${esc(b.naam||'—')}</td><td>${esc(b.email)}</td><td>${b.laatst_ingelogd?fmtDT(b.laatst_ingelogd.replace(' ','T')):'—'}</td>
+        <td style="white-space:nowrap">${ME && b.email===ME.email ? '<span class="tg t-ja">jij</span>' : `<button class="btn bd2 bs" onclick="delBeheerder(${b.id},'${esc(b.email)}')">Verw.</button>`}</td></tr>`).join('')
+    }</tbody></table>`;
+  } catch(e) { el.innerHTML = `<div class="al ale alw">${esc(e.message)}</div>`; }
+}
+async function delBeheerder(id, email) {
+  if (!confirm(`Beheerder ${email} verwijderen?`)) return;
+  try { await call('DELETE', `/api/beheerders?id=${id}`); al('bh-al','Verwijderd.',true); loadBeheerders(); }
+  catch(e) { al('bh-al', e.message, false); }
+}
+g('bh-form').onsubmit = async e => {
+  e.preventDefault();
+  try {
+    await call('POST', '/api/beheerders', { naam:g('bh-naam').value.trim(), email:g('bh-email').value.trim(), wachtwoord:g('bh-pw').value });
+    g('bh-form').reset(); g('bh-fp').classList.add('hi');
+    al('bh-al','Beheerder toegevoegd. Geef het tijdelijke wachtwoord persoonlijk door.',true); loadBeheerders();
+  } catch(err) { al('bh-al', err.message, false); }
+};
+g('pw-form').onsubmit = async e => {
+  e.preventDefault();
+  if (g('pw-nieuw').value !== g('pw-nieuw2').value) { al('pw-al','De nieuwe wachtwoorden zijn niet gelijk.',false); return; }
+  try {
+    await call('POST', '/api/auth/wachtwoord', { huidig:g('pw-oud').value, nieuw:g('pw-nieuw').value });
+    g('pw-form').reset(); al('pw-al','Wachtwoord gewijzigd.',true);
+  } catch(err) { al('pw-al', err.message, false); }
+};
+
 // ── SIDEBAR NAV ──────────────────────────────────────────────────
-const ALL_SECS = ['inbox','agenda','nieuws','shop','fotos','bestuur','partners','ereleden','disciplines','niveaugroepen','locaties','stats','instellingen','records'];
+const ALL_SECS = ['beheerders','inbox','agenda','nieuws','shop','fotos','bestuur','partners','ereleden','disciplines','niveaugroepen','locaties','stats','instellingen','records'];
 
 document.querySelectorAll('.sn[data-s]').forEach(btn => {
   btn.onclick = () => {
@@ -1108,9 +1227,11 @@ document.querySelectorAll('.sn[data-s]').forEach(btn => {
       if(!INBOX.bestellingen) loadInboxTab('bestellingen');
     } else if(s==='fotos') {
       loadFotoGallery();
+    } else if(s==='beheerders') {
+      loadBeheerders();
     } else if(s==='instellingen') {
       if(!SETTINGS.length) loadSettings();
-    } else if(SECS[s] && (!Array.isArray(DATA[s]) || !DATA[s].length) && s!=='records') {
+    } else if(SECS[s] && (!Array.isArray(DATA[s]) || !DATA[s].length)) {
       loadSec(s);
     }
   };
@@ -1123,7 +1244,7 @@ g('lf').onsubmit = async e => {
   try { await sbAuth(g('le').value.trim(), g('lp').value); showDash(); }
   catch(e) { err.textContent=e.message; err.classList.remove('hi'); }
 };
-g('lout').onclick = () => { sessionStorage.removeItem('ag_tok'); g('sa').classList.add('hi'); g('sl').classList.remove('hi'); };
+g('lout').onclick = async () => { try { await call('POST','/api/auth/logout'); } catch {} ME=null; CSRF=''; g('sa').classList.add('hi'); g('sl').classList.remove('hi'); };
 
 function showDash() {
   g('sl').classList.add('hi'); g('sa').classList.remove('hi');
@@ -1132,7 +1253,7 @@ function showDash() {
   loadInboxTab('bestellingen');
 }
 
-if (tok()) api('GET','agenda_items',null,'?limit=1').then(()=>showDash()).catch(()=>sessionStorage.removeItem('ag_tok'));
+call('GET','/api/auth/me').then(d=>{ CSRF=d.csrf; ME=d; showDash(); }).catch(()=>{});
 </script>
 </body>
 </html>

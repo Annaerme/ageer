@@ -47,8 +47,8 @@
     </section>
     <script>
     (()=>{
-      const SB='https://wlmehcbxeseigxwougwd.supabase.co';
-      const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsbWVoY2J4ZXNlaWd4d291Z3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NTUwMzQsImV4cCI6MjA5NjMzMTAzNH0.hzplILom0POZIbIuTIv6op9QSUl8PQdKdYg5Q0dh4_8';
+      const SB=window.AEGIR_SB='/api';
+      const KEY=window.AEGIR_KEY='';
       const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       fetch(`${SB}/rest/v1/disciplines?order=reeks.asc,volgorde.asc`,{headers:{apikey:KEY}})
         .then(r=>r.json())
@@ -152,9 +152,17 @@
       const tabs = document.querySelectorAll('.cr-tab');
       let records = [], activeType = 'ind';
 
+      // Live uit de database (beheerbaar via /pages/admin/), statisch JSON als fallback
       try {
-        records = await fetch('/data/clubrecords.json').then(r => r.json());
-      } catch { container.textContent = 'Kon records niet laden.'; return; }
+        const r = await fetch(`${window.AEGIR_SB}/rest/v1/clubrecords?order=code.asc,discipline.asc,geslacht.asc,bad.asc`, { headers: { apikey: window.AEGIR_KEY } });
+        const d = r.ok ? await r.json() : [];
+        if (Array.isArray(d) && d.length) records = d;
+      } catch {}
+      if (!records.length) {
+        try {
+          records = await fetch('/data/clubrecords.json').then(r => r.json());
+        } catch { container.textContent = 'Kon records niet laden.'; return; }
+      }
 
       function render(type) {
         const filtered = records.filter(r => r.type === type);
