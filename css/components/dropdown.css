@@ -60,7 +60,7 @@
   transition: transform .18s, opacity .18s;
 }
 .has-dropdown:hover .nav-chevron { transform: rotate(180deg); opacity: .75; }
-.nav-chevron svg { width: 8px; height: 5px; }
+.nav-chevron svg { width: 8px; height: 5px; display: block; }
 
 /* ── Mobile accordion dropdown ── */
 @media (max-width: 768px) {

@@ -163,7 +163,10 @@
 
   .nav-links.open > li.has-dropdown > .nav-parent .nav-chevron {
     transition: transform .2s;
+    width: 12px; height: 8px;
+    opacity: .6;
   }
+  .nav-links.open .nav-chevron svg { width: 12px; height: 8px; }
   .nav-links.open > li.has-dropdown.mob-open > .nav-parent .nav-chevron {
     transform: rotate(180deg);
   }
