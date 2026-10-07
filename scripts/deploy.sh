@@ -136,8 +136,8 @@ if lftp_cmd "cd \"$REMOTE_PATH\"; cls api/index.php" >/dev/null 2>&1; then
 else
   # Eerste installatie: enkel toegelaten als de map leeg is of alleen de
   # standaardbestanden van een nieuwe Infomaniak-site bevat.
-  vreemd="$(printf '%s\n' "$inhoud" | grep -vxE '\.|\.\.|index\.html|index\.php|\.htaccess|\.user\.ini|error_log|favicon\.ico|robots\.txt|cgi-bin|' || true)"
-  [ -z "$vreemd" ] || fout "in '$REMOTE_PATH' staat geen api/index.php, maar de map is ook niet leeg (bv. '$(printf '%s' "$vreemd" | head -1)'). Uit voorzorg niets geüpload. Controleer DEPLOY_PATH en de map van het FTP-account."
+  vreemd="$(printf '%s\n' "$inhoud" | grep -vxE '\.|\.\.|index\.html|index\.php|\.htaccess|\.user\.ini|\.infomaniak[^/]*|error_log|favicon\.ico|robots\.txt|cgi-bin|' || true)"
+  [ -z "$vreemd" ] || fout "in '$REMOTE_PATH' staat geen api/index.php, maar de map is ook niet leeg (onverwacht: $(printf '%s' "$vreemd" | tr '\n' ' ')). Uit voorzorg niets geüpload. Controleer DEPLOY_PATH en de map van het FTP-account."
   echo "Doelmap gecontroleerd: lege map van een nieuwe site, eerste installatie."
 fi
 
