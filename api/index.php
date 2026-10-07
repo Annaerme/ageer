@@ -6,6 +6,7 @@
 //   /api/beheerders          beheerders oplijsten, toevoegen, verwijderen
 //   /api/fotos               foto's oplijsten (GET), uploaden (POST), verwijderen (DELETE)
 //   /api/documenten          PDF's oplijsten, uploaden, verwijderen (bv. blanco ledenfiche)
+//   /api/formulieren/ledenfiche.pdf | medische-fiche.pdf   blanco fiches met het juiste jaar
 //   /api/setup               eenmalig de eerste beheerder aanmaken
 
 declare(strict_types=1);
@@ -27,6 +28,10 @@ $path = trim(preg_replace('#^.*?/api/#', '', $path), '/');
 try {
     if (preg_match('#^rest/v1/([a-z_]+)$#', $path, $m)) {
         handle_rest($m[1], $method);
+    }
+    if ($method === 'GET' && preg_match('#^formulieren/(ledenfiche|medische-fiche)\.pdf$#', $path, $m)) {
+        require __DIR__ . '/lib/formulieren.php';
+        handle_formulier($m[1]);
     }
 
     switch ("$method $path") {
