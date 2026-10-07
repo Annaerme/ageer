@@ -74,10 +74,14 @@ Infomaniak Manager → site → **SSL-certificaat** → Let's Encrypt, en zet
 
 ## 8. Automatisch uploaden via GitHub
 
-Na de eerste installatie (stappen 1 tot 7: database, `api/config.php`,
-`/api/setup`) kan GitHub elke wijziging zelf uploaden. Elke keer dat er iets
-op de `main`-branch komt, zet GitHub de website automatisch op de server.
-De eerste installatie zelf blijft zoals hierboven beschreven.
+GitHub kan de bestanden zelf uploaden, ook de allereerste keer (in plaats
+van stap 3 met de zip). Elke keer dat er iets op de `main`-branch komt, zet
+GitHub de website automatisch op de server.
+
+De eerste upload gebeurt enkel naar een **lege** map van de nieuwe site (of
+een map met alleen de standaardpagina van Infomaniak). De database (stap 2),
+`api/config.php` (stap 4) en de eerste beheerder (stap 5) doe je nog altijd
+zelf.
 
 ### a. Een apart FTP-account maken bij Infomaniak
 

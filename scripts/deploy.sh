@@ -22,9 +22,11 @@
 #   (zonder .DS_Store, .git*, *.md, api/config.php).
 #
 #   CONTROLE VOORAF: de doelmap moet de nieuwe site zijn (api/index.php staat
-#   er al) en mag geen sporen van de oude site of van de hoofdmap van de
-#   hosting bevatten (news.php, leden/, rag/, web/, sites/, …). Anders stopt
-#   het script zonder iets te wijzigen.
+#   er al) of een lege map van een nieuwe site (eerste installatie: enkel
+#   standaardbestanden zoals index.html/index.php van Infomaniak). Ze mag nooit
+#   sporen van de oude site of van de hoofdmap van de hosting bevatten
+#   (news.php, leden/, rag/, web/, sites/, …). Anders stopt het script zonder
+#   iets te wijzigen.
 #
 #   Er wordt NOOIT iets verwijderd op de server. Bestanden van de nieuwe site
 #   worden enkel toegevoegd of bijgewerkt; verouderde bestanden blijven staan.
@@ -125,9 +127,15 @@ for spoor in content.php news.php events.php contact.php logon.php leden rag wp 
     fout "de doelmap '$REMOTE_PATH' bevat '$spoor': dat lijkt de OUDE site of de hoofdmap van de hosting. Niets geüpload en niets verwijderd. Beperk het FTP-account tot de map van nieuw.aegir-gent.be of zet DEPLOY_PATH juist."
   fi
 done
-lftp_cmd "cd \"$REMOTE_PATH\"; cls api/index.php" >/dev/null 2>&1 \
-  || fout "in '$REMOTE_PATH' staat geen api/index.php: de nieuwe site is daar (nog) niet geïnstalleerd. Doe eerst de handmatige installatie (INSTALLATIE.md). Niets geüpload."
-echo "Doelmap gecontroleerd: dit is de nieuwe site."
+if lftp_cmd "cd \"$REMOTE_PATH\"; cls api/index.php" >/dev/null 2>&1; then
+  echo "Doelmap gecontroleerd: dit is de nieuwe site."
+else
+  # Eerste installatie: enkel toegelaten als de map leeg is of alleen de
+  # standaardbestanden van een nieuwe Infomaniak-site bevat.
+  vreemd="$(printf '%s\n' "$inhoud" | grep -vxE '\.|\.\.|index\.html|index\.php|\.htaccess|\.user\.ini|error_log|favicon\.ico|robots\.txt|cgi-bin|' || true)"
+  [ -z "$vreemd" ] || fout "in '$REMOTE_PATH' staat geen api/index.php, maar de map is ook niet leeg (bv. '$(printf '%s' "$vreemd" | head -1)'). Uit voorzorg niets geüpload. Controleer DEPLOY_PATH en de map van het FTP-account."
+  echo "Doelmap gecontroleerd: lege map van een nieuwe site, eerste installatie."
+fi
 
 # ---------- 6. Uploaden ----------
 # Er wordt NOOIT iets verwijderd op de server: enkel bestanden van de nieuwe
