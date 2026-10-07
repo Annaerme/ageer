@@ -139,23 +139,6 @@ for spoor in content.php news.php events.php contact.php logon.php leden rag wp 
     fout "de doelmap '$REMOTE_PATH' bevat '$spoor': dat lijkt de OUDE site of de hoofdmap van de hosting. Niets geüpload en niets verwijderd. Beperk het FTP-account tot de map van nieuw.aegir-gent.be of zet DEPLOY_PATH juist."
   fi
 done
-# TIJDELIJK (eenmalig): verwijdert enkel de oude projectkopie 'aegir-gent'
-# binnen de map van de nieuwe site. Draait pas na de controle hierboven (geen
-# sporen van de oude site) en enkel als die map echt een projectkopie is.
-if [ "${DEPLOY_REMOVE_OLD_COPY:-}" = "1" ]; then
-  printf '%s\n' "$inhoud" | grep -qx 'aegir-gent' || fout "geen map 'aegir-gent' in '$REMOTE_PATH'. Niets verwijderd."
-  printf '%s\n' "$inhoud" | grep -qx '\.infomaniak-maintenance\.html' \
-    || lftp_cmd "cd \"$REMOTE_PATH\"; cls api/index.php" >/dev/null 2>&1 \
-    || fout "'$REMOTE_PATH' lijkt niet de map van de nieuwe site. Niets verwijderd."
-  lftp_cmd "cd \"$REMOTE_PATH\"; cls aegir-gent/README.md aegir-gent/.gitignore" >/dev/null 2>&1 \
-    || fout "'aegir-gent' lijkt geen kopie van dit project. Niets verwijderd."
-  echo "Verwijderen: '$REMOTE_PATH/aegir-gent' (oude projectkopie)…"
-  lftp_cmd "cd \"$REMOTE_PATH\"; rm -r aegir-gent"
-  echo "Verwijderd. Overige inhoud van '$REMOTE_PATH':"
-  lftp_cmd "cd \"$REMOTE_PATH\"; cls -1a"
-  exit 0
-fi
-
 if lftp_cmd "cd \"$REMOTE_PATH\"; cls api/index.php" >/dev/null 2>&1; then
   echo "Doelmap gecontroleerd: dit is de nieuwe site."
 else
