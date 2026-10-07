@@ -16,6 +16,9 @@
 #   DEPLOY_DRY_RUN=1  optioneel  enkel tonen wat er zou gebeuren, niets wijzigen
 #   DEPLOY_CHECK_ONLY=1          enkel de veiligheidscontrole doen, niet verbinden
 #   DEPLOY_VIEW_ONLY=1           enkel de bestandsnamen in de doelmap tonen, niets wijzigen
+#   DB_NAME, DB_USER, DB_PASS, SETUP_TOKEN (en optioneel DB_HOST): als ingesteld en
+#                     api/config.php bestaat nog niet op de server, wordt het één keer
+#                     aangemaakt. Een bestaande config.php wordt nooit overschreven.
 #
 # WAT ER GEBEURT
 #   Geüpload wordt exact wat scripts/maak-upload-zip.sh in de zip stopt:
@@ -182,3 +185,38 @@ $PUT uploads/.htaccess -o uploads/.htaccess
 bye
 EOF
 echo "Upload klaar ($PROTOCOL://$DEPLOY_HOST:$PORT$REMOTE_PATH)."
+
+# ---------- 7. api/config.php eenmalig aanmaken (optioneel) ----------
+# Enkel als DB_PASS is ingesteld én er op de server nog GEEN api/config.php
+# staat. Een bestaande config.php wordt nooit overschreven. De waarden worden
+# nergens getoond; het tijdelijke bestand staat buiten de upload en wordt
+# meteen gewist.
+if [ -n "${DB_PASS:-}" ] && [ "${DEPLOY_DRY_RUN:-}" != "1" ]; then
+  if lftp_cmd "cd \"$REMOTE_PATH\"; cls api/config.php" >/dev/null 2>&1; then
+    echo "api/config.php bestaat al op de server: niet aangeraakt."
+  else
+    [ -n "${DB_NAME:-}" ] && [ -n "${DB_USER:-}" ] \
+      || fout "DB_NAME en DB_USER moeten ingesteld zijn om api/config.php aan te maken."
+    [ "${#SETUP_TOKEN}" -ge 24 ] 2>/dev/null \
+      || fout "SETUP_TOKEN moet ingesteld zijn en minstens 24 tekens tellen om api/config.php aan te maken."
+    php_str() { printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e "s/'/\\\\'/g"; }
+    cfg="$(mktemp)"; chmod 600 "$cfg"
+    {
+      echo "<?php"
+      echo "// Aangemaakt door de automatische upload (scripts/deploy.sh). Wordt nooit overschreven."
+      echo "return ["
+      echo "    'db_host'     => '$(php_str "${DB_HOST:-cndh.myd.infomaniak.com}")',"
+      echo "    'db_name'     => '$(php_str "$DB_NAME")',"
+      echo "    'db_user'     => '$(php_str "$DB_USER")',"
+      echo "    'db_pass'     => '$(php_str "$DB_PASS")',"
+      echo "    'setup_token' => '$(php_str "$SETUP_TOKEN")',"
+      echo "    'debug'       => false,"
+      echo "];"
+    } > "$cfg"
+    lftp_cmd "cd \"$REMOTE_PATH\"; put \"$cfg\" -o api/config.php; chmod 600 api/config.php" >/dev/null 2>&1 \
+      || lftp_cmd "cd \"$REMOTE_PATH\"; put \"$cfg\" -o api/config.php" >/dev/null 2>&1 \
+      || { rm -f "$cfg"; fout "api/config.php kon niet geüpload worden."; }
+    rm -f "$cfg"
+    echo "api/config.php aangemaakt op de server (waarden niet getoond)."
+  fi
+fi

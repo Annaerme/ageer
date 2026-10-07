@@ -47,6 +47,12 @@ jobs:
       DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || vars.DEPLOY_PORT }}
       DEPLOY_PATH: ${{ secrets.DEPLOY_PATH || vars.DEPLOY_PATH || '/' }}
       SITE_URL: ${{ secrets.SITE_URL || vars.SITE_URL }}
+      # Enkel nodig om api/config.php de eerste keer aan te maken (nooit overschreven).
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
+      SETUP_TOKEN: ${{ secrets.SETUP_TOKEN }}
     steps:
       - name: Instellingen controleren
         run: |
