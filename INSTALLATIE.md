@@ -62,6 +62,10 @@ Infomaniak Manager → site → **SSL-certificaat** → Let's Encrypt, en zet
 
 - De homepage toont de cijfers, Nieuws toont berichten, Competitie de clubrecords.
 - `https://<jouw-domein>/api/config.php` geeft **403** (afgeschermd).
+- `https://<jouw-domein>/api/formulieren/ledenfiche.pdf` en `…/medische-fiche.pdf`
+  tonen de blanco fiches met het juiste jaar (vanaf 1 november het volgende
+  jaar). Ze worden door de site zelf gemaakt (FPDF in `api/lib/fpdf/`); IBAN,
+  BIC, polisnummers, adres en e-mail komen uit **Instellingen**.
 - Aanmelden op `/pages/admin/` werkt. Stuur een test via het contactformulier
   en kijk of het in de Inbox verschijnt.
 
