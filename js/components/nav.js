@@ -90,14 +90,36 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // Mobile: parent links open the accordion, so add an "Overzicht" link to each sub-menu
+  navEl.querySelectorAll('.has-dropdown').forEach(li => {
+    const parent = li.querySelector('.nav-parent');
+    const overview = document.createElement('a');
+    overview.href = parent.getAttribute('href');
+    overview.className = 'nav-dropdown-overview';
+    overview.textContent = parent.textContent.trim() + ' — overzicht';
+    li.querySelector('.nav-dropdown').prepend(overview);
+  });
+
+  const closeMenu = () => {
+    links.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.classList.remove('is-open');
+    document.body.classList.remove('nav-open');
+    navEl.querySelectorAll('.has-dropdown.mob-open').forEach(el => el.classList.remove('mob-open'));
+  };
+
   // Burger open/close
   if (burger && links) {
     burger.addEventListener('click', () => {
       const open = links.classList.toggle('open');
       burger.setAttribute('aria-expanded', open);
       burger.classList.toggle('is-open', open);
+      document.body.classList.toggle('nav-open', open);
     });
   }
+
+  // Reset mobile menu when resizing to desktop
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
 
   // Mobile accordion: toggle sub-menu on parent click
   navEl.querySelectorAll('.has-dropdown .nav-parent').forEach(a => {
@@ -113,22 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close menu when a sub-link or leaf link is clicked
   navEl.querySelectorAll('.nav-dropdown a, .nav-links > li:not(.has-dropdown) a').forEach(a => {
-    a.addEventListener('click', () => {
-      links.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-      burger.classList.remove('is-open');
-      navEl.querySelectorAll('.has-dropdown.mob-open').forEach(el => el.classList.remove('mob-open'));
-    });
+    a.addEventListener('click', closeMenu);
   });
 
   // Close on outside click
   document.addEventListener('click', e => {
-    if (!navEl.contains(e.target)) {
-      links.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-      burger.classList.remove('is-open');
-      navEl.querySelectorAll('.has-dropdown.mob-open').forEach(el => el.classList.remove('mob-open'));
-    }
+    if (!navEl.contains(e.target)) closeMenu();
   });
 
   // Active nav link

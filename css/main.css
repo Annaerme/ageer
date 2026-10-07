@@ -127,4 +127,16 @@
   [style*="grid-template-columns: 2fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
+  [style*="grid-template-columns:1fr 360px"],
+  [style*="grid-template-columns: 1fr 360px"],
+  [style*="grid-template-columns:1fr auto"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="minmax(320px,1fr)"],
+  [style*="minmax(280px,1fr)"],
+  [style*="minmax(280px, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
 }
+body { overflow-x: clip; }
+img, video, iframe { max-width: 100%; }

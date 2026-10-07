@@ -42,6 +42,8 @@
   color: var(--navy) !important;
 }
 
+.nav-dropdown-overview { display: none !important; }
+
 .nav-dropdown-divider {
   height: 1px;
   background: var(--border);
@@ -78,6 +80,7 @@
   }
 
   .has-dropdown.mob-open .nav-dropdown { display: block; }
+  .nav-dropdown .nav-dropdown-overview { display: block !important; font-weight: 600 !important; color: var(--navy) !important; }
 
   .nav-dropdown a {
     padding: .7rem 1.5rem .7rem 2.5rem !important;
