@@ -1,0 +1,81 @@
+# Uploadt de website automatisch naar de Infomaniak-hosting bij elke push naar
+# main, of handmatig via tabblad Actions → "Deploy naar Infomaniak" → Run workflow.
+#
+# Keuze: lftp (uit de Ubuntu-pakketten) in plaats van een kant-en-klare action.
+# lftp is een oud, goed onderhouden programma dat zowel FTPS (expliciete TLS,
+# met certificaatcontrole) als SFTP kent, en met "mirror" per map kan kiezen of
+# oude bestanden verwijderd worden. Alle logica staat in scripts/deploy.sh, zodat
+# je exact hetzelfde ook lokaal kan draaien. Zie dat script voor wat er wel en
+# niet overschreven/verwijderd wordt (kort: api/config.php en bestaande
+# bestanden in uploads/ nooit; oude bestanden enkel in pages/ css/ js/ api/).
+#
+# Inloggegevens staan NOOIT in de code: vul ze in als GitHub Secrets
+# (Settings → Secrets and variables → Actions). Zie INSTALLATIE.md.
+#   Verplicht: DEPLOY_HOST, DEPLOY_USER, DEPLOY_PASSWORD
+#   Optioneel (secret of variabele): DEPLOY_PROTOCOL (ftps|sftp, standaard ftps),
+#   DEPLOY_PORT, DEPLOY_PATH (standaard /), SITE_URL (voor de rooktest)
+name: Deploy naar Infomaniak
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-infomaniak
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+      DEPLOY_PROTOCOL: ${{ secrets.DEPLOY_PROTOCOL || vars.DEPLOY_PROTOCOL || 'ftps' }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || vars.DEPLOY_PORT }}
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH || vars.DEPLOY_PATH || '/' }}
+      SITE_URL: ${{ secrets.SITE_URL || vars.SITE_URL }}
+    steps:
+      - name: Instellingen controleren
+        run: |
+          ontbreekt=""
+          [ -n "$DEPLOY_HOST" ] || ontbreekt="$ontbreekt DEPLOY_HOST"
+          [ -n "$DEPLOY_USER" ] || ontbreekt="$ontbreekt DEPLOY_USER"
+          [ -n "$DEPLOY_PASSWORD" ] || ontbreekt="$ontbreekt DEPLOY_PASSWORD"
+          if [ -n "$ontbreekt" ]; then
+            echo "::error title=Instellingen ontbreken::Deze GitHub Secrets ontbreken:$ontbreekt. Voeg ze toe via Settings → Secrets and variables → Actions (zie INSTALLATIE.md, 'Automatisch uploaden via GitHub'). Er is niets geüpload."
+            exit 1
+          fi
+          case "$DEPLOY_PROTOCOL" in
+            ftps|sftp|FTPS|SFTP) echo "Protocol: $DEPLOY_PROTOCOL" ;;
+            *) echo "::error title=Ongeldig protocol::DEPLOY_PROTOCOL moet 'ftps' of 'sftp' zijn (nu: '$DEPLOY_PROTOCOL'). Onversleuteld FTP wordt nooit gebruikt. Er is niets geüpload."; exit 1 ;;
+          esac
+
+      - name: Code ophalen
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Veiligheidscontrole (geen config.php of wachtwoorden in de upload)
+        run: DEPLOY_CHECK_ONLY=1 ./scripts/deploy.sh
+
+      - name: lftp installeren
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp rsync jq
+
+      - name: Uploaden naar Infomaniak
+        run: ./scripts/deploy.sh
+
+      - name: Rooktest op de live site
+        run: |
+          if [ -z "$SITE_URL" ]; then
+            echo "::notice title=Rooktest overgeslagen::SITE_URL is niet ingesteld (bv. https://nieuw.aegir-gent.be). Voeg die toe als secret of variabele om na elke upload automatisch te testen."
+            exit 0
+          fi
+          ./scripts/rooktest.sh
