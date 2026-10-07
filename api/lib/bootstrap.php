@@ -36,16 +36,29 @@ function db(): PDO
     static $pdo = null;
     if ($pdo === null) {
         $c = config();
-        $pdo = new PDO(
-            "mysql:host={$c['db_host']};dbname={$c['db_name']};charset=utf8mb4",
-            $c['db_user'],
-            $c['db_pass'],
-            [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES   => false,
-            ]
-        );
+        try {
+            $pdo = new PDO(
+                "mysql:host={$c['db_host']};dbname={$c['db_name']};charset=utf8mb4",
+                $c['db_user'],
+                $c['db_pass'],
+                [
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES   => false,
+                ]
+            );
+        } catch (PDOException $e) {
+            // Duidelijke melding voor de beheerder, zonder gebruikersnaam of wachtwoord te tonen.
+            error_log('[aegir-api] databaseverbinding: ' . $e->getMessage());
+            $code = (int)($e->errorInfo[1] ?? $e->getCode());
+            throw new HttpError(500, match ($code) {
+                1045    => 'Database: gebruikersnaam of wachtwoord in api/config.php klopt niet.',
+                1044    => 'Database: deze gebruiker heeft geen toegang tot de database in api/config.php.',
+                1049    => 'Database: de databasenaam in api/config.php bestaat niet.',
+                2002, 2005 => 'Database: de databaseserver (db_host in api/config.php) is niet bereikbaar.',
+                default => 'Database: verbinding mislukt (code ' . $code . ').',
+            });
+        }
         $pdo->exec("SET time_zone = '" . date('P') . "'");
     }
     return $pdo;

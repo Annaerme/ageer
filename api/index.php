@@ -100,6 +100,13 @@ try {
     throw new HttpError(404, 'Niet gevonden.');
 } catch (HttpError $e) {
     send_json(['message' => $e->getMessage()], $e->status);
+} catch (PDOException $e) {
+    error_log('[aegir-api] ' . $e);
+    // Ontbrekende tabel/kolom: meestal is schema.sql (nog) niet geïmporteerd.
+    $msg = in_array($e->getCode(), ['42S02', '42S22'], true)
+        ? 'Database: tabellen ontbreken of zijn verouderd. Importeer database/schema.sql.'
+        : 'Er ging iets mis op de server. Probeer later opnieuw.';
+    send_json(['message' => $msg], 500);
 } catch (Throwable $e) {
     error_log('[aegir-api] ' . $e);
     $debug = false;
