@@ -15,6 +15,7 @@
 #   DEPLOY_PATH       optioneel  doelmap op de server, standaard /
 #   DEPLOY_DRY_RUN=1  optioneel  enkel tonen wat er zou gebeuren, niets wijzigen
 #   DEPLOY_CHECK_ONLY=1          enkel de veiligheidscontrole doen, niet verbinden
+#   DEPLOY_VIEW_ONLY=1           enkel de bestandsnamen in de doelmap tonen, niets wijzigen
 #
 # WAT ER GEBEURT
 #   Geüpload wordt exact wat scripts/maak-upload-zip.sh in de zip stopt:
@@ -118,6 +119,13 @@ lftp_cmd() {
   LFTP_PASSWORD="$DEPLOY_PASSWORD" lftp --env-password -u "$DEPLOY_USER" "$URL" \
     -e "set cmd:fail-exit yes; set net:timeout 30; set net:max-retries 2; $(printf '%s' "$VERBINDING" | tr '\n' ';'); $1; bye"
 }
+# Bekijk-modus: enkel de namen in de doelmap tonen (2 niveaus diep), niets wijzigen.
+if [ "${DEPLOY_VIEW_ONLY:-}" = "1" ]; then
+  echo "BEKIJKEN (er wordt niets gewijzigd): inhoud van '$REMOTE_PATH'"
+  lftp_cmd "cd \"$REMOTE_PATH\"; find -d 3 ." 2>&1 | grep -v -i 'pass' | head -300
+  exit 0
+fi
+
 lftp_fout="$(mktemp)"
 inhoud="$(lftp_cmd "cd \"$REMOTE_PATH\"; cls -1a" 2>"$lftp_fout")" || {
   echo "Melding van de server: $(grep -v -i 'pass' "$lftp_fout" | tail -3)" >&2

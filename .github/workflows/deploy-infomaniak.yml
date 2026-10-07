@@ -21,6 +21,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      actie:
+        description: "uploaden, of enkel bekijken wat er op de server staat (wijzigt niets)"
+        type: choice
+        options: [uploaden, bekijken]
+        default: uploaden
 
 permissions:
   contents: read
@@ -70,10 +76,16 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp rsync jq
 
+      - name: Bekijken wat er op de server staat (wijzigt niets)
+        if: ${{ inputs.actie == 'bekijken' }}
+        run: DEPLOY_VIEW_ONLY=1 ./scripts/deploy.sh
+
       - name: Uploaden naar Infomaniak
+        if: ${{ inputs.actie != 'bekijken' }}
         run: ./scripts/deploy.sh
 
       - name: Rooktest op de live site
+        if: ${{ inputs.actie != 'bekijken' }}
         run: |
           if [ -z "$SITE_URL" ]; then
             echo "::notice title=Rooktest overgeslagen::SITE_URL is niet ingesteld (bv. https://nieuw.aegir-gent.be). Voeg die toe als secret of variabele om na elke upload automatisch te testen."
